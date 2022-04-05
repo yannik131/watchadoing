@@ -1,0 +1,40 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <body>
+        
+        
+        <script>
+            
+            const activities = [];
+            const maxLikes = 100;
+            for(let i = 0; i < 90; ++i) {
+                activities.push({
+                    title: `Activity ${i+1}`,
+                    likes: randomInteger(0, maxLikes)
+                });
+            }
+            
+            activities.sort((a, b) => {
+                return a.likes < b.likes;
+            });
+            
+            
+            
+            
+            
+            
+            
+            const positions = createPositions(activities.length, centerX, centerY, maxsize);
+            
+            function createBubble(maxSize, size) {
+                
+            }
+            
+            makeDraggable('canvas');
+
+            
+        </script>
+    </body>
+</html>
