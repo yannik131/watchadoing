@@ -1,3 +1,3 @@
-export default function randomInteger(min, max) {
+export function randomInteger(min, max) {
     return Math.floor(Math.random() * (max - min) ) + min;
 }

@@ -1,9 +1,14 @@
 <template>
-  <h1 class="text-center text-red-500">Hi</h1>
+  <Home></Home>
 </template>
 
 <script>
+import Home from './pages/Home';
+
 export default {
   name: 'App',
+  components: {
+      Home
+  }
 }
 </script>

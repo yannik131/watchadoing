@@ -1,6 +1,6 @@
 import { randomInteger } from './randomInteger';
 
-export default class BubbleFactory {
+class BubbleFactory {
     constructor() {
         const canvasSize = 5000;
         this.centerX = canvasSize+window.innerWidth/2;
@@ -8,7 +8,7 @@ export default class BubbleFactory {
         
         const maxSizeFactor = 0.25;
         this.maxSize = window.innerHeight < window.innerWidth? maxSizeFactor*window.innerHeight : maxSizeFactor*window.innerWidth;
-        this.minSize = maxSize*0.5;
+        this.minSize = this.maxSize*0.5;
         
         //Distance from the center of the position matrix
         this.positionLevel = 1;
@@ -25,14 +25,14 @@ export default class BubbleFactory {
         for(const i of [-this.positionLevel, this.positionLevel]) {
             for(let j = -this.positionLevel; j <= this.positionLevel; ++j) {
                 newPositions.push(
-                    [centerX+i*maxSize, centerY+j*maxSize]
+                    [this.centerX+i*this.maxSize, this.centerY+j*this.maxSize]
                 );
             }
         }
         for(let i = -this.positionLevel+1; i <= this.positionLevel-1; ++i) {
             newPositions.push(
-                [centerX+i*maxSize, centerY-this.positionLevel*maxSize],
-                [centerX+i*maxSize, centerY+this.positionLevel*maxSize]
+                [this.centerX+i*this.maxSize, this.centerY-this.positionLevel*this.maxSize],
+                [this.centerX+i*this.maxSize, this.centerY+this.positionLevel*this.maxSize]
             );
         }
         
@@ -58,18 +58,16 @@ export default class BubbleFactory {
         const size = this.bubbleSize(relativeSize);
         const position = this.getRandomPosition();
         
-        const div = document.createElement('div');
-        div.className = 'draggable bg-gray-100 p-3';
-        
         const wiggleRoom = (this.maxSize-size)/2;
         const x = position[0]-size/2 + randomInteger(-wiggleRoom, wiggleRoom);
         const y = position[1]-size/2 + randomInteger(-wiggleRoom, wiggleRoom);
-        div.style.left = `${x}px`;
-        div.style.top  = `${y}px`;
-        div.style.width = `${size}px`;
-        div.style.height = div.style.width;
-        return div;
+        
+        return {
+            x,
+            y,
+            size
+        };
     }
 }
 
-export default function 
+export const bubbleFactory = new BubbleFactory();
