@@ -36,7 +36,7 @@ class BubbleFactory {
             );
         }
         
-        const removeCount = randomInteger(0.2*newPositions.length, Math.ceil(0.5*newPositions.length));
+        const removeCount = randomInteger(Math.ceil(0.2*newPositions.length), Math.ceil(0.5*newPositions.length));
         for(let i = 0; i < removeCount; ++i) {
             newPositions.splice(randomInteger(0, newPositions.length-1), 1);
         }

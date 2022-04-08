@@ -1,11 +1,24 @@
 {
     "restoreTerminals.terminals": [
-        {
+      {
+        "splitTerminals": [
+          {
             "name": "django",
             "commands": [
-                "source env/bin/activate",
-                "python3 manage.py runserver"
+              "source env/bin/activate",
+              "cd api",
+              "python3 manage.py runserver"
             ]
-        }
+          }
+        ]
+      },
+      {
+        "splitTerminals": [
+          {
+            "name": "yarn",
+            "commands": ["cd app", "yarn serve"]
+          }
+        ]
+      },
     ]
 }

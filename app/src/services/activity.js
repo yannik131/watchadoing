@@ -1,33 +1,47 @@
-import axios from 'axios';
+import axios from '../services/axios';
 import store from './store';
-import { randomInteger } from '../helpers/randomInteger';
+import { distance } from '../helpers/distance';
 
 export async function getActivities() {
     try {
-        const response = await axios.get('/api/activities');
-        const activities = response.data.activities;
+        const response = await axios.get('api/activities');
+        let activities = response.data;
+        const maxDistance = 50000;
+        activities = activities.filter(activity => {
+            return  distance(
+                store.getters.userLatitude,
+                store.getters.userLongitude,
+                activity.latitude,
+                activity.longitude
+            ) < maxDistance;
+        })
         if(activities.length === 0) {
             return;
         }
         
         store.commit('setActivities', {
-            activities: response.data.activities
+            activities
         });
     }
     catch(error) {
-        const titles = ['Jogging', 'Netflix', 'Sleeping', 'Board games', 'Eating', 'McDonalds', 'Walking my dog'];
-        let activities = [];
-        for(const title of titles) {
-            for(const letter of ['a', 'b', 'c', 'd', 'e']) {
-                activities.push({
-                    title: title + letter,
-                    likeCount: randomInteger(0, 50)
-                });
-            }
-            
-        }
-        store.commit('setActivities', {
-            activities
+        return;
+    }
+}
+
+export async function createActivity(title) {
+    try {
+        const data = {
+            title: title[0].toUpperCase() + title.substring(1),
+            latitude: store.getters.userLatitude.toFixed(6),
+            longitude: store.getters.userLongitude.toFixed(6),
+            likeCount: 0
+        };
+        await axios.post('api/activities/', data);
+        store.commit('addActivity', {
+            activity: data
         });
+    }
+    catch(error) {
+        return;
     }
 }

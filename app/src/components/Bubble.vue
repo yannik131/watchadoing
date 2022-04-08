@@ -1,6 +1,6 @@
 <template>
     <div 
-        class="draggable bg-gray-100 p-3 text-center absolute flex justify-center items-center flex-col"
+        class="draggable bg-gray-100 p-3 text-center absolute flex justify-center items-center flex-col text-xl rounded-full hover:bg-gray-200"
         :style="{
             'left': `${bubble.x}px`,
             'top': `${bubble.y}px`,
@@ -11,13 +11,6 @@
         <p>{{ activity.likeCount }}</p>
     </div>
 </template>
-
-<style>
-.draggable {
-    border-radius: 50%;
-    font-size: 1.5rem;
-}
-</style>
 
 <script>
 import { bubbleFactory } from '../helpers/bubbleFactory';
@@ -32,7 +25,11 @@ export default {
         }
     },
     setup(props) {
-        const bubble = bubbleFactory.createBubble(props.activity.likeCount / store.getters.maxLikeCount);
+        let relativeSize = 0;
+        if(store.getters.maxLikeCount > 0) {
+            relativeSize = props.activity.likeCount / store.getters.maxLikeCount;
+        }
+        const bubble = bubbleFactory.createBubble(relativeSize);
         
         return {
             bubble

@@ -1,4 +1,7 @@
-from django.shortcuts import render
+from rest_framework import viewsets
+from .serializers import ActivitySerializer
+from .models import Activity
 
-def index(request):
-    return render(request, 'activity/index.html')
+class ActivityViewSet(viewsets.ModelViewSet):
+    serializer_class = ActivitySerializer
+    queryset = Activity.objects.all()

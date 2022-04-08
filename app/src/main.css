@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.round {
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+}
+
+.plus {
+    @apply flex items-center justify-center text-xl ml-2 p-1.5 rounded bg-gray-300 hover:bg-gray-200 cursor-pointer;
+}
