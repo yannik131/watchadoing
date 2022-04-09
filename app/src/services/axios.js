@@ -4,23 +4,6 @@ const getClient = function() {
     const instance = axios.create();
     instance.defaults.baseURL = 'http://localhost:8000/';
     
-    instance.interceptors.request.use(function(config) {
-		instance.stamp = new Date().getTime();
-		return config;
-	});
-	
-	instance.interceptors.response.use(function(response) {
-			console.log(`${response.request.responseURL}: ${new Date().getTime() - instance.stamp} ms`);
-			console.log(response.data);
-			return response;
-		},
-		function(error) {
-			console.log(`${error.response.request.responseURL}: ${new Date().getTime() - instance.stamp} ms`);
-			console.log(`Request error: ${JSON.stringify(error.response.data)}`);
-			throw error;
-		}
-	);
-    
     return instance;
 }
 

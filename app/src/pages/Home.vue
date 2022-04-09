@@ -1,33 +1,33 @@
 <template>
     <div id="canvas" class="absolute text-center cursor-pointer">
         <Bubble 
+            
             v-for="activity in $store.getters.activities" 
             :key="activity.title" 
             :activity="activity">
         </Bubble>
     </div>
     
-    <div v-if="$store.getters.isFetching" class="text-center">
+    <div v-if="$store.getters.isFetching" class="text-2xl font-bold fixed left-0 right-0 text-center z-20 bg-white flex flex-col justify-center items-center">
         <div class="font-bold text-2xl">Fetching data..</div>
         <i class="fa fa-spinner fa-spin mt-10 text-6xl"></i>
     </div>
     
     <div 
-        v-else-if="$store.getters.activities.length === 0"
-        class="text-2xl font-bold text-center">
-        Nothing here yet :(
-    </div>
-    
-    <div 
         v-else
-        class="text-2xl font-bold text-center relative z-20 rounded flex justify-center">
-        <div class="inline-block bg-white p-3">
-            This is popular around you
+        class="text-2xl font-bold fixed left-0 right-0 text-center z-20 bg-white flex justify-center items-center mt-0">
+        <span v-if="$store.getters.activities.length === 0" class="mr-2">
+            Nothing here yet :(
+        </span>
+        <span v-else class="mr-2">
+            Popular stuff
+        </span>
+        <div class="plus my-2" @click="toggleAddActivity()">
+            <i class="fas fa-plus mr-1"></i>
+            Add
         </div>
-        <div class="plus my-2" @click="toggleAddActivity()"><i class="fas fa-plus mr-3"></i>Add new...</div>
+        
     </div>
-    
-    
     
     <AddActivity v-if="showAddActivity" @activity-created="createActivity" @close="toggleAddActivity()"></AddActivity>
     
@@ -61,7 +61,9 @@ export default {
         store.commit('setFetching', {
             value: true
         });
+        store.commit('setActivities', { activities: [] });
         makeDraggable('canvas');
+        
         navigator.geolocation.getCurrentPosition(
             async function(position) {
                 store.commit('setLocation', {
@@ -82,7 +84,9 @@ export default {
             {
                 enableHighAccuracy: true
             }
-        )
+        );
+        
+        alert("Drag and drop the screen to see what's happening around you. Double click a bubble to like it.");
     },
     setup() {
         let showAddActivity = ref(false);

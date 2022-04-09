@@ -1,5 +1,6 @@
 <template>
     <div 
+        @click="bubbleClicked"
         class="draggable bg-gray-100 p-3 text-center absolute flex justify-center items-center flex-col text-xl rounded-full hover:bg-gray-200"
         :style="{
             'left': `${bubble.x}px`,
@@ -14,6 +15,7 @@
 
 <script>
 import { bubbleFactory } from '../helpers/bubbleFactory';
+import { updateActivity } from '../services/activity';
 import store from '../services/store';
 
 export default {
@@ -31,8 +33,24 @@ export default {
         }
         const bubble = bubbleFactory.createBubble(relativeSize);
         
+        let loaded = false;
+        async function bubbleClicked() {
+            if(store.getters.likedActivities[props.activity.id]) {
+                return;
+            }
+            if(!loaded) {
+                setTimeout(() => { loaded = false; }, 300);
+                loaded = true;
+                return;
+            }
+            store.commit('likeActivity', { activity: props.activity });
+            await updateActivity(props.activity);
+            loaded = false;
+        }
+        
         return {
-            bubble
+            bubble,
+            bubbleClicked
         };
     }
 }

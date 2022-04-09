@@ -5,8 +5,8 @@
           {
             "name": "django",
             "commands": [
-              "source env/bin/activate",
               "cd api",
+              "source env/bin/activate",
               "python3 manage.py runserver"
             ]
           }
@@ -20,5 +20,25 @@
           }
         ]
       },
+      {
+        "splitTerminals": [
+          {
+            "name": "shell",
+            "commands": [
+              "source env/bin/activate",
+              "cd api",
+              "python3 manage.py shell_plus"
+            ]
+          }
+        ]
+      },
+      {
+        "splitTerminals": [
+          {
+            "name": "bash",
+            "commands": ["source env/bin/activate"]
+          }
+        ]
+      }
     ]
 }
