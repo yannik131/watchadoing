@@ -1,3 +1,3 @@
 #! /bin/bash
 
-uwsgi --ini ./config/uwsgi.ini
+uwsgi --ini ./config/uwsgi.ini &
