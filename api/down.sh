@@ -1,0 +1,1 @@
+uwsgi --stop /tmp/watchadoing.pid
