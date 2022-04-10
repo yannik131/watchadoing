@@ -6,6 +6,14 @@ html {
     overflow: hidden;
 } 
 
+.popup {
+    min-width: 368px; 
+    max-width: 400px; 
+    height: 330px; 
+    transform: translate(-50%, 0); 
+    left: 50%
+}
+
 .plus {
     @apply flex items-center justify-center text-xl ml-2 p-1.5 rounded bg-gray-300 hover:bg-gray-200 cursor-pointer;
 }
