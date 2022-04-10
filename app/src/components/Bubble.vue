@@ -16,12 +16,12 @@
     
     <div :id="`${activity.id}-tooltip`" class="flex flex-col hidden bg-white rounded border border-gray-400 p-1 gap-1 z-30 tooltip text-left">
         <div v-if="!hasAlreadyReacted()">
-            <div @click="react('likeActivity')" class="p-2 hover:bg-gray-100 text-green-500 font-bold text-xl flex justify-between"><div>Yes!</div> <div>😬👌👍</div></div>
+            <div @click="react('likeActivity')" class="p-2 hover:bg-gray-100 text-green-500 font-bold text-xl">😬👌👍 <span class="ml-1">Yes!</span></div>
             <hr>
-            <div @click="react('dislikeActivity')" class="p-2 hover:bg-gray-100 text-red-500 font-bold text-xl flex justify-between gap-1"><div>No!</div> <div>🤮😡💩</div></div>
+            <div @click="react('dislikeActivity')" class="p-2 hover:bg-gray-100 text-red-500 font-bold text-xl">🤮😡💩 <span class="ml-1">No!</span></div>
             <hr>
         </div>
-        <div @click="react('resetActivity')" class="p-2 hover:bg-gray-100 text-gray-500 font-bold text-xl flex justify-between gap-1"><div>Okay.</div> <div>🤷‍♂️🤷‍♂️🤷‍♂️</div></div>
+        <div @click="react('resetActivity')" class="p-2 hover:bg-gray-100 text-gray-500 font-bold text-xl">🤷‍♂️🤷‍♂️🤷‍♂️ <span class="ml-1">Okay.</span></div>
     </div>
 </template>
 

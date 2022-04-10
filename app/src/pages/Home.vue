@@ -9,7 +9,12 @@
         </Bubble>
     </div>
     
-    <div v-if="$store.getters.isFetching" class="text-2xl font-bold fixed left-0 right-0 text-center z-20 bg-white flex flex-col justify-center items-center">
+    <div v-if="!$store.getters.userLatitude" class="text-2xl font-bold fixed left-0 right-0 text-center z-20 bg-white flex flex-col justify-center items-center">
+        <div class="font-bold text-2xl">Getting location..</div>
+        <i class="fa fa-spinner fa-spin mt-10 text-6xl"></i>
+    </div>
+    
+    <div v-else-if="$store.getters.isFetching" class="text-2xl font-bold fixed left-0 right-0 text-center z-20 bg-white flex flex-col justify-center items-center">
         <div class="font-bold text-2xl">Fetching data..</div>
         <i class="fa fa-spinner fa-spin mt-10 text-6xl"></i>
     </div>
@@ -21,7 +26,7 @@
             Nothing here yet :(
         </span>
         <span v-else class="mr-2">
-            Double click stuff you like
+            Double click the bubbles!
         </span>
         <div class="plus my-2" @click="toggleAddActivity()">
             <i class="fas fa-plus mr-1"></i>

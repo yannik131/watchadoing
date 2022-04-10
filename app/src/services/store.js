@@ -3,7 +3,7 @@ import createPersistedState from 'vuex-persistedstate';
 
 const store = createStore({
     plugins: [createPersistedState({
-        paths: ['likedActivities', 'introductionShown']
+        paths: ['likedActivities', 'dislikedActivities', 'introductionShown']
     })],
     state: () => ({
         activities: [],
