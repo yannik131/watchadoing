@@ -2,3 +2,5 @@
 node_modules
 __pycache__/
 api/env
+app/dist
+api/logs/*

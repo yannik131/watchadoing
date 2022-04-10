@@ -75,17 +75,25 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'watchadoing.wsgi.application'
 
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer'
+    ]
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'watchadoing',
+        'USER': 'postgres',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': '5432'
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -130,5 +138,36 @@ STATICFILES_DIRS = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
-    "https://app.myactivities.net"
+    "https://watchadoing.net"
 ]
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'normal': {
+            'format': '{asctime} - {levelname}: {message}',
+            'style': '{'
+        }
+    },
+    'handlers': {
+       'file': {
+           'class': 'logging.FileHandler',
+           'filename': 'logs/django.log',
+           'formatter': 'normal',
+           'level': 'DEBUG'
+       },
+       'console': {
+           'class': 'logging.StreamHandler',
+           'level': 'DEBUG',
+           'formatter': 'normal'
+       }
+    },
+    'loggers': {
+        'watcha': {
+            'handlers': ['file', 'console'],
+            'level': 'DEBUG'
+        }
+    }
+}

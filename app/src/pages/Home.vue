@@ -15,12 +15,12 @@
     
     <div 
         v-else
-        class="text-2xl font-bold fixed left-0 right-0 text-center z-20 bg-white flex justify-center items-center mt-0">
+        class="text-2xl font-bold fixed left-0 right-0 text-center z-20 bg-white flex justify-center items-center mt-0 px-2">
         <span v-if="$store.getters.activities.length === 0" class="mr-2">
             Nothing here yet :(
         </span>
         <span v-else class="mr-2">
-            Popular stuff
+            Double click stuff you like
         </span>
         <div class="plus my-2" @click="toggleAddActivity()">
             <i class="fas fa-plus mr-1"></i>
@@ -85,8 +85,6 @@ export default {
                 enableHighAccuracy: true
             }
         );
-        
-        alert("Drag and drop the screen to see what's happening around you. Double click a bubble to like it.");
     },
     setup() {
         let showAddActivity = ref(false);

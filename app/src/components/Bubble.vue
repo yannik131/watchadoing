@@ -1,6 +1,6 @@
 <template>
     <div 
-        @click="bubbleClicked"
+        v-touch="bubbleClicked"
         class="draggable bg-gray-100 p-3 text-center absolute flex justify-center items-center flex-col text-xl rounded-full hover:bg-gray-200"
         :style="{
             'left': `${bubble.x}px`,
