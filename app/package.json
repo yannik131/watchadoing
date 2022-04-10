@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.1.1",
+    "@popperjs/core": "^2.11.5",
     "autoprefixer": "^9",
     "axios": "^0.26.1",
     "core-js": "^3.6.5",
