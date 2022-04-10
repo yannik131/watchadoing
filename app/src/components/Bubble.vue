@@ -16,18 +16,17 @@
     
     <div :id="`${activity.id}-tooltip`" class="flex flex-col hidden bg-white rounded border border-gray-400 p-1 gap-1 z-30 tooltip text-left">
         <div v-if="!hasAlreadyReacted()">
-            <div v-touch="react('likeActivity')" class="p-2 hover:bg-gray-100 text-green-500 font-bold text-xl">😬👌👍 <span class="ml-1">Yes!</span></div>
+            <div v-touch="onTapReaction('likeActivity')" class="p-2 hover:bg-gray-100 text-green-500 font-bold text-xl">😬👌👍 <span class="ml-1">Yes!</span></div>
             <hr>
-            <div v-touch="react('dislikeActivity')" class="p-2 hover:bg-gray-100 text-red-500 font-bold text-xl">🤮😡💩 <span class="ml-1">No!</span></div>
+            <div v-touch="onTapReaction('dislikeActivity')" class="p-2 hover:bg-gray-100 text-red-500 font-bold text-xl">🤮😡💩 <span class="ml-1">No!</span></div>
             <hr>
         </div>
-        <div v-touch="react('resetActivity')" class="p-2 hover:bg-gray-100 text-gray-500 font-bold text-xl">🤷‍♂️🤷‍♂️🤷‍♂️ <span class="ml-1">Okay.</span></div>
+        <div v-touch="onTapReaction('resetActivity')" class="p-2 hover:bg-gray-100 text-gray-500 font-bold text-xl">🤷‍♂️🤷‍♂️🤷‍♂️ <span class="ml-1">Okay.</span></div>
     </div>
 </template>
 
 <script>
 import { bubbleFactory } from '../helpers/bubbleFactory';
-import { updateActivity } from '../services/activity';
 import store from '../services/store';
 import { createPopper } from '@popperjs/core';
 import { ref } from 'vue';
@@ -113,7 +112,13 @@ export default {
             updatebackgroundStyle();
             const tooltip = document.getElementById(props.activity.id + '-tooltip');
             tooltip.classList.add('hidden');
-            await updateActivity(props.activity);
+            //await updateActivity(props.activity);
+        }
+        
+        function onTapReaction(reaction) {
+            return async function() {
+                await react(reaction);
+            }
         }
         
         function hasAlreadyReacted() {
@@ -125,7 +130,8 @@ export default {
             bubbleClicked,
             backgroundStyle,
             react,
-            hasAlreadyReacted
+            hasAlreadyReacted,
+            onTapReaction
         };
     }
 }
