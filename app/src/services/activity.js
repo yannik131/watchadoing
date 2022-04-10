@@ -9,7 +9,7 @@ export async function getActivities() {
     
     const response = await axios.get('api/activities');
     let activities = response.data;
-    const maxDistance = 50000;
+    const maxDistance = 100000;
     activities = activities.filter(activity => {
         return distance(
             store.getters.userLatitude,
