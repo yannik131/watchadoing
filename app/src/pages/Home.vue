@@ -1,5 +1,5 @@
 <template>
-    <Introduction v-if="!$store.getters.introductionShowed"></Introduction>
+    <Introduction v-if="!$store.getters.introductionShown"></Introduction>
     <div id="canvas" class="absolute text-center cursor-pointer">
         <Bubble 
             
@@ -65,7 +65,7 @@ export default {
         store.commit('setActivities', { activities: [] });
         makeDraggable('canvas');
 
-        if(store.getters.introductionShowed) {
+        if(store.getters.introductionShown) {
             getUserLocation(async function() {
                 await getActivities();
             });

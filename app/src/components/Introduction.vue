@@ -1,11 +1,11 @@
 <template>
     <div class="fixed inset-0 bg-black opacity-50 z-30 flex justify-center items-center">
     </div>
-    <div class="z-40 px-5 rounded bg-white flex flex-col relative mx-auto p-2 text-center mt-2" style="width: 368px; height: 330px">
+    <div class="z-40 px-5 rounded bg-white flex flex-col fixed mx-auto p-2 text-center mt-2" style="width: 368px; height: 330px; left: calc(50% - 159px);">
             <h1 class="text-2xl font-bold mb-2">Welcome! 👋</h1>
-            <p class="mb-2 italic">Wanna know what people around you are up to? 🤔</p>
+            <p class="mb-2 italic">Wanna know what people around you like to do? 🤔</p>
             <ul class="list-disc">
-                <li>After you click the button, your location 📍 will be requested. </li>
+                <li>After granting access to your 📍 location, stuff that's popular around you will be shown as bubbles.</li>
                 <li>The bigger the bubble, the more popular the stuff!</li>
                 <li>Double click bubbles to like or dislike. Click the 'Add' button to add new stuff.</li>
             </ul>
@@ -31,7 +31,7 @@ export default {
             buttonText.value = 'Getting location..';
             gettingLocation.value = true;
             getUserLocation(async function() {
-                store.commit('introductionShowed');
+                store.commit('introductionShown');
                 await getActivities();
             });
         }
