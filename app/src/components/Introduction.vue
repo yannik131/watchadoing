@@ -33,6 +33,9 @@ export default {
             getUserLocation(async function() {
                 store.commit('introductionShown');
                 await getActivities();
+            }, function() {
+                gettingLocation.value = false;
+                buttonText.value = "Let's go!";
             });
         }
         return {
