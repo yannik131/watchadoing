@@ -1,4 +1,5 @@
 <template>
+    <Introduction v-if="!$store.getters.introductionShowed"></Introduction>
     <div id="canvas" class="absolute text-center cursor-pointer">
         <Bubble 
             
@@ -46,8 +47,10 @@
 <script>
 import Bubble from '../components/Bubble';
 import AddActivity from '../components/AddActivity';
+import Introduction from '../components/Introduction';
 import makeDraggable from '../helpers/makeDraggable';
-import { getActivities, createActivity } from '../services/activity';
+import { createActivity, getActivities } from '../services/activity';
+import { getUserLocation } from '../services/location';
 import { ref } from 'vue';
 import store from '../services/store';
 
@@ -55,36 +58,18 @@ export default {
     name: 'Home',
     components: {
         Bubble,
-        AddActivity
+        AddActivity,
+        Introduction
     },
     async mounted() {
-        store.commit('setFetching', {
-            value: true
-        });
         store.commit('setActivities', { activities: [] });
         makeDraggable('canvas');
-        
-        navigator.geolocation.getCurrentPosition(
-            async function(position) {
-                store.commit('setLocation', {
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude
-                });
+
+        if(store.getters.introductionShowed) {
+            getUserLocation(async function() {
                 await getActivities();
-                store.commit('setFetching', {
-                    value: false
-                });
-            },
-            function() {
-                alert("This app won't work without your location!");
-                store.commit('setFetching', {
-                    value: false
-                });
-            },
-            {
-                enableHighAccuracy: true
-            }
-        );
+            });
+        }
     },
     setup() {
         let showAddActivity = ref(false);

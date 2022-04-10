@@ -11,7 +11,8 @@ const store = createStore({
         userLatitude: null,
         userLongitude: null,
         isFetching: false,
-        likedActivities: {}
+        likedActivities: {},
+        introductionShowed: false
     }),
     
     mutations: {
@@ -40,6 +41,9 @@ const store = createStore({
         },
         setFetching(state, { value }) {
             state.isFetching = value;
+        },
+        introductionShowed(state) {
+            state.introductionShowed = true;
         }
     },
     
@@ -49,7 +53,8 @@ const store = createStore({
         userLatitude: state => state.userLatitude,
         userLongitude: state => state.userLongitude,
         isFetching: state => state.isFetching,
-        likedActivities: state => state.likedActivities
+        likedActivities: state => state.likedActivities,
+        introductionShowed: state => state.introductionShowed
     }
 });
 

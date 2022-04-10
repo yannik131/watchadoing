@@ -3,39 +3,40 @@ import store from './store';
 import { distance } from '../helpers/distance';
 
 export async function getActivities() {
-    try {
-        const response = await axios.get('api/activities');
-        let activities = response.data;
-        const maxDistance = 50000;
-        activities = activities.filter(activity => {
-            return distance(
-                store.getters.userLatitude,
-                store.getters.userLongitude,
-                activity.latitude,
-                activity.longitude
-            ) < maxDistance;
-        });
-        const occurenceCount = {};
-        for(let i = activities.length-1; i >= 0; --i) {
-            const activity = activities[i];
-            if(!occurenceCount[activity.title]) {
-                occurenceCount[activity.title] = 1;
-            }
-            else {
-                activities.splice(i, 1);
-            }
+    store.commit('setFetching', {
+        value: true
+    });
+    
+    const response = await axios.get('api/activities');
+    let activities = response.data;
+    const maxDistance = 50000;
+    activities = activities.filter(activity => {
+        return distance(
+            store.getters.userLatitude,
+            store.getters.userLongitude,
+            activity.latitude,
+            activity.longitude
+        ) < maxDistance;
+    });
+    const occurenceCount = {};
+    for(let i = activities.length-1; i >= 0; --i) {
+        const activity = activities[i];
+        if(!occurenceCount[activity.title]) {
+            occurenceCount[activity.title] = 1;
         }
-        if(activities.length === 0) {
-            return;
+        else {
+            activities.splice(i, 1);
         }
-        
-        store.commit('setActivities', {
-            activities
-        });
     }
-    catch(error) {
-        return;
-    }
+    
+    store.commit('setActivities', {
+        activities
+    });
+    
+    store.commit('setFetching', {
+        value: false
+    });
+    
 }
 
 export async function createActivity(title) {
