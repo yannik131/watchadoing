@@ -28,7 +28,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -133,12 +132,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    BASE_DIR / "static"
+    BASE_DIR / 'static'
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8080",
-    "https://watchadoing.net"
+    'http://localhost:8080'
 ]
 
 
