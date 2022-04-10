@@ -6,7 +6,7 @@ class BubbleFactory {
         this.centerX = canvasSize+window.innerWidth/2;
         this.centerY = canvasSize+window.innerHeight/2;
         
-        const maxSizeFactor = 0.25;
+        const maxSizeFactor = 0.3;
         this.maxSize = window.innerHeight < window.innerWidth? maxSizeFactor*window.innerHeight : maxSizeFactor*window.innerWidth;
         this.minSize = this.maxSize*0.5;
         

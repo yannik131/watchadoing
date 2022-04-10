@@ -30,6 +30,7 @@ import { bubbleFactory } from '../helpers/bubbleFactory';
 import store from '../services/store';
 import { createPopper } from '@popperjs/core';
 import { ref } from 'vue';
+import { updateActivity } from '../services/activity';
 
 export default {
     name: "Bubble",
@@ -112,7 +113,7 @@ export default {
             updatebackgroundStyle();
             const tooltip = document.getElementById(props.activity.id + '-tooltip');
             tooltip.classList.add('hidden');
-            //await updateActivity(props.activity);
+            await updateActivity(props.activity);
         }
         
         function onTapReaction(reaction) {
