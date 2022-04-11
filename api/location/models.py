@@ -26,12 +26,10 @@ class Location(models.Model):
     
     @staticmethod
     def determine_from_address(address):
-        logger.debug(address)
         try:
             return Location.objects.get(city=address)
         except:
             location = geocode(address, addressdetails=True)
-            logger.debug
         if location is None:
             raise ValidationError({'error': "The address could not be found."})
         return Location.get_from_geopy_location(location)    
@@ -41,13 +39,10 @@ class Location(models.Model):
         address = geopy_location.raw['address']
         components = dict(
             country=address['country'],
-            state=address.get('state', address.get('city', address.get('town'))),
+            state=address.get('state', address.get('region', address.get('city', address.get('town')))),
             county=address.get('county'),
             city=address.get('city', address.get('town', address.get('village', address.get('county'))))
         )
-        for component in components:
-            if component is None:
-                raise ValidationError({'error': "Could not determine city from address. Please specify your city correctly."})
         try:
             location = Location.objects.get(**components)
         except:
