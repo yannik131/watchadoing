@@ -9,7 +9,7 @@ html {
 .popup {
     min-width: 368px; 
     max-width: 400px; 
-    height: 330px; 
+    height: 400px; 
     transform: translate(-50%, 0); 
     left: 50%
 }

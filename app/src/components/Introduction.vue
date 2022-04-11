@@ -7,15 +7,16 @@
             <ul class="list-disc">
                 <li>After granting access to your 📍 location, stuff that's popular around you will be shown as bubbles.</li>
                 <li>The bigger the bubble, the more ⭐ popular the stuff!</li>
-                <li>Double click bubbles to like or dislike. Click the 'Add' button to add new stuff.</li>
+                <li>If you don't want to or can't use your current location, you can type in a city here:</li>
             </ul>
+            <input type="text" placeholder="City or address" class="p-2 w-100 border rounded mt-2" v-model="addressInput" v-on:keyup.enter="requestUserLocation()" v-on:input="updateButtonText"/>
             <div class="flex-1"></div>
-            <button @click="requestUserLocation()" class="bg-green-500 rounded p-2 hover:bg-green-300" v-text="buttonText" :disabled="gettingLocation"></button>
+            <button @click="requestUserLocation()" class="bg-green-500 rounded p-2 hover:bg-green-300" v-text="buttonText" :disabled="buttonDisabled"></button>
         </div>
 </template>
 
 <script>
-import { getUserLocation } from '../services/location';
+import { getUserLocation, getUserLocationByAddress, formatLocation } from '../services/location';
 import { getActivities } from '../services/activity';
 import store from '../services/store';
 import { ref } from 'vue';
@@ -25,23 +26,71 @@ export default {
     emits: ['done'],
     setup() {
         const buttonText = ref("Let's go!");
-        const gettingLocation = ref(false);
+        const buttonDisabled = ref(false);
+        const addressInput = ref('');
+        let locationByAddressSuccess = false;
         
-        function requestUserLocation() {
-            buttonText.value = 'Getting location..';
-            gettingLocation.value = true;
-            getUserLocation(async function() {
-                store.commit('introductionShown');
+        const buttonTexts = {
+            'ready': "Let's go!",
+            'addressNotSent': 'Send address',
+            'gettingLocation': 'Getting location..'
+        };
+        
+        async function requestUserLocation() {
+            if(buttonDisabled.value) {
+                return;
+            }
+            if(locationByAddressSuccess) {
+                store.commit('setIntroductionShown', { value: true });
                 await getActivities();
-            }, function() {
-                gettingLocation.value = false;
-                buttonText.value = "Let's go!";
-            });
+                return;
+            }
+            buttonText.value = buttonTexts['gettingLocation'];
+            buttonDisabled.value = true;
+            
+            if(addressInput.value.trim().length === 0) {
+                getUserLocation(async function() {
+                    store.commit('setIntroductionShown', { value: true });
+                    await getActivities();
+                }, function() {
+                    buttonDisabled.value = false;
+                    buttonText.value = buttonTexts['ready'];
+                });
+            }
+            else {
+                const { error, location } = await getUserLocationByAddress(addressInput.value);
+                if(error) {
+                    addressInput.value = '';
+                    alert(error);
+                    updateButtonText();
+                }
+                else {
+                    alert(`Determined location: ${formatLocation(location)}. Proceed if this is correct :)`);
+                    addressInput.value = formatLocation(location);
+                    buttonText.value = buttonTexts['ready'];
+                    locationByAddressSuccess = true;
+                }
+                buttonDisabled.value = false;
+            }
         }
+        
+        function updateButtonText() {
+            locationByAddressSuccess = false;
+            
+            if(addressInput.value.trim().length > 0) {
+                buttonText.value = buttonTexts['addressNotSent'];
+            }
+            else {
+                buttonText.value = buttonTexts['ready'];
+            }
+        }
+        
         return {
             requestUserLocation,
-            gettingLocation,
-            buttonText
+            buttonDisabled,
+            buttonText,
+            addressInput,
+            updateButtonText
         }
     }
 }

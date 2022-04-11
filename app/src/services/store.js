@@ -63,8 +63,8 @@ const store = createStore({
         setFetching(state, { value }) {
             state.isFetching = value;
         },
-        introductionShown(state) {
-            state.introductionShown = true;
+        setIntroductionShown(state, { value }) {
+            state.introductionShown = value;
         }
     },
     

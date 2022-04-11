@@ -73,6 +73,8 @@ export default {
         if(store.getters.introductionShown) {
             getUserLocation(async function() {
                 await getActivities();
+            }, function() {
+                store.commit('setIntroductionShown', { value: false });
             });
         }
     },

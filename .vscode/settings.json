@@ -36,7 +36,15 @@
         "splitTerminals": [
           {
             "name": "bash",
-            "commands": ["source env/bin/activate"]
+            "commands": ["source api/env/bin/activate"]
+          }
+        ]
+      },
+      {
+        "splitTerminals": [
+          {
+            "name": "redis",
+            "commands": ["redis-server --port 6655"]
           }
         ]
       }
