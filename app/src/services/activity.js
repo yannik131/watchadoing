@@ -9,28 +9,33 @@ export async function getActivities() {
     
     const response = await axios.get('api/activities');
     let activities = response.data;
-    const maxDistance = 100000;
-    activities = activities.filter(activity => {
-        return distance(
+    for(const activity of activities) {
+        activity.distance = distance(
             store.getters.userLatitude,
             store.getters.userLongitude,
             activity.latitude,
             activity.longitude
-        ) < maxDistance;
-    });
-    const occurenceCount = {};
-    for(let i = activities.length-1; i >= 0; --i) {
-        const activity = activities[i];
-        if(!occurenceCount[activity.title]) {
-            occurenceCount[activity.title] = 1;
+        );
+    }
+    activities.sort((a, b) => { return a.distance - b.distance; });
+    
+    const limit = 100;
+    const duplicateCheck = {};
+    const filteredActivities = [];
+    
+    for(const activity of activities) {
+        if(duplicateCheck[activity.title]) {
+            continue;
         }
-        else {
-            activities.splice(i, 1);
+        duplicateCheck[activity.title] = true;
+        filteredActivities.push(activity);
+        if(filteredActivities.length === limit) {
+            break;
         }
     }
     
     store.commit('setActivities', {
-        activities
+        activities: filteredActivities
     });
     
     store.commit('setFetching', {
