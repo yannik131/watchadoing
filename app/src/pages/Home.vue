@@ -46,14 +46,16 @@
     left: -5000px;
     top: -5000px;
     overflow: hidden;
+    z-index: -1;
 }
 </style>
 
 <script>
+/* global L */
 import Bubble from '../components/Bubble';
 import AddActivity from '../components/AddActivity';
 import Introduction from '../components/Introduction';
-import makeDraggable from '../helpers/makeDraggable';
+//import makeDraggable from '../helpers/makeDraggable';
 import { createActivity, getActivities } from '../services/activity';
 import { getUserLocation } from '../services/location';
 import { ref } from 'vue';
@@ -68,7 +70,7 @@ export default {
     },
     async mounted() {
         store.commit('setActivities', { activities: [] });
-        makeDraggable('canvas');
+        //makeDraggable('canvas');
 
         if(store.getters.introductionShown) {
             getUserLocation(async function() {
@@ -77,6 +79,9 @@ export default {
                 store.commit('setIntroductionShown', { value: false });
             });
         }
+        
+        const map = L.map('canvas').setView([51.0834196, 10.4234469], 5);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
     },
     setup() {
         let showAddActivity = ref(false);
