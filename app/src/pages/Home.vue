@@ -10,13 +10,13 @@
     </div>
     
     <div v-if="!$store.getters.userLatitude" class="text-2xl font-bold fixed left-0 right-0 text-center z-20 bg-white flex flex-col justify-center items-center">
-        <div class="font-bold text-2xl">Getting location..</div>
-        <i class="fa fa-spinner fa-spin mt-10 text-6xl"></i>
+        <div class="font-bold text-2xl mr-2">Getting location.. <i class="fa fa-spinner fa-spin"></i></div>
+        
     </div>
     
     <div v-else-if="$store.getters.isFetching" class="text-2xl font-bold fixed left-0 right-0 text-center z-20 bg-white flex flex-col justify-center items-center">
-        <div class="font-bold text-2xl">Fetching data..</div>
-        <i class="fa fa-spinner fa-spin mt-10 text-6xl"></i>
+        <div class="font-bold text-2xl mr-2">Fetching data.. <i class="fa fa-spinner fa-spin"></i></div>
+        
     </div>
     
     <div 
@@ -32,6 +32,10 @@
             <i class="fas fa-plus mr-1"></i>
             Add
         </div>
+        <div class="plus my-2 flex items-center" @click="centerMapToUserLocation()">
+            <i class="fas fa-location-arrow mr-1"></i>
+            Center
+        </div>
         
     </div>
     
@@ -41,24 +45,21 @@
 
 <style>
 #canvas {
-    width: 10000px;
-    height: 10000px;
-    left: -5000px;
-    top: -5000px;
-    overflow: hidden;
+    position: absolute;
+    height: 100%;
+    width: 100%;
     z-index: -1;
 }
 </style>
 
 <script>
-/* global L */
 import Bubble from '../components/Bubble';
 import AddActivity from '../components/AddActivity';
 import Introduction from '../components/Introduction';
-//import makeDraggable from '../helpers/makeDraggable';
 import { createActivity, getActivities } from '../services/activity';
 import { getUserLocation } from '../services/location';
 import { ref } from 'vue';
+import { getMap } from '../services/map';
 import store from '../services/store';
 
 export default {
@@ -70,18 +71,17 @@ export default {
     },
     async mounted() {
         store.commit('setActivities', { activities: [] });
-        //makeDraggable('canvas');
 
         if(store.getters.introductionShown) {
             getUserLocation(async function() {
                 await getActivities();
+                getMap().setView([store.getters.userLatitude, store.getters.userLongitude], 15);
             }, function() {
                 store.commit('setIntroductionShown', { value: false });
             });
         }
         
-        const map = L.map('canvas').setView([51.0834196, 10.4234469], 5);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+        getMap().setView([51.0834196, 10.4234469], 6);
     },
     setup() {
         let showAddActivity = ref(false);
@@ -90,10 +90,15 @@ export default {
             showAddActivity.value = !showAddActivity.value;
         }
         
+        function centerMapToUserLocation() {
+            getMap().setView([store.getters.userLatitude, store.getters.userLongitude]);
+        }
+        
         return {
             showAddActivity,
             toggleAddActivity,
-            createActivity
+            createActivity,
+            centerMapToUserLocation
         }
     }
 }
