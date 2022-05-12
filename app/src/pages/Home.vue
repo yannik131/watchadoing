@@ -75,7 +75,13 @@ export default {
         if(store.getters.introductionShown) {
             getUserLocation(async function() {
                 await getActivities();
-                getMap().setView([store.getters.userLatitude, store.getters.userLongitude], 15);
+                /*Zoom levels:
+                Countries: 4
+                States: 6
+                Counties: 8
+                Cities: 10
+                */
+                getMap().setView([store.getters.userLatitude, store.getters.userLongitude], 4);
             }, function() {
                 store.commit('setIntroductionShown', { value: false });
             });

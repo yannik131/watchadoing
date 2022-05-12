@@ -164,7 +164,7 @@ LOGGING = {
        }
     },
     'loggers': {
-        'watcha': {
+        'watchadoing': {
             'handlers': ['file', 'console'],
             'level': 'DEBUG'
         }

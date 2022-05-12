@@ -1,0 +1,25 @@
+watchadoing.net task list
+
+Legend
+------
+- Planned
+* In progress
++ Done
+o On hold
+? Decision pending
+c Canceled
+
+--------------------------------
+
+- create tiles with mapbox.com looking exactly like the fiverr designs
+- Position bubbles:
+    - Es gibt 4 Zoomstufen mit 4 Gebietstypen: Land, Bundesland, Landkreis, Stadt
+    - Jedes Gebiet wird mit einem Symbol (rote Pinnadel) markiert
+    - Bei Klick auf ein Gebiet werden die Blasen dieses Gebiets ohne Duplikate sichtbar und verteilen sich, beginnend mit den meisten Likes, um die Gebietsmitte
+    - Eine Infotafel zeigt das gerade ausgewählte Gebiet an
+    - Es werden immer nur Blasen von genau einem Gebiet angezeigt
+    - Das Gebiet am nächsten zur Bildschirmmitte ist standardgemäß ausgewählt (auch beim rein/rauszoomen)
+    - Blasen werden auf der niedrigsten Ebene hinzugefügt
+    - Auf höherer (z. B. Land) Ebene werden die Likes von Blasen gleichen Namens aufsummiert
+    - Namensvariationen sollten durch Namensvorschläge minimiert werden ("Joggen gehen" vs. "Joggen" vs. "joggen" etc.)
+    - Standardlabels der Karte deaktivieren (zu viel Text)
