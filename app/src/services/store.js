@@ -3,7 +3,7 @@ import createPersistedState from 'vuex-persistedstate';
 
 const store = createStore({
     plugins: [createPersistedState({
-        paths: ['likedActivities', 'dislikedActivities', 'introductionShown']
+        paths: ['likedActivities', 'dislikedActivities', 'locationConfirmed']
     })],
     state: () => ({
         activities: [],
@@ -13,7 +13,7 @@ const store = createStore({
         isFetching: false,
         likedActivities: {},
         dislikedActivities: {},
-        introductionShown: false
+        locationConfirmed: false
     }),
     
     mutations: {
@@ -63,20 +63,27 @@ const store = createStore({
         setFetching(state, { value }) {
             state.isFetching = value;
         },
-        setIntroductionShown(state, { value }) {
-            state.introductionShown = value;
+        setLocationConfirmed(state, { value }) {
+            state.locationConfirmed = value;
         }
     },
     
     getters: {
         activities: state => state.activities,
         maxLikeCount: state => state.maxLikeCount,
+        locationConfirmed: state => state.locationConfirmed,
         userLatitude: state => state.userLatitude,
         userLongitude: state => state.userLongitude,
         isFetching: state => state.isFetching,
         likedActivities: state => state.likedActivities,
         dislikedActivities: state => state.dislikedActivities,
-        introductionShown: state => state.introductionShown
+        countries: state => {
+            const countries = {};
+            for(const activity of state.activities) {
+                countries[activity.location.country] = 1;
+            }
+            return Object.values(countries);
+        }
     }
 });
 

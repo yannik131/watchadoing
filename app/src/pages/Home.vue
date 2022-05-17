@@ -1,8 +1,9 @@
 <template>
-    <Introduction v-if="!$store.getters.introductionShown"></Introduction>
-    <div id="canvas" class="absolute text-center cursor-pointer">
+    <Introduction v-if="!$store.getters.locationDetermined"></Introduction>
+    <div id="canvas" class="absolute text-center cursor-pointer" :class="{
+        'blurry': !$store.getters.locationConfirmed
+    }">
         <Bubble 
-            
             v-for="activity in $store.getters.activities" 
             :key="activity.title" 
             :activity="activity">
@@ -50,6 +51,13 @@
     width: 100%;
     z-index: -1;
 }
+
+.blurry {
+    -webkit-filter: blur(2px);
+    -moz-filter: blur(2px);
+    -o-filter: blur(2px);
+    -ms-filter: blur(2px);
+}
 </style>
 
 <script>
@@ -57,9 +65,8 @@ import Bubble from '../components/Bubble';
 import AddActivity from '../components/AddActivity';
 import Introduction from '../components/Introduction';
 import { createActivity, getActivities } from '../services/activity';
-import { getUserLocation } from '../services/location';
 import { ref } from 'vue';
-import { getMap } from '../services/map';
+import { centerMapToUserLocation, getMap } from '../services/map';
 import store from '../services/store';
 
 export default {
@@ -71,33 +78,15 @@ export default {
     },
     async mounted() {
         store.commit('setActivities', { activities: [] });
-
-        if(store.getters.introductionShown) {
-            getUserLocation(async function() {
-                await getActivities();
-                /*Zoom levels:
-                Countries: 4
-                States: 6
-                Counties: 8
-                Cities: 10
-                */
-                getMap().setView([store.getters.userLatitude, store.getters.userLongitude], 4);
-            }, function() {
-                store.commit('setIntroductionShown', { value: false });
-            });
-        }
-        
-        getMap().setView([51.0834196, 10.4234469], 6);
+        await getActivities();
+        getMap();
+        centerMapToUserLocation();
     },
     setup() {
         let showAddActivity = ref(false);
         
         function toggleAddActivity() {
             showAddActivity.value = !showAddActivity.value;
-        }
-        
-        function centerMapToUserLocation() {
-            getMap().setView([store.getters.userLatitude, store.getters.userLongitude]);
         }
         
         return {

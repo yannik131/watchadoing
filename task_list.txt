@@ -11,7 +11,7 @@ c Canceled
 
 --------------------------------
 
-- create tiles with mapbox.com looking exactly like the fiverr designs
+- Show markers for countries, states, counties and cities automatically when changing zoom levels
 - Position bubbles:
     - Es gibt 4 Zoomstufen mit 4 Gebietstypen: Land, Bundesland, Landkreis, Stadt
     - Jedes Gebiet wird mit einem Symbol (rote Pinnadel) markiert
