@@ -11,3 +11,8 @@ class LocationView(views.APIView):
         location = Location.determine_from_address(request.data.get('address'))
             
         return response.Response({'location': LocationSerializer(location).data})
+    
+    def get(self, request: Request):
+        return response.Response({
+            'locations': LocationSerializer(Location.objects.all(), many=True).data
+        })

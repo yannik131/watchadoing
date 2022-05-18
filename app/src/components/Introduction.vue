@@ -36,15 +36,12 @@ export default {
         let locationByAddressSuccess = false;
         
         async function onButtonClick() {
-            if(buttonDisabled.value) {
-                return;
-            }
             if(locationByAddressSuccess) {
                 store.commit('setLocationConfirmed', { value: true });
                 return;
             }
             
-            buttonText.value = buttonTexts['gettingLocation']
+            buttonText.value = buttonTexts['gettingLocation'];
             buttonDisabled.value = true;
             
             if(addressInput.value.trim().length === 0) {

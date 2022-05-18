@@ -34,14 +34,11 @@ export async function getActivities() {
         }
     }
     
-    store.commit('setActivities', {
-        activities: filteredActivities
-    });
-    
     store.commit('setFetching', {
         value: false
     });
     
+    return filteredActivities;
 }
 
 export async function createActivity(title) {

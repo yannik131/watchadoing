@@ -52,3 +52,20 @@ export async function getUserLocationByAddress(address) {
 export function formatLocation(location) {
     return `${location.city}, ${location.state}`;
 }
+
+export async function getLocations() {
+    const response = await axios.get('api/locations');
+    console.log(response.data.locations);
+}
+
+class LocationTree {
+    addLocations(locations) {
+        console.log(locations);
+    }
+    
+    getCountries() {
+        return [];
+    }
+}
+
+export const locationTree = new LocationTree();

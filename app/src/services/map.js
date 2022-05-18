@@ -207,6 +207,10 @@ export function getMap(id = 'canvas') {
     return map;
 }
 
+export function addMarker(latitude, longitude) {
+    return L.marker([latitude, longitude]).addTo(map);
+}
+
 /*
 1. Add location marker to a location like on myactivities.net
 export function createLocationMarker(text, latitude, longitude) {

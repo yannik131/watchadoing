@@ -1,8 +1,6 @@
 <template>
-    <Introduction v-if="!$store.getters.locationDetermined"></Introduction>
-    <div id="canvas" class="absolute text-center cursor-pointer" :class="{
-        'blurry': !$store.getters.locationConfirmed
-    }">
+    <Introduction v-if="!$store.getters.locationConfirmed"></Introduction>
+    <div id="canvas" class="absolute text-center cursor-pointer blurry">
         <Bubble 
             v-for="activity in $store.getters.activities" 
             :key="activity.title" 
@@ -65,9 +63,10 @@ import Bubble from '../components/Bubble';
 import AddActivity from '../components/AddActivity';
 import Introduction from '../components/Introduction';
 import { createActivity, getActivities } from '../services/activity';
-import { ref } from 'vue';
-import { centerMapToUserLocation, getMap } from '../services/map';
+import { ref, watch } from 'vue';
+import { centerMapToUserLocation, getMap, addMarker } from '../services/map';
 import store from '../services/store';
+import { getLocations, locationTree } from '../services/location';
 
 export default {
     name: 'Home',
@@ -77,9 +76,17 @@ export default {
         Introduction
     },
     async mounted() {
-        store.commit('setActivities', { activities: [] });
-        await getActivities();
         getMap();
+        
+        const activities = await getActivities();
+        store.commit('setActivities', { activities });
+        
+        const locations = await getLocations();
+        locationTree.addLocations(locations);
+        for(const country of locationTree.getCountries()) {
+            addMarker(country.latitude, country.longitude);
+        }
+        
         centerMapToUserLocation();
     },
     setup() {
@@ -88,6 +95,11 @@ export default {
         function toggleAddActivity() {
             showAddActivity.value = !showAddActivity.value;
         }
+        
+        watch(() => store.getters.locationConfirmed, () => {
+            //leaflet doesn't play nicely with Vues dynamic class attributes
+            document.getElementById('canvas').classList.toggle('blurry');
+        });
         
         return {
             showAddActivity,
