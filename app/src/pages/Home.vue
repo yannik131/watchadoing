@@ -67,6 +67,7 @@ import { ref, watch } from 'vue';
 import { centerMapToUserLocation, getMap, addMarker } from '../services/map';
 import store from '../services/store';
 import { getLocations, locationTree } from '../services/location';
+import { addToList } from '../helpers/utils.js';
 
 export default {
     name: 'Home',
@@ -79,13 +80,21 @@ export default {
         getMap();
         
         const activities = await getActivities();
-        store.commit('setActivities', { activities });
+        const activityMap = {};
+        for(const activity of activities) {
+            addToList(activityMap, activity.location, activity);
+        }
+        store.commit('setActivities', { activities: activityMap });
         
         const locations = await getLocations();
         locationTree.addLocations(locations);
-        for(const country of locationTree.getCountries()) {
+        
+        for(const country of locationTree.countries) {
             addMarker(country.latitude, country.longitude);
         }
+        
+        //TODO: Get all activities from selected location by getting all counties inside the selected location and then retrieving them from activityMap[county]
+        //TODO: Delete old code related to sorting activities and created bubbles
         
         centerMapToUserLocation();
     },

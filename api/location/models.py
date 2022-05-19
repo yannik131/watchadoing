@@ -52,6 +52,8 @@ class Location(models.Model):
             county=address.get('county'),
             city=address.get('city', address.get('town', address.get('village', address.get('county'))))
         )
+        if components['county'] is None:
+            components['county'] = components['city']
         try:
             location = Location.objects.get(**components)
         except:

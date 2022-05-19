@@ -1,5 +1,6 @@
 import axios from './axios';
 import store from './store';
+import { addToList } from '../helpers/utils';
 
 export function getUserLocation(successCallback, failureCallback) {
     navigator.geolocation.getCurrentPosition(
@@ -55,12 +56,44 @@ export function formatLocation(location) {
 
 export async function getLocations() {
     const response = await axios.get('api/locations');
-    console.log(response.data.locations);
+    return response.data.locations;
 }
 
 class LocationTree {
+    constructor() {
+        this.countries = {}; //Maybe we go to mars some day?
+        this.states = {};
+        this.counties = {};
+        this.citites = {};
+    }
+    
     addLocations(locations) {
-        console.log(locations);
+        const getScore = (location) => {
+            //countries have highest score (3), cities lowest score (0)
+            return 4 - +Boolean(location.city) - +Boolean(location.state) - +Boolean(location.county) - +Boolean(location.country);
+        }
+        
+        locations.sort((a, b) => {
+            return getScore(b) - getScore(a);
+        });
+        
+        for(const location of locations) {
+            if(location.state === null) {
+                var dict = this.countries;
+            }
+            else if(location.county === null) {
+                dict = this.states;
+            }
+            else if(location.city === null) {
+                dict = this.counties;
+            }
+            else {
+                dict = this.citites;
+            }
+            addToList(dict, location.parent, location);
+        }
+        
+        this.countries = Object.values(this.countries)[0];
     }
     
     getCountries() {
