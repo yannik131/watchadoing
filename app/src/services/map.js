@@ -1,6 +1,7 @@
 /* global L */
 import store from './store';
 let map;
+let layerGroup;
 
 export function centerMapToUserLocation() {
     if(store.getters.userLongitude && store.getters.userLatitude) {
@@ -21,6 +22,9 @@ export function getMap(id = 'canvas') {
         maxZoom: 10,
         zoomDelta: 2
     });
+    
+    layerGroup = L.layerGroup();
+    map.addLayer(layerGroup);
     
     const tileLayerUrl = 'https://api.mapbox.com/styles/v1/yannik131/cl396p2vi00cj14nu8pk3uvvg/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoieWFubmlrMTMxIiwiYSI6ImNrb2Jxd2cydTE0NjEycHFtcjhzeWxhcWEifQ.MLJRNjUUkyI65DSSEulrjA';
     const attribution = '© <a href="https://www.mapbox.com/contribute/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
@@ -208,7 +212,14 @@ export function getMap(id = 'canvas') {
 }
 
 export function addMarker(latitude, longitude) {
-    return L.marker([latitude, longitude]).addTo(map);
+    const marker = L.marker([latitude, longitude]);
+    layerGroup.addLayer(marker);
+    
+    return marker;
+}
+
+export function clearMarkers() {
+    layerGroup.clearLayers();
 }
 
 /*

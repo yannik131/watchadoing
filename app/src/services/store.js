@@ -18,13 +18,7 @@ const store = createStore({
     
     mutations: {
         setActivities(state, { activities }) {
-            activities.sort((a, b) => { return b.likeCount - a.likeCount; });
-            if(activities.length > 0) {
-                state.maxLikeCount = activities[0].likeCount;
-            }
-            else {
-                state.maxLikeCount = 0;
-            }
+            state.maxLikeCount = 0;
             state.activities = activities;
         },
         addActivity(state, { activity }) {

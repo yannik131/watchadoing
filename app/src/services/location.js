@@ -64,7 +64,7 @@ class LocationTree {
         this.countries = {}; //Maybe we go to mars some day?
         this.states = {};
         this.counties = {};
-        this.citites = {};
+        this.cities = {};
     }
     
     addLocations(locations) {
@@ -88,12 +88,10 @@ class LocationTree {
                 dict = this.counties;
             }
             else {
-                dict = this.citites;
+                dict = this.cities;
             }
             addToList(dict, location.parent, location);
         }
-        
-        this.countries = Object.values(this.countries)[0];
     }
     
     getCountries() {

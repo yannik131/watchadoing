@@ -64,7 +64,7 @@ import AddActivity from '../components/AddActivity';
 import Introduction from '../components/Introduction';
 import { createActivity, getActivities } from '../services/activity';
 import { ref, watch } from 'vue';
-import { centerMapToUserLocation, getMap, addMarker } from '../services/map';
+import { centerMapToUserLocation, getMap, addMarker, clearMarkers } from '../services/map';
 import store from '../services/store';
 import { getLocations, locationTree } from '../services/location';
 import { addToList } from '../helpers/utils.js';
@@ -77,7 +77,30 @@ export default {
         Introduction
     },
     async mounted() {
-        getMap();
+        const map = getMap();
+        
+        const locations = await getLocations();
+        locationTree.addLocations(locations);
+        
+        map.addEventListener('zoomend', () => {
+            const zoomMap = {
+                4: locationTree.countries,
+                6: locationTree.states,
+                8: locationTree.counties,
+                10: locationTree.cities
+            };
+            clearMarkers();
+            const locations = [];
+            const dict = zoomMap[map.getZoom()];
+            for(const key of Object.keys(dict)) {
+                for(const child of dict[key]) {
+                    locations.push(child);
+                    addMarker(child.latitude, child.longitude).bindPopup(`${child.country}, ${child.state}, ${child.county}, ${child.city}`);
+                    //Winschoten not displayed?
+                }
+            }
+            console.log(locations);
+        });
         
         const activities = await getActivities();
         const activityMap = {};
@@ -86,12 +109,7 @@ export default {
         }
         store.commit('setActivities', { activities: activityMap });
         
-        const locations = await getLocations();
-        locationTree.addLocations(locations);
         
-        for(const country of locationTree.countries) {
-            addMarker(country.latitude, country.longitude);
-        }
         
         //TODO: Get all activities from selected location by getting all counties inside the selected location and then retrieving them from activityMap[county]
         //TODO: Delete old code related to sorting activities and created bubbles
