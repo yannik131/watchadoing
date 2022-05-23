@@ -1,6 +1,6 @@
 import axios from '../services/axios';
 import store from './store';
-import { distance } from '../helpers/distance';
+import { distance } from '../helpers/utils';
 
 export async function getActivities() {
     store.commit('setFetching', {

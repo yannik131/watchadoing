@@ -81,12 +81,6 @@ export function countApiCalls() {
 }
 
 export function drawBubble(latitude, longitude, size) {
-    /*
-    f(1) = 0;
-    f(0.5) = -270/2;
-    f(0.75) = 
-    f(0.25) = -400
-    */
     const magicalBubbleConstant = 270;
     const width = 1/size * magicalBubbleConstant;
     const xmin = magicalBubbleConstant/2*(-1/size + 1);
@@ -104,22 +98,27 @@ export function drawBubble(latitude, longitude, size) {
     svgElement.innerHTML = bubble;
     var svgElementBounds = [ 
         [latitude, longitude], 
-        [latitude*1.2, longitude*2.78] 
+        [latitude*1.4, longitude*5.78] 
     ];
-    svgElement.addEventListener('click', function() {
-        alert('click');
-    });
     
     L.svgOverlay(svgElement, svgElementBounds, {
         opacity: 0.5,
         interactive: true
     }).addTo(map);
     
+    svgElement.addEventListener('click', (event) => {
+        const rect = document.getElementById('bubble-2').getBoundingClientRect();
+        const x = event.clientX;
+        const y = event.clientY;
+        
+        if (x < rect.left || 
+            x >= rect.right || 
+            y < rect.top || 
+            y >= rect.bottom) {
+            return;
+        }
+        console.log('click');
+    });
+    
     return svgElement;
 }
-
-/*
-1. Add location marker to a location like on myactivities.net
-export function createLocationMarker(text, latitude, longitude) {
-    
-}*/
