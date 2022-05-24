@@ -13,6 +13,10 @@ export function getRandomFloat(min, max, decimals=2) {
     return parseFloat(str);
 }
 
+export function getRandomInteger(min, max) {
+    return Math.floor(Math.random() * (max - min) ) + min;
+}
+
 export function distance(lat1, lon1, lat2, lon2) {
     const R = 6371e3; // metres
     const phi1 = lat1 * Math.PI/180; 
@@ -24,4 +28,13 @@ export function distance(lat1, lon1, lat2, lon2) {
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
   
     return R * c; // in metres
-  }
+}
+
+export function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+}

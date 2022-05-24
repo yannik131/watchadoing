@@ -1,11 +1,6 @@
 <template>
     <Introduction v-if="!$store.getters.locationConfirmed"></Introduction>
     <div id="canvas" class="absolute text-center cursor-pointer blurry">
-        <Bubble 
-            v-for="activity in $store.getters.activities" 
-            :key="activity.title" 
-            :activity="activity">
-        </Bubble>
     </div>
     
     <div v-if="!$store.getters.userLatitude" class="text-2xl font-bold fixed left-0 right-0 text-center z-20 bg-white flex flex-col justify-center items-center">
@@ -35,7 +30,7 @@
             <i class="fas fa-location-arrow mr-1"></i>
             Center
         </div>-->
-        <div class="flex-col">
+        <div class="flex-col" style="display: none">
             <div class="grid grid-cols-2">
                 <input style="width:600px" id="xmin" class="col" type="range" min="-500" max="200" v-model="xmin" />
                 <label for="xmin">xmin: {{ xmin }}</label>
@@ -78,22 +73,18 @@
 </style>
 
 <script>
-import Bubble from '../components/Bubble';
 import AddActivity from '../components/AddActivity';
 import Introduction from '../components/Introduction';
 import { createActivity, getActivities } from '../services/activity';
 import { ref, watch } from 'vue';
-import { centerMapToUserLocation, getMap, addMarker, clearMarkers, drawBubble } from '../services/map';
+import { centerMapToUserLocation, getMap, addMarker, clearMarkers, drawBubbles } from '../services/map';
 import store from '../services/store';
 import { getLocations, locationTree } from '../services/location';
 import { addToList } from '../helpers/utils.js';
 
-let svgElement;
-
 export default {
     name: 'Home',
     components: {
-        Bubble,
         AddActivity,
         Introduction
     },
@@ -166,7 +157,7 @@ export default {
         }
         store.commit('setActivities', { activities: activityMap });
         
-        svgElement = drawBubble(51.083420, 10.423447, 0.5);
+        drawBubbles(51.083420, 10.423447, 10);
         
         //drawBubble(52.083420, 11.423447);
         //TODO: Get all activities from selected location by getting all counties inside the selected location and then retrieving them from activityMap[county]
@@ -189,18 +180,6 @@ export default {
             //leaflet doesn't play nicely with Vues dynamic class attributes
             document.getElementById('canvas').classList.toggle('blurry');
         });
-        
-        function updateViewBox() {
-            svgElement.setAttribute(
-                'viewBox', 
-                `${xmin.value} ${ymin.value} ${width.value} ${height.value}`
-            );
-        }
-        
-        watch(() => xmin.value, updateViewBox);
-        watch(() => ymin.value, updateViewBox);
-        watch(() => width.value, updateViewBox);
-        watch(() => height.value, updateViewBox);
         
         return {
             showAddActivity,
