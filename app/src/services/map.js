@@ -87,13 +87,15 @@ export function drawBubble(size, svgElementBounds) {
     svgElement.setAttribute('opacity', '1');
     svgElement.innerHTML = bubble;
     
+    const fontSize = 50;
     var svgNS = "http://www.w3.org/2000/svg";
     var newText = document.createElementNS(svgNS,"text");
-    newText.setAttributeNS(null,"x",0);     
-    newText.setAttributeNS(null,"y",0); 
-    newText.setAttributeNS(null,"font-size","100");
+    newText.setAttributeNS(null,"x",magicalBubbleConstant/2);     
+    newText.setAttributeNS(null,"y", magicalBubbleConstant/2+size*fontSize/2); 
+    newText.setAttributeNS(null,"font-size",fontSize);
     newText.setAttributeNS(null, "font-weight", "bold");
     newText.setAttributeNS(null, "fill", "white");
+    newText.setAttributeNS(null, 'opacity', '1');
     var textNode = document.createTextNode('hihi');
     newText.appendChild(textNode);
     svgElement.appendChild(newText);
