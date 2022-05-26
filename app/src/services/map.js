@@ -3,6 +3,7 @@ import store from './store';
 import { bubble } from '../svg/elements';
 import { getRandomFloat } from '../helpers/utils';
 import PositionFactory from '../helpers/positionFactory';
+import { createPopper } from '@popperjs/core';
 let map;
 let layerGroup;
 
@@ -31,9 +32,6 @@ export function getMap(id = 'canvas') {
     
     const tileLayerUrl = 'https://api.mapbox.com/styles/v1/yannik131/cl396p2vi00cj14nu8pk3uvvg/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoieWFubmlrMTMxIiwiYSI6ImNrb2Jxd2cydTE0NjEycHFtcjhzeWxhcWEifQ.MLJRNjUUkyI65DSSEulrjA';
     const attribution = '© <a href="https://www.mapbox.com/contribute/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
-    
-    //Openstreetmap tiles:
-    //L.tileLayer('https://api.mapbox.com/styles/v1/yannik131/cl2z0gvu7000314nv0mgxg2f1/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoieWFubmlrMTMxIiwiYSI6ImNrb2Jxd2cydTE0NjEycHFtcjhzeWxhcWEifQ.MLJRNjUUkyI65DSSEulrjA')
     
     L.tileLayer(tileLayerUrl, {
         attribution: attribution,
@@ -70,10 +68,13 @@ export function countApiCalls() {
     return count;
 }
 
-export function drawBubble(size, svgElementBounds) {
-    const magicalBubbleConstant = 270;
-    const width = 1/size * magicalBubbleConstant;
-    const xmin = magicalBubbleConstant/2*(-1/size + 1);
+/*
+let bubbleCount = 0;
+
+export function drawBubble(size, svgElementBounds, title, subtitle) {
+    const svgEdgeLengthPx = 601;
+    const width = 1/size * svgEdgeLengthPx;
+    const xmin = svgEdgeLengthPx/2*(-1/size + 1);
     
     const maxXmin = 0;
     const minXmin = 2*xmin;
@@ -82,31 +83,20 @@ export function drawBubble(size, svgElementBounds) {
     
     var svgElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svgElement.setAttribute('xmlns', "http://www.w3.org/2000/svg");
-    svgElement.setAttribute('viewBox', `${getRandomFloat(minXmin, maxXmin)} ${getRandomFloat(minYmin, maxYmin)} ${width} ${magicalBubbleConstant}`);
-    svgElement.style.backgroundColor = 'red';
-    svgElement.setAttribute('opacity', '1');
-    svgElement.innerHTML = bubble;
-    
-    const fontSize = 50;
-    var svgNS = "http://www.w3.org/2000/svg";
-    var newText = document.createElementNS(svgNS,"text");
-    newText.setAttributeNS(null,"x",magicalBubbleConstant/2);     
-    newText.setAttributeNS(null,"y", magicalBubbleConstant/2+size*fontSize/2); 
-    newText.setAttributeNS(null,"font-size",fontSize);
-    newText.setAttributeNS(null, "font-weight", "bold");
-    newText.setAttributeNS(null, "fill", "white");
-    newText.setAttributeNS(null, 'opacity', '1');
-    var textNode = document.createTextNode('hihi');
-    newText.appendChild(textNode);
-    svgElement.appendChild(newText);
+    svgElement.setAttribute('viewBox', `${getRandomFloat(minXmin, maxXmin)} ${getRandomFloat(minYmin, maxYmin)} ${width} ${svgEdgeLengthPx}`);
+    const bubbleId = `bubble-${bubbleCount}`;
+    svgElement.innerHTML = bubble.replace('bubble-N', bubbleId);
     
     L.svgOverlay(svgElement, svgElementBounds, {
-        opacity: 0.5,
+        opacity: 1,
         interactive: true
     }).addTo(map);
     
+    addBubbleText(title, svgElement, svgEdgeLengthPx);
+    addBubbleText(subtitle, svgElement, svgEdgeLengthPx, false);
+    
     document.addEventListener('click', (event) => {
-        const rect = document.getElementById('bubble-2').getBoundingClientRect();
+        const rect = document.getElementById(bubbleId).getBoundingClientRect();
         const x = event.clientX;
         const y = event.clientY;
         
@@ -116,23 +106,85 @@ export function drawBubble(size, svgElementBounds) {
             y >= rect.bottom) {
             return;
         }
+        
+        const tooltip = document.getElementById(bubbleId + '-tooltip');
+            
+        const popper = createPopper(
+            document.getElementById(bubbleId), 
+            tooltip, 
+            {
+                placement: 'bottom',
+                modifiers: [
+                    {
+                        name: 'offset',
+                        options: {
+                            offset: [0, 8]
+                        }
+                    }
+                ]
+            }
+        );
+        
+        for(const div of document.getElementsByClassName('tooltip')) {
+            if(div === tooltip) {
+                continue;
+            }
+            div.classList.add('hidden');
+        }
+        
+        tooltip.classList.toggle('hidden');
+        popper.update();
+        
+        map.addEventListener('move', () => {
+            popper.update();
+        });
     });
+    
+    ++bubbleCount;
     
     return svgElement;
 }
 
-export function drawBubbles(latitude, longitude, N) {
+function addBubbleText(text, svgElement, svgEdgeLengthPx, header=true) {
+    const fontSize = svgEdgeLengthPx/10;
+    const  svgNS = "http://www.w3.org/2000/svg";
+    const newText = document.createElementNS(svgNS,"text");
+    newText.setAttribute("font-size",fontSize);
+    newText.setAttribute( "font-weight", "bold");
+    newText.setAttribute( "fill", "white");
+    const textNode = document.createTextNode(text);
+    newText.id = `bubble-header-${bubbleCount}`;
+    newText.appendChild(textNode);
+    svgElement.appendChild(newText);
+    
+    const bubbleWidth = document.getElementById(`bubble-${bubbleCount}`).getBoundingClientRect().width;
+    const bubbleHeight = document.getElementById(`bubble-${bubbleCount}`).getBoundingClientRect().height;
+    
+    const textWidth = newText.getBoundingClientRect().width;
+    const textHeight = newText.getBoundingClientRect().height;
+    
+    newText.setAttribute('x', svgEdgeLengthPx/2*(1-textWidth/bubbleWidth));
+    
+    if(header) {
+        newText.setAttribute('y', svgEdgeLengthPx/2*(1-textHeight/bubbleHeight));
+    }
+    else {
+        newText.setAttribute('y', svgEdgeLengthPx/2*(1+textHeight/bubbleHeight));
+    }
+}
+
+export function drawBubbles(latitude, longitude, activities) {
     const center = map.latLngToLayerPoint([latitude, longitude]);
-    const edgeLengthPx = 100;
+    const edgeLengthPx = 150;
     const positionFactory = new PositionFactory(center.x, center.y, edgeLengthPx);
     
-    for(let i = 0; i < N; ++i) {
+    for(const activity of activities) {
         const position = positionFactory.getRandomPosition();
         const lowerLeftCornerPx = [position[0]-edgeLengthPx/2, position[1]-edgeLengthPx/2];
         const lowerLeftCornerLatLng = map.layerPointToLatLng(lowerLeftCornerPx);
         const upperRightCornerPx = [position[0]+edgeLengthPx/2, position[1]+edgeLengthPx/2];
         const upperRightCornerLatLng = map.layerPointToLatLng(upperRightCornerPx);
-        drawBubble(getRandomFloat(0.3, 0.8), [lowerLeftCornerLatLng, upperRightCornerLatLng]);
+        drawBubble(getRandomFloat(0.3, 0.8), [lowerLeftCornerLatLng, upperRightCornerLatLng], activity.name, activity.likeCount);
     }
     
-}
+}*/

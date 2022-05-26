@@ -22,6 +22,7 @@
             <hr>
         </div>
         <div v-touch="onTapReaction('resetActivity')" class="p-2 hover:bg-gray-100 text-gray-500 font-bold text-xl">🤷‍♂️🤷‍♂️🤷‍♂️ <span class="ml-1">Okay.</span></div>
+        
     </div>
 </template>
 

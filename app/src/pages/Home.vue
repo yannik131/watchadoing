@@ -30,29 +30,19 @@
             <i class="fas fa-location-arrow mr-1"></i>
             Center
         </div>-->
-        <div class="flex-col" style="display: none">
-            <div class="grid grid-cols-2">
-                <input style="width:600px" id="xmin" class="col" type="range" min="-500" max="200" v-model="xmin" />
-                <label for="xmin">xmin: {{ xmin }}</label>
-            </div>
-            <div class="grid grid-cols-2">
-                <input style="width:600px" id="xmin" class="col" type="range" min="-200" max="200" v-model="ymin" />
-                <label for="xmin">ymin: {{ ymin }}</label>
-            </div>
-            <div class="grid grid-cols-2">
-                <input style="width:600px" id="width" class="col" type="range" min="0" max="1080" v-model="width" />
-                <label for="width">width: {{ width }}</label>
-            </div>
-            <div class="grid grid-cols-2">
-                <input style="width:600px" id="height" class="col" type="range" min="0" max="740" v-model="height" />
-                <label for="height">height: {{ height }}</label>
-            </div>
-        </div>
-        
     </div>
     
     <AddActivity v-if="showAddActivity" @activity-created="createActivity" @close="toggleAddActivity()"></AddActivity>
     
+    <div v-for="i in count" :key="i" :id="`bubble-${i-1}-tooltip`" class="flex flex-col hidden bg-white rounded border border-gray-400 p-1 gap-1 z-30 tooltip text-left" role="tooltip">
+        <div class="flex flex-row">
+            <div class="p-2 hover:bg-gray-100 text-green-500 font-bold text-xl flex items-center"><img :src="yesSVG"/> <span class="ml-2">Yes!</span></div>
+            <div class="p-2 hover:bg-gray-100 text-red-500 font-bold text-xl flex items-center" style="border-left: 1px solid lightgray"><img :src="noSVG"/> <span class="ml-2">No!</span></div>
+        </div>
+        <hr>
+        <div class="p-2 hover:bg-gray-100 text-gray-500 font-bold text-xl flex items-center justify-center"><img :src="okaySVG"/> <span class="ml-2">Okay.</span></div>
+        <div class="arrow" data-popper-arrow></div>
+    </div>
 </template>
 
 <style>
@@ -68,6 +58,40 @@
     -moz-filter: blur(2px);
     -o-filter: blur(2px);
     -ms-filter: blur(2px);*/
+}
+
+.arrow,
+.arrow::before {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: inherit;
+}
+
+.arrow {
+  visibility: hidden;
+}
+
+.arrow::before {
+  visibility: visible;
+  content: '';
+  transform: rotate(45deg);
+}
+
+.tooltip[data-popper-placement^='top'] > .arrow {
+  bottom: -4px;
+}
+
+.tooltip[data-popper-placement^='bottom'] > .arrow {
+  top: -4px;
+}
+
+.tooltip[data-popper-placement^='left'] > .arrow {
+  right: -4px;
+}
+
+.tooltip[data-popper-placement^='right'] > .arrow {
+  left: -4px;
 }
 
 </style>
@@ -148,7 +172,7 @@ export default {
         }
         
         map.addEventListener('zoomend', addMarkersForCurrentZoomLevel);
-        addMarkersForCurrentZoomLevel();
+        //addMarkersForCurrentZoomLevel();
         
         const activities = await getActivities();
         const activityMap = {};
@@ -159,18 +183,11 @@ export default {
         
         drawBubbles(51.083420, 10.423447, 10);
         
-        //drawBubble(52.083420, 11.423447);
-        //TODO: Get all activities from selected location by getting all counties inside the selected location and then retrieving them from activityMap[county]
-        //TODO: Delete old code related to sorting activities and created bubbles
-        
         centerMapToUserLocation();
     },
     setup() {
         let showAddActivity = ref(false);
-        const xmin = ref(0);
-        const ymin = ref(0);
-        const width = ref(270);
-        const height = ref(270);
+        const count = ref(10);
         
         function toggleAddActivity() {
             showAddActivity.value = !showAddActivity.value;
@@ -186,10 +203,10 @@ export default {
             toggleAddActivity,
             createActivity,
             centerMapToUserLocation,
-            xmin,
-            ymin,
-            height,
-            width
+            count,
+            yesSVG: require('../svg/yes.svg'),
+            okaySVG: require('../svg/okay.svg'),
+            noSVG: require('../svg/no.svg')
         }
     }
 }
