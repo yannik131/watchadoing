@@ -32,17 +32,14 @@
         </div>-->
     </div>
     
-    <AddActivity v-if="showAddActivity" @activity-created="createActivity" @close="toggleAddActivity()"></AddActivity>
-    
-    <div v-for="i in count" :key="i" :id="`bubble-${i-1}-tooltip`" class="flex flex-col hidden bg-white rounded border border-gray-400 p-1 gap-1 z-30 tooltip text-left" role="tooltip">
-        <div class="flex flex-row">
-            <div class="p-2 hover:bg-gray-100 text-green-500 font-bold text-xl flex items-center"><img :src="yesSVG"/> <span class="ml-2">Yes!</span></div>
-            <div class="p-2 hover:bg-gray-100 text-red-500 font-bold text-xl flex items-center" style="border-left: 1px solid lightgray"><img :src="noSVG"/> <span class="ml-2">No!</span></div>
-        </div>
-        <hr>
-        <div class="p-2 hover:bg-gray-100 text-gray-500 font-bold text-xl flex items-center justify-center"><img :src="okaySVG"/> <span class="ml-2">Okay.</span></div>
-        <div class="arrow" data-popper-arrow></div>
-    </div>
+    <Bubble 
+        v-for="activity in store.getters.displayedActivities" 
+        :key="activity.title" 
+        :activity="activity"
+        :bubbleSvgEdgeLength="601"
+        :mapRectSvgEdgeLength="150"
+        >
+    </Bubble>
 </template>
 
 <style>
@@ -60,57 +57,24 @@
     -ms-filter: blur(2px);*/
 }
 
-.arrow,
-.arrow::before {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  background: inherit;
-}
-
-.arrow {
-  visibility: hidden;
-}
-
-.arrow::before {
-  visibility: visible;
-  content: '';
-  transform: rotate(45deg);
-}
-
-.tooltip[data-popper-placement^='top'] > .arrow {
-  bottom: -4px;
-}
-
-.tooltip[data-popper-placement^='bottom'] > .arrow {
-  top: -4px;
-}
-
-.tooltip[data-popper-placement^='left'] > .arrow {
-  right: -4px;
-}
-
-.tooltip[data-popper-placement^='right'] > .arrow {
-  left: -4px;
-}
-
 </style>
 
 <script>
-import AddActivity from '../components/AddActivity';
 import Introduction from '../components/Introduction';
+import Bubble from '../components/Bubble';
 import { createActivity, getActivities } from '../services/activity';
 import { ref, watch } from 'vue';
-import { centerMapToUserLocation, getMap, addMarker, clearMarkers, drawBubbles } from '../services/map';
+import { centerMapToUserLocation, getMap, addMarker, clearMarkers } from '../services/map';
 import store from '../services/store';
 import { getLocations, locationTree } from '../services/location';
 import { addToList } from '../helpers/utils.js';
+import PositionFactory from '../helpers/positionFactory';
 
 export default {
     name: 'Home',
     components: {
-        AddActivity,
-        Introduction
+        Introduction,
+        Bubble
     },
     async mounted() {
         const map = getMap();
@@ -125,63 +89,58 @@ export default {
             10: locationTree.cities
         };
         
-        function collectCitiesIn(location) {
-            if(location.city) {
-                return [location];
-            }
-            if(location.county) {
-                return locationTree.cities[location.id];
-            }
-            if(location.state) {
-                const cities = [];
-                for(const county of locationTree.counties[location.id]) {
-                    cities.push.apply(cities, locationTree.cities[county.id]);
-                }
-                return cities;
-            }
-            if(location.country) {
-                const cities = [];
-                for(const state of locationTree.states[location.id]) {
-                    cities.push.apply(cities, collectCitiesIn(state));
-                }
-                return cities;
-            }
-        }
-        
         function onMarkerClick(location) {
-            let cities = collectCitiesIn(location);
-            const activities = [];
+            let cities = locationTree.collectCitiesIn(location);
+            const activities = {};
+            
             for(const city of cities) {
-                activities.push.apply(activities, store.getters.activities[city.id]);
+                for(const activity of store.getters.activityMap[city.id]) {
+                    if(!activities[activity.title]) {
+                        activities[activity.title] = activity.likeCount;
+                    }
+                    else {
+                        activities[activity.title] += activity.likeCount;
+                    }
+                }
             }
+            
+            const center = map.latLngToLayerPoint([location.latitude, location.longitude]);
+            PositionFactory.set(center.x, center.y, 150);
+            
+            const displayedActivities = [];
+            for(const [title, likeCount] of activities) {
+                displayedActivities.push({
+                    title, likeCount
+                });
+            }
+            store.setDisplayedActivities(displayedActivities);
         }
         
         function addMarkersForCurrentZoomLevel() {
             clearMarkers();
             const locations = [];
-            const dict = zoomMap[map.getZoom()];
-            for(const key of Object.keys(dict)) {
-                for(const child of dict[key]) {
+            const locationMap = zoomMap[map.getZoom()];
+            for(const locationId of Object.keys(locationMap)) {
+                for(const child of locationMap[locationId]) {
                     locations.push(child);
-                    addMarker(child.latitude, child.longitude).bindPopup(`${child.country}, ${child.state}, ${child.county}, ${child.city}`).addEventListener('click', () => {
-                        onMarkerClick(child);
-                    });
-                    //Winschoten not displayed?
+                    addMarker(child.latitude, child.longitude)
+                        .bindPopup(`${child.country}, ${child.state}, ${child.county}, ${child.city}`)
+                        .addEventListener('click', () => {
+                            onMarkerClick(child);
+                        });
                 }
             }
         }
         
         map.addEventListener('zoomend', addMarkersForCurrentZoomLevel);
-        //addMarkersForCurrentZoomLevel();
+        addMarkersForCurrentZoomLevel();
         
         const activities = await getActivities();
         const activityMap = {};
         for(const activity of activities) {
             addToList(activityMap, activity.location, activity);
         }
-        store.commit('setActivities', { activities: activityMap });
-        
-        drawBubbles(51.083420, 10.423447, 10);
+        store.commit('setActivityMap', { activityMap });
         
         centerMapToUserLocation();
     },

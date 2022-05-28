@@ -1,9 +1,9 @@
 /* global L */
 import store from './store';
-import { bubble } from '../svg/elements';
+/*import { bubble } from '../svg/elements';
 import { getRandomFloat } from '../helpers/utils';
 import PositionFactory from '../helpers/positionFactory';
-import { createPopper } from '@popperjs/core';
+import { createPopper } from '@popperjs/core';*/
 let map;
 let layerGroup;
 

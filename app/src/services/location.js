@@ -94,8 +94,27 @@ class LocationTree {
         }
     }
     
-    getCountries() {
-        return [];
+    collectCitiesIn(location) {
+        if(location.city) {
+            return [location];
+        }
+        if(location.county) {
+            return this.cities[location.id];
+        }
+        if(location.state) {
+            const cities = [];
+            for(const county of this.counties[location.id]) {
+                cities.push.apply(cities, this.cities[county.id]);
+            }
+            return cities;
+        }
+        if(location.country) {
+            const cities = [];
+            for(const state of this.states[location.id]) {
+                cities.push.apply(cities, this.collectCitiesIn(state));
+            }
+            return cities;
+        }
     }
 }
 

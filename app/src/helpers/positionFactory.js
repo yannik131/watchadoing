@@ -1,5 +1,6 @@
 import { getRandomInteger, shuffleArray } from './utils';
 
+let positionFactory = null;
 
 export default class PositionFactory {
     constructor(centerX, centerY, edgeLength) {
@@ -12,6 +13,22 @@ export default class PositionFactory {
         this.randomPositions = [
             [this.centerX, this.centerY]
         ];
+    }
+    
+    static set(centerX, centerY, edgeLength) {
+        if(centerX && centerY && edgeLength) {
+            positionFactory = new PositionFactory(centerX, centerY, edgeLength);
+        }
+        else {
+            throw 'Not enough arguments';
+        }
+    }
+    
+    static get() {
+        if(positionFactory === null) {
+            throw 'Not initialized yet';
+        }
+        return positionFactory;
     }
     
     generateRandomPositions() {

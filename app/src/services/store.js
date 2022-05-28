@@ -1,30 +1,32 @@
 import { createStore } from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
 
-const store = createStore({
+export default createStore({
     plugins: [createPersistedState({
         paths: ['likedActivities', 'dislikedActivities', /*'locationConfirmed'*/]
     })],
     state: () => ({
-        activities: [],
+        activityMap: [], //city-id -> [activity]
         maxLikeCount: null,
         userLatitude: null,
         userLongitude: null,
         isFetching: false,
         likedActivities: {},
         dislikedActivities: {},
-        locationConfirmed: false
+        locationConfirmed: false,
+        displayedActivities: []
     }),
     
     mutations: {
-        setActivities(state, { activities }) {
+        setActivityMap(state, { activityMap }) {
             state.maxLikeCount = 0;
-            state.activities = activities;
+            state.activityMap = activityMap;
         },
-        addActivity(state, { activity }) {
-            state.activities.push(activity);
-            state.activities.sort((a, b) => { return b.likeCount - a.likeCount; });
-            state.maxLikeCount = state.activities[0].likeCount;
+        setDisplayedActivities(state, { activities }) {
+            state.displayedActivities = activities;
+        },
+        setMaxLikeCount(state, { maxLikeCount }) {
+            state.maxLikeCount = maxLikeCount;
         },
         likeActivity(state, { activity }) {
             if(state.likedActivities[activity.id]) {
@@ -63,22 +65,13 @@ const store = createStore({
     },
     
     getters: {
-        activities: state => state.activities,
+        activityMap: state => state.activityMap,
         maxLikeCount: state => state.maxLikeCount,
         locationConfirmed: state => state.locationConfirmed,
         userLatitude: state => state.userLatitude,
         userLongitude: state => state.userLongitude,
         isFetching: state => state.isFetching,
         likedActivities: state => state.likedActivities,
-        dislikedActivities: state => state.dislikedActivities,
-        countries: state => {
-            const countries = {};
-            for(const activity of state.activities) {
-                countries[activity.location.country] = 1;
-            }
-            return Object.values(countries);
-        }
+        dislikedActivities: state => state.dislikedActivities
     }
 });
-
-export default store;
