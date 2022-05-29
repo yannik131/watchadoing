@@ -21,11 +21,12 @@ def location_created(instance: Location, created, **kwargs):
         try:
             parent = Location.objects.get(**components)
         except Location.DoesNotExist:
-            loc = geocode(parent_components)
+            query = Location.components_to_string(components)
+            loc = geocode(query, addressdetails=True)
             try:
                 parent = Location.objects.create(**components, longitude=loc.longitude, latitude=loc.latitude)
             except AttributeError:
-                logger.warn(f'Could not geocode parent of location {instance}: geocode({parent_components}) returned None')
+                logger.warn(f'Could not geocode parent of location {instance}: geocode("{query}") returned None')
                 return
         instance.parent = parent
         instance.save()

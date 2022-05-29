@@ -25,3 +25,4 @@ c Canceled
     - figure out algorithm to accumulate bubbles with equal name. maybe no spaces / hints?
 - display add button on every level, zooms to city level and current location once clicked
 - only like bubbles where you live
+- enforce location address format: city[, state] and query the db first before geocoding

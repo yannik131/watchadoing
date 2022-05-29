@@ -1,0 +1,248 @@
+                  id                  |   country   |        state        |            county             |            city            | longitude | latitude |              parent_id               
+--------------------------------------+-------------+---------------------+-------------------------------+----------------------------+-----------+----------+--------------------------------------
+ 3453dce8-d1a8-4057-bd6d-db872889eebf | Deutschland | Niedersachsen       | Landkreis Oldenburg           |                            |     8.382 |   52.985 | 4478acee-0196-4b69-9cde-6a5806d09ae4
+ 716d268e-6dd9-4d02-a15c-4bec9f582c00 | Deutschland |                     |                               |                            |    10.423 |   51.083 | 
+ 4478acee-0196-4b69-9cde-6a5806d09ae4 | Deutschland | Niedersachsen       |                               |                            |     9.076 |   52.840 | 716d268e-6dd9-4d02-a15c-4bec9f582c00
+ b228c821-4cf9-439c-8dd1-49bd1e03a4e1 | Deutschland | Niedersachsen       | Landkreis Diepholz            |                            |     8.762 |   52.748 | 4478acee-0196-4b69-9cde-6a5806d09ae4
+ 33698a4b-ef46-4643-9db2-cc519c095354 | Deutschland | Niedersachsen       | Landkreis Diepholz            | Hüde                       |     8.359 |   52.496 | b228c821-4cf9-439c-8dd1-49bd1e03a4e1
+ 23b9eb6e-e78b-4cf1-b048-3aeca5e48da1 | Deutschland | Niedersachsen       | Landkreis Oldenburg           | Großenkneten               |     8.251 |   52.942 | 3453dce8-d1a8-4057-bd6d-db872889eebf
+ cae1ef88-066d-48d7-97c2-d4605ad976bd | Deutschland | Niedersachsen       | Landkreis Osnabrück           | Bramsche                   |     7.980 |   52.408 | b9c185e2-102e-4a34-b469-ccaf55c69b17
+ 0c31eb9f-0aae-4cd2-8466-bd508923d2ec | Deutschland | Nordrhein-Westfalen |                               |                            |     7.554 |   51.479 | 716d268e-6dd9-4d02-a15c-4bec9f582c00
+ 3b43203d-bba0-499f-8bb9-039f4a8b0fa6 | Deutschland | Nordrhein-Westfalen | Kreis Coesfeld                |                            |     7.321 |   51.864 | 0c31eb9f-0aae-4cd2-8466-bd508923d2ec
+ bdf27ac2-3c78-48e5-9ca0-8fc311211b5f | Deutschland | Nordrhein-Westfalen | Kreis Coesfeld                | Nottuln                    |     7.353 |   51.930 | 3b43203d-bba0-499f-8bb9-039f4a8b0fa6
+ 42e3add8-d01b-4c45-ba3a-cc2bd062841c | Deutschland | Nordrhein-Westfalen | Kreis Coesfeld                | Senden                     |     7.488 |   51.855 | 3b43203d-bba0-499f-8bb9-039f4a8b0fa6
+ fa182803-03b3-471d-8427-c8857c4780d3 | Deutschland | Niedersachsen       | Landkreis Grafschaft Bentheim |                            |     7.109 |   52.447 | 4478acee-0196-4b69-9cde-6a5806d09ae4
+ b91b5153-cbe5-4db5-bea1-8304731120e1 | Deutschland | Nordrhein-Westfalen | Kreis Warendorf               |                            |     7.941 |   51.881 | 0c31eb9f-0aae-4cd2-8466-bd508923d2ec
+ 96593b82-7b92-4a4b-90a4-382c51a30b25 | Deutschland | Nordrhein-Westfalen | Kreis Warendorf               | Warendorf                  |     8.002 |   51.952 | b91b5153-cbe5-4db5-bea1-8304731120e1
+ 9e624eb4-92eb-40be-a693-6233bf842c4e | Deutschland | Niedersachsen       | Landkreis Grafschaft Bentheim | Engden                     |     7.181 |   52.398 | fa182803-03b3-471d-8427-c8857c4780d3
+ 1330c86a-de71-4767-a6b9-54e04e0876c6 | Deutschland | Nordrhein-Westfalen | Kreis Soest                   |                            |     8.156 |   51.558 | 0c31eb9f-0aae-4cd2-8466-bd508923d2ec
+ 5ecd445a-d162-4edf-b1f9-d6f6511ae955 | Deutschland | Nordrhein-Westfalen | Kreis Soest                   | Warstein                   |     8.354 |   51.446 | 1330c86a-de71-4767-a6b9-54e04e0876c6
+ 23c25c25-9e15-4448-a43d-b97abfe447b4 | Deutschland | Nordrhein-Westfalen | Märkischer Kreis              |                            |     7.727 |   51.274 | 0c31eb9f-0aae-4cd2-8466-bd508923d2ec
+ b9c185e2-102e-4a34-b469-ccaf55c69b17 | Deutschland | Niedersachsen       | Landkreis Osnabrück           |                            |     8.161 |   52.373 | 4478acee-0196-4b69-9cde-6a5806d09ae4
+ bd634807-e4f5-4acf-a618-6539c90655bb | Deutschland | Niedersachsen       | Landkreis Osnabrück           | Bohmte                     |     8.281 |   52.414 | b9c185e2-102e-4a34-b469-ccaf55c69b17
+ 06f08d40-9bf6-4db5-9503-a96583ad6848 | Deutschland | Nordrhein-Westfalen | Märkischer Kreis              | Menden                     |     7.795 |   51.438 | 23c25c25-9e15-4448-a43d-b97abfe447b4
+ 99342aef-ee4f-4cfc-a01a-e6d2e9b4e4a9 | Deutschland | Niedersachsen       | Landkreis Leer                |                            |     7.459 |   53.205 | 4478acee-0196-4b69-9cde-6a5806d09ae4
+ ef05ca91-4029-4e85-8aa6-9667e49e8b75 | Deutschland | Niedersachsen       | Landkreis Leer                | Rhauderfehn                |     7.570 |   53.130 | 99342aef-ee4f-4cfc-a01a-e6d2e9b4e4a9
+ 5242c29b-019b-4d83-9ec6-59b064089f71 | Deutschland | Nordrhein-Westfalen | Kreis Recklinghausen          | Waltrop                    |     7.401 |   51.624 | 9cc02371-1e58-4b32-ae66-6fa7efaf4a89
+ fef69f68-470a-4c20-996c-2360ee1399ec | Deutschland | Niedersachsen       | Landkreis Emsland             |                            |     7.366 |   52.699 | 4478acee-0196-4b69-9cde-6a5806d09ae4
+ d7eedabf-dce5-4a2c-a14c-8b2765b15597 | Deutschland | Niedersachsen       | Landkreis Emsland             | Esterwegen                 |     7.628 |   53.004 | fef69f68-470a-4c20-996c-2360ee1399ec
+ 7c53d43e-05c3-4e6d-b4a3-d575e5b6a381 | Deutschland | Niedersachsen       | Landkreis Diepholz            | Brockum                    |     8.420 |   52.467 | b228c821-4cf9-439c-8dd1-49bd1e03a4e1
+ 158d1204-14b1-47be-b1c6-a6cddd8d8b58 | Deutschland | Nordrhein-Westfalen | Kreis Borken                  |                            |     6.946 |   51.986 | 0c31eb9f-0aae-4cd2-8466-bd508923d2ec
+ 62323b8b-42b7-40ed-af9b-4be0b7ffaf23 | Deutschland | Nordrhein-Westfalen | Kreis Borken                  | Ahaus                      |     7.005 |   52.076 | 158d1204-14b1-47be-b1c6-a6cddd8d8b58
+ 90f48793-8458-4116-8007-6dec08fcce23 | Deutschland | Niedersachsen       | Landkreis Oldenburg           | Wardenburg                 |     8.194 |   53.066 | 3453dce8-d1a8-4057-bd6d-db872889eebf
+ 9cc02371-1e58-4b32-ae66-6fa7efaf4a89 | Deutschland | Nordrhein-Westfalen | Kreis Recklinghausen          |                            |     7.146 |   51.671 | 0c31eb9f-0aae-4cd2-8466-bd508923d2ec
+ b11c255f-e6f9-4d68-a7df-e3a3b48218a7 | Deutschland | Nordrhein-Westfalen | Kreis Recklinghausen          | Haltern am See             |     7.180 |   51.758 | 9cc02371-1e58-4b32-ae66-6fa7efaf4a89
+ 77fb5345-138f-46ca-a3d4-8f7875f8e791 | Deutschland | Niedersachsen       | Landkreis Emsland             | Dohren                     |     7.588 |   52.634 | fef69f68-470a-4c20-996c-2360ee1399ec
+ 6660f9f8-9d22-4ba7-84a0-fb3005912fdf | Deutschland | Niedersachsen       | Landkreis Cloppenburg         |                            |     7.962 |   52.932 | 4478acee-0196-4b69-9cde-6a5806d09ae4
+ 8b83c9af-d6bb-4e4c-b6c3-11fef37eb6e3 | Deutschland | Niedersachsen       | Landkreis Cloppenburg         | Saterland - Seelterlound   |     7.691 |   53.103 | 6660f9f8-9d22-4ba7-84a0-fb3005912fdf
+ a4361bce-5434-4a11-81e3-cd8ccfd24d1a | Deutschland | Nordrhein-Westfalen | Kreis Soest                   | Möhnesee                   |     8.114 |   51.478 | 1330c86a-de71-4767-a6b9-54e04e0876c6
+ b2a78837-5577-48a2-a464-a238c39a59b3 | Deutschland | Niedersachsen       | Landkreis Emsland             | Lähden                     |     7.593 |   52.748 | fef69f68-470a-4c20-996c-2360ee1399ec
+ ca020ea3-3ee5-458e-93cc-602043ea6f63 | Deutschland | Nordrhein-Westfalen | Kreis Warendorf               | Drensteinfurt              |     7.743 |   51.801 | b91b5153-cbe5-4db5-bea1-8304731120e1
+ 39ab5fa4-4b4b-4dd3-83d8-b8a264894837 | Deutschland | Nordrhein-Westfalen | Kreis Steinfurt               |                            |     7.512 |   52.235 | 0c31eb9f-0aae-4cd2-8466-bd508923d2ec
+ c9b5a6ec-074f-4372-b9fd-f41b8acce608 | Deutschland | Nordrhein-Westfalen | Kreis Steinfurt               | Lotte                      |     7.922 |   52.299 | 39ab5fa4-4b4b-4dd3-83d8-b8a264894837
+ 5a7f3522-e30a-4b1e-8532-84cf3a5923be | Deutschland | Nordrhein-Westfalen | Kreis Coesfeld                | Nordkirchen                |     7.525 |   51.738 | 3b43203d-bba0-499f-8bb9-039f4a8b0fa6
+ a3cb1d5d-84cb-4245-9060-90fcff1f7b81 | Deutschland | Niedersachsen       | Landkreis Emsland             | Lünne                      |     7.425 |   52.432 | fef69f68-470a-4c20-996c-2360ee1399ec
+ 68d1c846-ba97-4d58-8f5b-cab223a88131 | Deutschland | Nordrhein-Westfalen | Kreis Warendorf               | Ostbevern                  |     7.840 |   52.036 | b91b5153-cbe5-4db5-bea1-8304731120e1
+ ea18f2c8-10bc-4103-a8ee-e7718dd1c170 | Deutschland | Niedersachsen       | Landkreis Osnabrück           | Neuenkirchen               |     7.840 |   52.417 | b9c185e2-102e-4a34-b469-ccaf55c69b17
+ 26fb6188-457f-4f32-a20a-6e2ddbd5f36c | Deutschland | Niedersachsen       | Landkreis Oldenburg           | Dötlingen                  |     8.382 |   52.936 | 3453dce8-d1a8-4057-bd6d-db872889eebf
+ 946b30e1-1822-4dda-903b-7036c155866d | Deutschland | Niedersachsen       | Landkreis Emsland             | Spelle                     |     7.467 |   52.367 | fef69f68-470a-4c20-996c-2360ee1399ec
+ e62ae20b-543e-444e-b539-fcbbf65bbb37 | Deutschland | Nordrhein-Westfalen | Kreis Warendorf               | Oelde                      |     8.145 |   51.826 | b91b5153-cbe5-4db5-bea1-8304731120e1
+ a852d82b-2035-4a60-b581-84e7c6fafc35 | Deutschland | Nordrhein-Westfalen | Kreis Mettmann                |                            |     6.956 |   51.223 | 0c31eb9f-0aae-4cd2-8466-bd508923d2ec
+ 52252696-b782-42b5-af3f-f1306d76e285 | Deutschland | Nordrhein-Westfalen | Kreis Mettmann                | Wülfrath                   |     7.033 |   51.282 | a852d82b-2035-4a60-b581-84e7c6fafc35
+ f40e4aa4-5b91-424c-a45e-667155ec3ada | Deutschland | Niedersachsen       | Landkreis Diepholz            | Syke                       |     8.820 |   52.913 | b228c821-4cf9-439c-8dd1-49bd1e03a4e1
+ 943e5700-13c9-4036-99cf-5070959d0167 | Deutschland | Nordrhein-Westfalen | Märkischer Kreis              | Neuenrade                  |     7.783 |   51.283 | 23c25c25-9e15-4448-a43d-b97abfe447b4
+ 6b44da3a-2d7e-4a57-a676-4ee8f5f03295 | Deutschland | Niedersachsen       | Landkreis Diepholz            | Sulingen                   |     8.802 |   52.683 | b228c821-4cf9-439c-8dd1-49bd1e03a4e1
+ 0a7d51be-b82e-42c2-987e-4f30dc2a7575 | Deutschland | Nordrhein-Westfalen | Hochsauerlandkreis            |                            |     8.268 |   51.321 | 0c31eb9f-0aae-4cd2-8466-bd508923d2ec
+ 6adeb935-cd09-4934-a7fc-537701f0a259 | Deutschland | Nordrhein-Westfalen | Hochsauerlandkreis            | Brilon                     |     8.594 |   51.386 | 0a7d51be-b82e-42c2-987e-4f30dc2a7575
+ 0684e550-481d-41f0-a34d-74f6354d1ad6 | Deutschland | Nordrhein-Westfalen | Kreis Paderborn               |                            |     8.771 |   51.663 | 0c31eb9f-0aae-4cd2-8466-bd508923d2ec
+ 1a434e74-73dc-4805-88c7-607e96bfa2c9 | Deutschland | Nordrhein-Westfalen | Kreis Paderborn               | Paderborn                  |     8.753 |   51.718 | 0684e550-481d-41f0-a34d-74f6354d1ad6
+ 283e64bb-3472-49bd-8340-91e0597f24ea | Deutschland | Niedersachsen       | Landkreis Emsland             | Bockhorst                  |     7.577 |   53.035 | fef69f68-470a-4c20-996c-2360ee1399ec
+ e1d93c64-c0e1-44ba-a0df-cfc03baec684 | Deutschland | Niedersachsen       | Landkreis Verden              |                            |     9.181 |   52.976 | 4478acee-0196-4b69-9cde-6a5806d09ae4
+ 0a68f369-7403-4589-9b4c-d61b59d8fb46 | Deutschland | Niedersachsen       | Landkreis Verden              | Samtgemeinde Thedinghausen |     9.021 |   52.962 | e1d93c64-c0e1-44ba-a0df-cfc03baec684
+ 38d29e23-e32e-478e-bce6-e521ae30a777 | Deutschland | Niedersachsen       | Landkreis Emsland             | Twist                      |     7.095 |   52.647 | fef69f68-470a-4c20-996c-2360ee1399ec
+ 049f12c8-9ab3-4d41-af07-ebf9a41196cb | Deutschland | Nordrhein-Westfalen | Märkischer Kreis              | Altena                     |     7.669 |   51.278 | 23c25c25-9e15-4448-a43d-b97abfe447b4
+ 2b364fcf-fb12-4243-9d6a-833741a47eee | Deutschland | Niedersachsen       | Landkreis Wesermarsch         |                            |     8.345 |   53.359 | 4478acee-0196-4b69-9cde-6a5806d09ae4
+ 9222f65c-d0b6-40ab-b766-07686ed603d5 | Deutschland | Niedersachsen       | Landkreis Osnabrück           | Bad Essen                  |     8.374 |   52.328 | b9c185e2-102e-4a34-b469-ccaf55c69b17
+ 8facdc73-177c-4bfe-8196-4d6b7cf16fa6 | Deutschland | Niedersachsen       | Landkreis Wesermarsch         | Berne                      |     8.483 |   53.183 | 2b364fcf-fb12-4243-9d6a-833741a47eee
+ 7a77e722-f72f-4e0a-942c-41450c5747f5 | Deutschland | Nordrhein-Westfalen | Kreis Soest                   | Rüthen                     |     8.437 |   51.502 | 1330c86a-de71-4767-a6b9-54e04e0876c6
+ 0894f419-3b32-44dc-a90c-fb052b252113 | Deutschland | Nordrhein-Westfalen | Kreis Warendorf               | Beelen                     |     8.118 |   51.930 | b91b5153-cbe5-4db5-bea1-8304731120e1
+ 01bc2824-8a10-4a58-a7ae-a5da3a70cd75 | Deutschland | Niedersachsen       | Landkreis Cloppenburg         | Lastrup                    |     7.864 |   52.796 | 6660f9f8-9d22-4ba7-84a0-fb3005912fdf
+ e6e82da9-9c1a-4b60-b0da-e95b97326337 | Deutschland | Niedersachsen       | Landkreis Verden              | Oyten                      |     9.019 |   53.060 | e1d93c64-c0e1-44ba-a0df-cfc03baec684
+ 6a3ef69f-d1d1-481f-961d-252ee770880c | Deutschland | Bremen              |                               |                            |     8.807 |   53.076 | 716d268e-6dd9-4d02-a15c-4bec9f582c00
+ f184e724-6547-4d2a-bb71-bb5cf509cb6b | Deutschland | Nordrhein-Westfalen | Hochsauerlandkreis            | Sundern                    |     8.007 |   51.330 | 0a7d51be-b82e-42c2-987e-4f30dc2a7575
+ 93adaa8e-a93c-458a-82e4-f2acf0d196d4 | Deutschland | Bremen              | Bremen                        |                            |     8.807 |   53.076 | 6a3ef69f-d1d1-481f-961d-252ee770880c
+ 73e67391-ec04-45a0-a45f-31ce0b5348f7 | Deutschland | Bremen              | Bremen                        | Bremen                     |     8.807 |   53.076 | 93adaa8e-a93c-458a-82e4-f2acf0d196d4
+ 4d9685d0-0c90-4073-8714-418d72b81370 | Deutschland | Niedersachsen       | Landkreis Osterholz           |                            |     8.744 |   53.260 | 4478acee-0196-4b69-9cde-6a5806d09ae4
+ 6a2243f5-e52c-4496-8a7a-c06411b09bbc | Deutschland | Niedersachsen       | Landkreis Osterholz           | Schwanewede                |     8.594 |   53.226 | 4d9685d0-0c90-4073-8714-418d72b81370
+ 77678628-e890-4900-995d-9f3cc7390e5e | Deutschland | Nordrhein-Westfalen | Bielefeld                     |                            |     8.531 |   52.019 | 0c31eb9f-0aae-4cd2-8466-bd508923d2ec
+ bbacbd55-9bd8-415f-b736-5268be93c780 | Deutschland | Nordrhein-Westfalen | Bielefeld                     | Bielefeld                  |     8.531 |   52.019 | 77678628-e890-4900-995d-9f3cc7390e5e
+ 65f86ce7-e5df-4baf-b7e5-daed50573586 | Deutschland | Niedersachsen       | Landkreis Nienburg/Weser      |                            |     9.258 |   52.649 | 4478acee-0196-4b69-9cde-6a5806d09ae4
+ 69dba95d-26d1-4b35-8a9d-9446c8ce70d0 | Deutschland | Niedersachsen       | Landkreis Cloppenburg         | Friesoythe                 |     7.859 |   53.021 | 6660f9f8-9d22-4ba7-84a0-fb3005912fdf
+ 651570f2-242e-4c65-9cb8-4fc38ce69cc9 | Deutschland | Niedersachsen       | Landkreis Nienburg/Weser      | Uchte                      |     8.907 |   52.499 | 65f86ce7-e5df-4baf-b7e5-daed50573586
+ 9c2609db-0711-45de-962f-328e4cee5494 | Deutschland | Niedersachsen       | Landkreis Diepholz            | Drentwede                  |     8.562 |   52.737 | b228c821-4cf9-439c-8dd1-49bd1e03a4e1
+ a40c0c5c-2755-47fa-84e4-c0e6b0bf5a31 | Deutschland | Niedersachsen       | Landkreis Nienburg/Weser      | Stolzenau                  |     9.077 |   52.510 | 65f86ce7-e5df-4baf-b7e5-daed50573586
+ cfe5f05f-aaa4-47b9-9914-bd44a8fba5f8 | Deutschland | Nordrhein-Westfalen | Kreis Gütersloh               |                            |     8.381 |   51.904 | 0c31eb9f-0aae-4cd2-8466-bd508923d2ec
+ 28b9b35b-e39d-4bb8-a731-fca2401a4183 | Deutschland | Nordrhein-Westfalen | Kreis Gütersloh               | Gütersloh                  |     8.405 |   51.916 | cfe5f05f-aaa4-47b9-9914-bd44a8fba5f8
+ d5762674-cdbd-4503-ab9c-210e507c2953 | Deutschland | Niedersachsen       | Landkreis Leer                | Bunde                      |     7.265 |   53.216 | 99342aef-ee4f-4cfc-a01a-e6d2e9b4e4a9
+ eca57e79-f015-45df-8cbf-f0221cf46fc9 | Deutschland | Nordrhein-Westfalen | Kreis Warendorf               | Beckum                     |     8.041 |   51.756 | b91b5153-cbe5-4db5-bea1-8304731120e1
+ 2e6b01b4-a761-4e0e-8161-e1e3bab737ee | Deutschland | Niedersachsen       | Landkreis Vechta              |                            |     8.172 |   52.657 | 4478acee-0196-4b69-9cde-6a5806d09ae4
+ 1585ee36-d40f-46ee-bafc-86bef324222a | Deutschland | Niedersachsen       | Landkreis Vechta              | Steinfeld                  |     8.217 |   52.587 | 2e6b01b4-a761-4e0e-8161-e1e3bab737ee
+ df0da25a-d8c8-4727-88e9-464fc854583a | Deutschland | Niedersachsen       | Landkreis Diepholz            | Diepholz                   |     8.373 |   52.611 | b228c821-4cf9-439c-8dd1-49bd1e03a4e1
+ f2106ece-3ad9-4700-b54d-942eba4d5ba2 | Deutschland | Niedersachsen       | Osnabrück                     |                            |     8.048 |   52.272 | 4478acee-0196-4b69-9cde-6a5806d09ae4
+ a272e567-90b1-4db7-bc6e-57f53842c6a3 | Deutschland | Niedersachsen       | Landkreis Oldenburg           | Wildeshausen               |     8.436 |   52.897 | 3453dce8-d1a8-4057-bd6d-db872889eebf
+ a0b2ef54-44af-4e08-a257-c8f0aa5ad05d | Deutschland | Niedersachsen       | Osnabrück                     | Osnabrück                  |     8.048 |   52.272 | f2106ece-3ad9-4700-b54d-942eba4d5ba2
+ 01391892-7ed1-4922-9c58-1b02e67179c1 | Deutschland | Nordrhein-Westfalen | Kreis Steinfurt               | Hörstel                    |     7.595 |   52.289 | 39ab5fa4-4b4b-4dd3-83d8-b8a264894837
+ b749c332-5779-4c86-b5ff-8e6b5865bc63 | Deutschland | Nordrhein-Westfalen | Kreis Lippe                   |                            |     8.917 |   51.992 | 0c31eb9f-0aae-4cd2-8466-bd508923d2ec
+ ed111543-e265-42e1-85c3-395644d2538f | Deutschland | Nordrhein-Westfalen | Kreis Lippe                   | Detmold                    |     8.875 |   51.928 | b749c332-5779-4c86-b5ff-8e6b5865bc63
+ 626f8b2c-d450-4e2d-9120-554777f14ee6 | Deutschland | Nordrhein-Westfalen | Münster                       |                            |     7.625 |   51.962 | 0c31eb9f-0aae-4cd2-8466-bd508923d2ec
+ 44b1906c-731f-4b32-b3bb-7bd6313b02d4 | Deutschland | Niedersachsen       | Landkreis Leer                | Westoverledingen           |     7.467 |   53.150 | 99342aef-ee4f-4cfc-a01a-e6d2e9b4e4a9
+ c1957659-6eb6-4abe-93e3-757ec92c3100 | Deutschland | Nordrhein-Westfalen | Münster                       | Münster                    |     7.625 |   51.962 | 626f8b2c-d450-4e2d-9120-554777f14ee6
+ 3c8b5163-688c-4788-a548-1abf40255624 | Deutschland | Niedersachsen       | Oldenburg                     |                            |     8.215 |   53.139 | 4478acee-0196-4b69-9cde-6a5806d09ae4
+ ce3eaa40-ee1a-479c-8d86-9a5b4f255c96 | Deutschland | Niedersachsen       | Oldenburg                     | Oldenburg                  |     8.215 |   53.139 | 3c8b5163-688c-4788-a548-1abf40255624
+ ef278798-7ac5-4cc0-a664-e0cf25c26b62 | Deutschland | Nordrhein-Westfalen | Kreis Warendorf               | Everswinkel                |     7.847 |   51.924 | b91b5153-cbe5-4db5-bea1-8304731120e1
+ 271f9c14-7fa6-469f-af19-c2aebd9049cd | Deutschland | Nordrhein-Westfalen | Kreis Coesfeld                | Olfen                      |     7.379 |   51.708 | 3b43203d-bba0-499f-8bb9-039f4a8b0fa6
+ b5bf1811-613a-4f67-879f-90d4ee44bfac | Deutschland | Niedersachsen       | Landkreis Emsland             | Meppen                     |     7.250 |   52.698 | fef69f68-470a-4c20-996c-2360ee1399ec
+ 0af109da-07b8-4471-8aea-2d08b8d07339 | Deutschland | Nordrhein-Westfalen | Kreis Unna                    |                            |     7.689 |   51.577 | 0c31eb9f-0aae-4cd2-8466-bd508923d2ec
+ ce4858d8-cad6-4fce-a1b3-3112eb3a3c3c | Deutschland | Nordrhein-Westfalen | Kreis Unna                    | Werne                      |     7.636 |   51.663 | 0af109da-07b8-4471-8aea-2d08b8d07339
+ 3282ddcc-255d-4b0c-ae3c-e558f553df5e | Nederland   |                     |                               |                            |     5.387 |   52.155 | 
+ 36353b68-3aff-4197-9dee-0c5d8ce3c06c | Nederland   | Drenthe             |                               |                            |     6.637 |   52.907 | 3282ddcc-255d-4b0c-ae3c-e558f553df5e
+ ee9a250b-901d-41ea-94b6-26ffbc18ff26 | Nederland   | Drenthe             | Emmen                         |                            |     6.953 |   52.753 | 36353b68-3aff-4197-9dee-0c5d8ce3c06c
+ e044ee39-8d28-4e05-80ae-e68cdd9fb08d | Nederland   | Drenthe             | Emmen                         | Zwartemeer                 |     7.043 |   52.722 | ee9a250b-901d-41ea-94b6-26ffbc18ff26
+ ccc033e6-2c44-4ac4-8a68-9f92e5737485 | Deutschland | Niedersachsen       | Landkreis Diepholz            | Wagenfeld                  |     8.588 |   52.548 | b228c821-4cf9-439c-8dd1-49bd1e03a4e1
+ 9417e551-73ca-4202-aa21-96f913b47988 | Deutschland | Nordrhein-Westfalen | Kreis Lippe                   | Lemgo                      |     8.901 |   52.028 | b749c332-5779-4c86-b5ff-8e6b5865bc63
+ 6744d8a3-b012-46ab-afc4-9d36731fb942 | Deutschland | Nordrhein-Westfalen | Kreis Steinfurt               | Neuenkirchen               |     7.368 |   52.237 | 39ab5fa4-4b4b-4dd3-83d8-b8a264894837
+ a72919f4-9428-4b88-ba95-262e50618cdf | Deutschland | Niedersachsen       | Landkreis Cloppenburg         | Barßel                     |     7.743 |   53.170 | 6660f9f8-9d22-4ba7-84a0-fb3005912fdf
+ e317c327-4341-45d1-a860-7b3645835301 | Deutschland | Niedersachsen       | Landkreis Emsland             | Herzlake                   |     7.626 |   52.687 | fef69f68-470a-4c20-996c-2360ee1399ec
+ ea2c8f2b-f9e3-4ecc-a4e4-6f4b355be80f | Deutschland | Niedersachsen       | Landkreis Leer                | Leer                       |     7.458 |   53.233 | 99342aef-ee4f-4cfc-a01a-e6d2e9b4e4a9
+ a8599582-b493-4294-91df-c32cb404e08b | Deutschland | Nordrhein-Westfalen | Kreis Minden-Lübbecke         |                            |     8.753 |   52.347 | 0c31eb9f-0aae-4cd2-8466-bd508923d2ec
+ 954541eb-30c5-4fb6-b80c-bd950e8ee526 | Deutschland | Nordrhein-Westfalen | Kreis Minden-Lübbecke         | Lübbecke                   |     8.636 |   52.305 | a8599582-b493-4294-91df-c32cb404e08b
+ 95789d82-7b4c-416d-991a-a208d66b3b6f | Deutschland | Niedersachsen       | Landkreis Emsland             | Dörpen                     |     7.331 |   52.965 | fef69f68-470a-4c20-996c-2360ee1399ec
+ 6b701c30-4697-442b-9c01-b885c535b299 | Deutschland | Nordrhein-Westfalen | Kreis Steinfurt               | Altenberge                 |     7.467 |   52.047 | 39ab5fa4-4b4b-4dd3-83d8-b8a264894837
+ bb02f686-8120-416b-b2c5-a615eb0b8e34 | Deutschland | Nordrhein-Westfalen | Kreis Borken                  | Schöppingen                |     7.237 |   52.093 | 158d1204-14b1-47be-b1c6-a6cddd8d8b58
+ 9a7e7c4e-d988-4a20-93b8-ada3422d04ea | Deutschland | Nordrhein-Westfalen | Kreis Gütersloh               | Rietberg                   |     8.412 |   51.797 | cfe5f05f-aaa4-47b9-9914-bd44a8fba5f8
+ c716ea6c-5952-41bf-ac75-9e9b1fc9e5bf | Deutschland | Niedersachsen       | Landkreis Emsland             | Langen                     |     7.459 |   52.542 | fef69f68-470a-4c20-996c-2360ee1399ec
+ cc6964de-61c4-4264-a19f-e83e48fec36b | Deutschland | Nordrhein-Westfalen | Kreis Gütersloh               | Rheda-Wiedenbrück          |     8.299 |   51.843 | cfe5f05f-aaa4-47b9-9914-bd44a8fba5f8
+ 4aa5fbf8-4403-440d-8c47-9cd7c2702ebb | Deutschland | Niedersachsen       | Landkreis Wesermarsch         | Elsfleth                   |     8.457 |   53.236 | 2b364fcf-fb12-4243-9d6a-833741a47eee
+ d70714c4-bc8e-4756-ba13-c1bf0a35fc36 | Deutschland | Niedersachsen       | Landkreis Oldenburg           | Hatten                     |     8.335 |   53.050 | 3453dce8-d1a8-4057-bd6d-db872889eebf
+ 2425ebb0-fd45-4483-966b-b64354eab190 | Deutschland | Niedersachsen       | Landkreis Emsland             | Lingen (Ems)               |     7.366 |   52.510 | fef69f68-470a-4c20-996c-2360ee1399ec
+ 5379b8a5-8b0c-49d5-b2a7-91408cc8bff8 | Deutschland | Niedersachsen       | Landkreis Vechta              | Goldenstedt                |     8.431 |   52.787 | 2e6b01b4-a761-4e0e-8161-e1e3bab737ee
+ 9d3b2f1d-b446-4359-929c-e49b83d81e96 | Deutschland | Nordrhein-Westfalen | Kreis Minden-Lübbecke         | Minden                     |     8.917 |   52.288 | a8599582-b493-4294-91df-c32cb404e08b
+ 0f6b4cdc-3521-4062-a260-9750ae83349a | Deutschland | Nordrhein-Westfalen | Kreis Warendorf               | Ennigerloh                 |     8.026 |   51.836 | b91b5153-cbe5-4db5-bea1-8304731120e1
+ 77cb7342-f3ad-4172-9225-fd03a5b26322 | Deutschland | Nordrhein-Westfalen | Hochsauerlandkreis            | Olsberg                    |     8.489 |   51.355 | 0a7d51be-b82e-42c2-987e-4f30dc2a7575
+ 41209728-d9fa-462d-9875-fc0b6680fac0 | Deutschland | Nordrhein-Westfalen | Kreis Herford                 |                            |     8.645 |   52.168 | 0c31eb9f-0aae-4cd2-8466-bd508923d2ec
+ 4035435a-a576-4927-8cc8-f2f5aa48149b | Deutschland | Nordrhein-Westfalen | Kreis Herford                 | Spenge                     |     8.483 |   52.142 | 41209728-d9fa-462d-9875-fc0b6680fac0
+ 3716c089-13d6-44e9-95f4-72ea49c71a9a | Deutschland | Nordrhein-Westfalen | Kreis Herford                 | Rödinghausen               |     8.498 |   52.231 | 41209728-d9fa-462d-9875-fc0b6680fac0
+ 7c29c440-1104-49e6-8642-8991c0d2f186 | Deutschland | Niedersachsen       | Landkreis Vechta              | Dinklage                   |     8.107 |   52.651 | 2e6b01b4-a761-4e0e-8161-e1e3bab737ee
+(133 rows)
+
+                  id                  |          title          | longitude | latitude  | likeCount |             location_id              
+--------------------------------------+-------------------------+-----------+-----------+-----------+--------------------------------------
+ 9a025932-ba78-4464-bf6b-68adcd63f45f | Reading                 |  8.355252 | 52.509475 |         3 | 33698a4b-ef46-4643-9db2-cc519c095354
+ 9fb6711e-2ca5-4895-9c91-24734ecf798a | Diving                  |  7.336822 | 51.939305 |        17 | bdf27ac2-3c78-48e5-9ca0-8fc311211b5f
+ 3435d601-5124-40bf-90af-01b5281a2fb4 | Sauna                   |  7.492301 | 51.906654 |        10 | 42e3add8-d01b-4c45-ba3a-cc2bd062841c
+ 6daca5fd-0cb7-4663-b8b7-72aadcbf9f99 | Hiking                  |  7.947558 | 52.024226 |        11 | 96593b82-7b92-4a4b-90a4-382c51a30b25
+ 10da0928-1f55-461d-a484-17cea36f8d1b | Meteorology             |  8.251243 | 51.461054 |        13 | 5ecd445a-d162-4edf-b1f9-d6f6511ae955
+ 9177da66-da10-44c0-92da-d7ec2bd6730b | Bass                    |  8.279445 | 52.373795 |         7 | bd634807-e4f5-4acf-a618-6539c90655bb
+ 593fe07d-d0fc-4b95-af51-3e298bf70cb9 | Teaching                |  7.579390 | 53.063497 |        14 | ef05ca91-4029-4e85-8aa6-9667e49e8b75
+ df07ac4a-c8da-4d7b-b431-eb86155c5888 | Astrology               |  7.572357 | 53.002113 |         3 | d7eedabf-dce5-4a2c-a14c-8b2765b15597
+ 2ae7656b-d29e-43ff-9e3d-3ad194f766e1 | Piano                   |  7.028508 | 52.039540 |         5 | 62323b8b-42b7-40ed-af9b-4be0b7ffaf23
+ a2e6a535-edd3-4e98-8553-650f158eb946 | Massage                 |  7.221841 | 51.728616 |         0 | b11c255f-e6f9-4d68-a7df-e3a3b48218a7
+ b849df39-1e95-4e6e-9433-ff4857730726 | Physics                 |  7.573063 | 52.621284 |         1 | 77fb5345-138f-46ca-a3d4-8f7875f8e791
+ 7fcea02f-a936-4216-bd35-496170e44e5f | Skat                    |  8.262675 | 52.981232 |        15 | 23b9eb6e-e78b-4cf1-b048-3aeca5e48da1
+ dd1c04c5-a1db-4129-baa4-843ab817945d | Accounting              |  8.029114 | 52.457992 |         2 | cae1ef88-066d-48d7-97c2-d4605ad976bd
+ 9f710407-21fb-4753-bad1-869b7d8eac9e | Veterinary medicine     |  7.210792 | 52.375469 |         3 | 9e624eb4-92eb-40be-a693-6233bf842c4e
+ 2aa4fd5d-c792-405c-b914-834d90c4a260 | Photography             |  7.806181 | 51.406297 |        18 | 06f08d40-9bf6-4db5-9503-a96583ad6848
+ 6bb920d3-405b-4583-bda9-b8a3f6a31453 | Table tennis            |  7.417982 | 51.606134 |        12 | 5242c29b-019b-4d83-9ec6-59b064089f71
+ f2e28167-0aad-4260-acd9-f8975bded082 | Concerts                |  8.474953 | 52.508815 |        20 | 7c53d43e-05c3-4e6d-b4a3-d575e5b6a381
+ 3f848700-c47f-40d7-9ebf-f7810425f4fe | Snooker                 |  8.186427 | 53.079555 |         2 | 90f48793-8458-4116-8007-6dec08fcce23
+ 31bdfab9-a30e-4391-8c91-d4c52915e4a5 | Bouldering              |  7.680644 | 53.091149 |        17 | 8b83c9af-d6bb-4e4c-b6c3-11fef37eb6e3
+ 3340f1db-7cb8-4178-965e-261c5ad98e19 | Poker                   |  8.036817 | 51.470945 |        19 | a4361bce-5434-4a11-81e3-cd8ccfd24d1a
+ 840fce40-80fc-4070-a691-1240bbb58da2 | Caregiving              |  7.611490 | 52.708431 |        14 | b2a78837-5577-48a2-a464-a238c39a59b3
+ 0bffc950-0f23-4648-91a3-e158d81969e7 | Swimming                |  7.781505 | 51.736333 |         4 | ca020ea3-3ee5-458e-93cc-602043ea6f63
+ 54e8b98e-71c9-4bd2-b81b-68889477882d | Cycling                 |  7.937289 | 52.349408 |        17 | c9b5a6ec-074f-4372-b9fd-f41b8acce608
+ ca85d72e-6a44-4d13-81bc-a55bcfe7816b | Architecture            |  7.554593 | 51.742062 |        18 | 5a7f3522-e30a-4b1e-8532-84cf3a5923be
+ 30d0d65e-1802-488b-a078-3afa247c0862 | Tattooing               |  7.511533 | 52.382761 |        15 | a3cb1d5d-84cb-4245-9060-90fcff1f7b81
+ ee8a680b-d96a-4fe0-8581-24fdfc46f2b7 | Mechanical engineering  |  7.812762 | 52.094238 |        11 | 68d1c846-ba97-4d58-8f5b-cab223a88131
+ ecfb6d81-5d80-42cb-8324-743a8f7aa46e | Tennis                  |  7.771990 | 52.393712 |         1 | ea18f2c8-10bc-4103-a8ee-e7718dd1c170
+ 8ab4defd-1103-464c-9a69-ce33106ab497 | Volleyball              |  8.386683 | 52.964443 |         8 | 26fb6188-457f-4f32-a20a-6e2ddbd5f36c
+ e88b5ed9-15b3-4510-896f-dc27d3895629 | Fire service            |  7.518319 | 52.371101 |        13 | 946b30e1-1822-4dda-903b-7036c155866d
+ 49213b3c-b9e0-4dfa-af4b-bd5e0b6c8c17 | DIY                     |  8.246910 | 51.798876 |        13 | e62ae20b-543e-444e-b539-fcbbf65bbb37
+ 2c0851bf-3350-41b0-bec0-ea204195ddf5 | Police                  |  7.071018 | 51.283983 |         3 | 52252696-b782-42b5-af3f-f1306d76e285
+ 394ea678-b949-4058-9b74-8725a8c5ed0f | Biology                 |  8.870396 | 52.888733 |        10 | f40e4aa4-5b91-424c-a45e-667155ec3ada
+ 24da20b7-3553-47cb-a770-5afc39239c3c | Drums                   |  7.776629 | 51.291297 |        14 | 943e5700-13c9-4036-99cf-5070959d0167
+ 4885bed5-7353-4cc2-9dd4-c9ed566fcf8b | Pool                    |  8.860482 | 52.684558 |         2 | 6b44da3a-2d7e-4a57-a676-4ee8f5f03295
+ 2cd58e60-e1ee-4caa-9520-c66b21946fcf | Baking                  |  8.635072 | 51.398130 |         7 | 6adeb935-cd09-4934-a7fc-537701f0a259
+ 54e30563-7c28-480a-8b50-a83adc17542b | Guitar                  |  8.670821 | 51.764204 |         1 | 1a434e74-73dc-4805-88c7-607e96bfa2c9
+ a162f74b-ac03-4688-9957-b3b06503dd98 | Catan                   |  7.600522 | 53.037110 |        14 | 283e64bb-3472-49bd-8340-91e0597f24ea
+ 7340984c-1d47-47e0-82d7-eac7bc698160 | Dental medicine         |  8.016350 | 52.371328 |        19 | cae1ef88-066d-48d7-97c2-d4605ad976bd
+ 24317b96-f062-4a4e-bba5-d530ea75ebf4 | Computer Science        |  8.988943 | 52.930610 |         6 | 0a68f369-7403-4589-9b4c-d61b59d8fb46
+ fa7fcac0-55b9-4299-b237-3e7366de8a47 | Strolling               |  7.078319 | 52.707900 |        20 | 38d29e23-e32e-478e-bce6-e521ae30a777
+ 567a08c2-1e46-4eb4-b02d-05fc055b0824 | Partying                |  7.745392 | 51.303094 |         5 | 049f12c8-9ab3-4d41-af07-ebf9a41196cb
+ d8267d7f-4afc-4289-aa01-86d1fdca75c1 | Fast food               |  8.398678 | 52.337275 |        17 | 9222f65c-d0b6-40ab-b766-07686ed603d5
+ 4b4fc46b-5567-4c98-905d-130189f10bee | Advertising             |  8.458533 | 51.438936 |         1 | 7a77e722-f72f-4e0a-942c-41450c5747f5
+ c1965a10-81e9-4ac3-93f5-49ecd5d40654 | Nursing                 |  8.119998 | 51.935338 |         5 | 0894f419-3b32-44dc-a90c-fb052b252113
+ 742fee86-a4bd-4b70-9df2-4c5acc839ad1 | Boxing                  |  7.969072 | 52.770923 |         5 | 01bc2824-8a10-4a58-a7ae-a5da3a70cd75
+ c229acb6-e623-47aa-a0d9-e8cf914a0b97 | Chemistry               |  8.987492 | 53.050078 |        15 | e6e82da9-9c1a-4b60-b0da-e95b97326337
+ c9b15780-3c86-4b29-b627-330041ca6546 | Bar touring             |  8.048805 | 51.323533 |         0 | f184e724-6547-4d2a-bb71-bb5cf509cb6b
+ 450a2ab9-ad85-4e12-b400-abf863b9ff10 | Sewing                  |  8.558082 | 53.243620 |        16 | 6a2243f5-e52c-4496-8a7a-c06411b09bbc
+ 9d023717-4946-4bca-be46-639370f3e3d6 | Extreme sports          |  8.567362 | 52.005539 |         5 | bbacbd55-9bd8-415f-b736-5268be93c780
+ 9c210456-d6b6-4da6-937c-f7e6407dfb86 | Sailing                 |  7.873521 | 52.937717 |         7 | 69dba95d-26d1-4b35-8a9d-9446c8ce70d0
+ fa6d7ad3-0629-4404-b8b4-c8efa79fba9e | Pharmacy                |  8.538474 | 52.757899 |        10 | 9c2609db-0711-45de-962f-328e4cee5494
+ 9453808d-1775-42c8-9cff-12521b1557be | Kegeln                  |  8.384448 | 51.867282 |        20 | 28b9b35b-e39d-4bb8-a731-fca2401a4183
+ 9a53759c-4382-40de-83c9-380578410439 | Tea time                |  7.275121 | 53.230941 |         7 | d5762674-cdbd-4503-ab9c-210e507c2953
+ c349ac5f-401c-46bc-bb25-4599c98ca90b | Singing                 |  8.243540 | 52.586085 |        13 | 1585ee36-d40f-46ee-bafc-86bef324222a
+ 5ad9afad-018f-4a5a-a534-841b13fe5f5b | Zoo                     |  8.307007 | 52.651725 |        15 | df0da25a-d8c8-4727-88e9-464fc854583a
+ 2c9a6b88-45c1-4bca-ade7-399a0c2e1f13 | Acting                  |  8.344217 | 52.921872 |        17 | a272e567-90b1-4db7-bc6e-57f53842c6a3
+ 1983b80b-0e29-4a3a-a965-e62c3d24f720 | Gardening               |  7.534897 | 52.350247 |        13 | 01391892-7ed1-4922-9c58-1b02e67179c1
+ 95591bb5-98d0-40c9-8562-997318fd805d | Cat owning              |  8.832979 | 51.929437 |         2 | ed111543-e265-42e1-85c3-395644d2538f
+ 687663a7-a43f-4049-8a71-3fc96fab853e | Azul                    |  7.411547 | 53.106642 |        20 | 44b1906c-731f-4b32-b3bb-7bd6313b02d4
+ 2e44f996-d612-4058-bdee-f73b254aab06 | Journalism              |  8.293187 | 53.137864 |         7 | ce3eaa40-ee1a-479c-8d86-9a5b4f255c96
+ 6f6052be-5da1-452f-8a6c-81e64323d871 | Donating blood          |  7.302005 | 51.707933 |        11 | 271f9c14-7fa6-469f-af19-c2aebd9049cd
+ 7abb88e1-aab4-4db3-a696-30c810585a95 | Mathematics             |  7.314548 | 52.735952 |        12 | b5bf1811-613a-4f67-879f-90d4ee44bfac
+ 8b243c87-d989-4dd2-b310-7f192c8b026c | Soccer                  |  7.600458 | 51.671760 |         8 | ce4858d8-cad6-4fce-a1b3-3112eb3a3c3c
+ 6cceeede-26a3-48c4-af12-dc5728142e70 | Knitting                |  7.049864 | 52.688873 |         1 | e044ee39-8d28-4e05-80ae-e68cdd9fb08d
+ 83a05e8a-2fc0-43d2-b1b5-249f1bf54081 | Handicraft              |  8.185296 | 51.855344 |         4 | e62ae20b-543e-444e-b539-fcbbf65bbb37
+ 6f25896c-97f4-4eba-ad49-5a1a7af5cbfe | Dancing                 |  8.692900 | 52.518091 |         9 | ccc033e6-2c44-4ac4-8a68-9f92e5737485
+ 63872aa0-9ade-4c73-a66b-43bca74589e8 | Traveling               |  8.911545 | 52.053241 |         5 | 9417e551-73ca-4202-aa21-96f913b47988
+ db9fb84b-c0e6-4086-8512-9a06d187f73f | Funk Rock               |  7.428759 | 52.190049 |        20 | 6744d8a3-b012-46ab-afc4-9d36731fb942
+ 3a00a04d-7d3f-4cb3-b63a-9c74881afeb1 | Law                     |  8.109536 | 51.516426 |         3 | a4361bce-5434-4a11-81e3-cd8ccfd24d1a
+ c9216e10-a874-46fb-9f29-2c3b3ef7b154 | Chess                   |  8.111677 | 51.452986 |         5 | a4361bce-5434-4a11-81e3-cd8ccfd24d1a
+ 206f3ce8-64f8-413b-92ba-d074502b0b44 | Medicine                |  7.843485 | 53.126529 |         8 | a72919f4-9428-4b88-ba95-262e50618cdf
+ 6117295e-78e1-47e3-8a2f-0af19b65a2f6 | Painting                |  7.738169 | 53.102338 |         4 | 8b83c9af-d6bb-4e4c-b6c3-11fef37eb6e3
+ ba14f76f-ec25-4c1c-8a93-4182dab00720 | Electrical engineering  |  7.659321 | 52.678265 |         8 | e317c327-4341-45d1-a860-7b3645835301
+ 43783964-2dd4-4a65-93e6-6a174258c9aa | Religion                |  7.406060 | 53.257253 |        19 | ea2c8f2b-f9e3-4ecc-a4e4-6f4b355be80f
+ 492329a6-71bf-40d2-bf21-c885b199688a | Violin                  |  8.599523 | 52.303717 |        13 | 954541eb-30c5-4fb6-b80c-bd950e8ee526
+ 5c349dd8-8e55-443e-a229-c967cdb95c21 | Coeliac disease         |  7.337475 | 52.965689 |         5 | 95789d82-7b4c-416d-991a-a208d66b3b6f
+ f78455e9-6c53-413d-9c06-b891fb304d27 | Physical therapy        |  7.534317 | 52.036228 |        12 | 6b701c30-4697-442b-9c01-b885c535b299
+ 5b419e44-357a-45c8-9958-3fe40338f9e9 | Social work             |  7.125296 | 52.091633 |        17 | bb02f686-8120-416b-b2c5-a615eb0b8e34
+ e9423c40-e909-493f-800f-44c1c890a10f | Psychology              |  8.432735 | 51.812496 |         4 | 9a7e7c4e-d988-4a20-93b8-ada3422d04ea
+ e0dd5c89-c1c1-4e10-a964-e685c8512988 | Carcassonne             |  7.474997 | 52.521511 |        14 | c716ea6c-5952-41bf-ac75-9e9b1fc9e5bf
+ a4a48084-512c-4929-bf29-17e86e6fda74 | Business administration |  8.350752 | 51.853372 |        20 | cc6964de-61c4-4264-a19f-e83e48fec36b
+ 736dbcbd-fabb-4f59-b31e-8fe999839c40 | Dog owning              |  8.427039 | 52.540254 |         8 | df0da25a-d8c8-4727-88e9-464fc854583a
+ d5f86fda-6acd-468e-9f14-f1d83753d0f2 | Picnicking              |  8.893556 | 51.908099 |        12 | ed111543-e265-42e1-85c3-395644d2538f
+ 0c82b952-2d79-447f-9b2d-0f2fcaf0b217 | Shopping                |  8.483254 | 51.435098 |         2 | 6adeb935-cd09-4934-a7fc-537701f0a259
+ 10cdcd3f-bc10-4515-9e68-ec22c32b5aa8 | Golf                    |  8.459862 | 53.169566 |        17 | 8facdc73-177c-4bfe-8196-4d6b7cf16fa6
+ 662543d6-bda3-4407-af8c-238ffa378d4a | Running                 |  8.660236 | 53.111087 |         4 | 73e67391-ec04-45a0-a45f-31ce0b5348f7
+ 9661caea-1b13-4187-bad3-1e99abad4ed2 | Netflix                 |  8.866103 | 52.545327 |        16 | 651570f2-242e-4c65-9cb8-4fc38ce69cc9
+ 1580b1d6-f161-4e1a-b960-49cc93a8cc7a | Climbing                |  8.979254 | 52.506020 |         0 | a40c0c5c-2755-47fa-84e4-c0e6b0bf5a31
+ d8f81008-da19-4af4-ace1-06b1d40cb72b | Politics                |  8.037948 | 51.771224 |        11 | eca57e79-f015-45df-8cbf-f0221cf46fc9
+ 5f52b13e-9947-41f4-a26c-fde1ee4b16a4 | Jazz                    |  8.126220 | 52.270952 |        14 | a0b2ef54-44af-4e08-a257-c8f0aa5ad05d
+ d8d0d0e1-6bde-4dde-a2b4-aec9dd14b5ef | Blues                   |  7.589890 | 51.949534 |         9 | c1957659-6eb6-4abe-93e3-757ec92c3100
+ 2877b4e2-b94e-4763-b609-46ff5b7528f6 | Durak                   |  7.882782 | 51.926653 |        17 | ef278798-7ac5-4cc0-a664-e0cf25c26b62
+ e3b9aad0-2782-4543-85e9-dba01ee6b38e | Doppelkopf              |  8.397050 | 53.230500 |         6 | 4aa5fbf8-4403-440d-8c47-9cd7c2702ebb
+ eb9c9bad-611b-47a3-b823-13d652a565da | Beauty                  |  8.279842 | 53.068099 |         2 | d70714c4-bc8e-4756-ba13-c1bf0a35fc36
+ 48509c08-5a81-44c8-be51-8d7f6f90c128 | Paintball               |  7.323920 | 52.476278 |         2 | 2425ebb0-fd45-4483-966b-b64354eab190
+ d1b06160-1bb4-40d8-8645-6d4026243162 | Merels                  |  8.414223 | 52.807184 |        16 | 5379b8a5-8b0c-49d5-b2a7-91408cc8bff8
+ 92ed3db3-da4b-49af-9c17-095edc18efde | Canoeing                |  8.977432 | 52.993858 |         4 | 0a68f369-7403-4589-9b4c-d61b59d8fb46
+ a6a0d1ac-df52-45b4-a826-aba620bd71cc | Yoga                    |  8.902359 | 52.276797 |         5 | 9d3b2f1d-b446-4359-929c-e49b83d81e96
+ 45a209aa-d597-4886-9a80-4d9e81bb5d40 | Flute                   |  7.449553 | 51.933882 |         7 | 42e3add8-d01b-4c45-ba3a-cc2bd062841c
+ 897e17dd-120c-4687-9303-93ecc45363ef | Risk                    |  7.684892 | 51.696163 |        20 | ce4858d8-cad6-4fce-a1b3-3112eb3a3c3c
+ cbf65b3a-9eaf-424a-b1fe-e8fa5a970e69 | Badminton               |  8.108194 | 51.892677 |        14 | 0f6b4cdc-3521-4062-a260-9750ae83349a
+ e4fc3aea-6540-4066-a29f-f705cb77678a | Basketball              |  8.499947 | 51.294717 |         8 | 77cb7342-f3ad-4172-9225-fd03a5b26322
+ 79930a29-62f2-4431-ada5-1de44b0f578c | Rap                     |  8.493134 | 52.115240 |         7 | 4035435a-a576-4927-8cc8-f2f5aa48149b
+ 09f0ec08-35c7-4a1d-80a3-1b013803867d | Cooking                 |  8.650703 | 52.571167 |         1 | ccc033e6-2c44-4ac4-8a68-9f92e5737485
+ 75549c75-ed95-4734-ba2f-2b945c668aa7 | Ice hockey              |  8.492711 | 52.259025 |         0 | 3716c089-13d6-44e9-95f4-72ea49c71a9a
+ aa26575f-3c2f-41cb-88cd-07b69e5f0c38 | Pottery                 |  7.220062 | 52.689645 |        15 | b5bf1811-613a-4f67-879f-90d4ee44bfac
+ 3def465a-2971-441e-bad0-290cf197fc2f | Rock                    |  8.077559 | 52.664257 |         8 | 7c29c440-1104-49e6-8642-8991c0d2f186
+(107 rows)
+

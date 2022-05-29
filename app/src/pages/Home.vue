@@ -88,6 +88,10 @@ export default {
                     title, likeCount
                 });
             }
+            if(displayedActivities.length === 0) {
+                addMarkersForCurrentZoomLevel();
+                return; //TODO: Issue info
+            }
             
             displayedActivities.sort((a, b) => {
                 return b.likeCount - a.likeCount;

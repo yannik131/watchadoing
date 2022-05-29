@@ -1,12 +1,12 @@
-from logging import warn
 from django.db import models
-from .utils import geocode
+from .utils import geocode, try_keys
 from rest_framework.exceptions import ValidationError
 import geopy
 import uuid
 import logging
 
 logger = logging.getLogger('watchadoing')
+COMPONENTS = ['country', 'state', 'county', 'city']
 
 class Location(models.Model):
     id          = models.UUIDField(primary_key=True, default=uuid.uuid4)
@@ -18,42 +18,54 @@ class Location(models.Model):
     latitude    = models.DecimalField(max_digits=6, decimal_places=3)
     parent      = models.ForeignKey('Location', null=True, on_delete=models.SET_NULL, related_name='children')
     
-    COMPONENTS = ['country', 'state', 'county', 'city']
-    
     class Meta:
-        unique_together = ['country', 'state', 'county', 'city']
+        unique_together = COMPONENTS
         indexes = [
-            models.Index(fields=['country', 'state', 'county', 'city'])
+            models.Index(fields=COMPONENTS)
         ]
         
     @staticmethod
     def determine_from_coordinates(latitude, longitude):
-        location = geocode(f"{latitude}, {longitude}", reverse=True, addressdetails=True)
+        #zoom 10 restricts result to city coordinates: https://nominatim.org/release-docs/develop/api/Reverse/#result-limitation
+        location = geocode(f"{latitude}, {longitude}", reverse=True, addressdetails=True, zoom=10)
         if location is None:
             raise ValidationError(f"The coordinates seem to be ill-formatted: {latitude}, {longitude}")
         return Location.get_from_geopy_location(location)
     
     @staticmethod
     def determine_from_address(address):
-        #TODO: user determines location by coords -> get components with geocode -> get coords from components (query db, if that fails geocode them) -> send location back to user
-        #TODO: DO NOT use user location for city coordinates, geocode twice!
         try:
             return Location.objects.get(city=address)
         except:
+            #this location contains coordinates from the original address
+            location = geocode(address, addressdetails=True)
+            components = Location.get_components_from_geopy_location(location)
+            address = Location.components_to_string(components)
+            #this location, however, contains coordinates of the city
             location = geocode(address, addressdetails=True)
         if location is None:
             raise ValidationError({'error': "The address could not be found."})
-        return Location.get_from_geopy_location(location)    
+        return Location.get_from_geopy_location(location) 
+    
+    @staticmethod
+    def get_components_from_geopy_location(geopy_location: geopy.location.Location):
+        address = geopy_location.raw['address']
+        components = dict(
+            country=try_keys(address, 'country'),
+            state=try_keys(address, 'state', 'province', 'region'),
+            county=try_keys(address, 'county', 'district', 'municipality'),
+            city=try_keys(address, 'city', 'town', 'village', 'hamlet')
+        )
+        
+        return components
     
     @staticmethod
     def get_from_geopy_location(geopy_location: geopy.location.Location):
-        address = geopy_location.raw['address']
-        components = dict(
-            country=address['country'],
-            state=address.get('state', address.get('region', address.get('city', address.get('town')))),
-            county=address.get('county'),
-            city=address.get('city', address.get('town', address.get('village', address.get('county'))))
-        )
+        components = Location.get_components_from_geopy_location(geopy_location)
+        for component in ['state', 'city']:
+            if components.get(component) is None:
+                raise ValidationError(f'Could not determine {component}. Please type in another address manually.')
+            
         if components['county'] is None:
             components['county'] = components['city']
         try:
@@ -62,13 +74,26 @@ class Location(models.Model):
             location = Location.objects.create(**components, latitude=geopy_location.latitude, longitude=geopy_location.longitude)
         return location
     
+    @staticmethod
+    def components_to_string(components: dict):
+        string = components['country']
+        for component in ['state', 'county', 'city']:
+            if components[component]:
+                string = components[component] + ", " + string
+        return string
+    
     def highest_component_index(self):
-        for i, element in enumerate(reversed(Location.COMPONENTS)):
+        for i, element in enumerate(reversed(COMPONENTS)):
             if getattr(self, element):
                 return 3-i
     
     def parent_components(self):
-        return dict([(component, getattr(self, component)) for component in Location.COMPONENTS[:self.highest_component_index()] if getattr(self, component)])
+        return dict(
+            [
+                (component, getattr(self, component)) 
+                for component in COMPONENTS[:self.highest_component_index()] 
+                if getattr(self, component)
+            ])
     
     def __str__(self):
         if self.city:
