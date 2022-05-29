@@ -14,8 +14,8 @@ class Location(models.Model):
     state       = models.CharField(max_length=40, null=True, blank=True)
     county      = models.CharField(max_length=40, null=True, blank=True)
     city        = models.CharField(max_length=40, null=True, blank=True)
-    longitude   = models.DecimalField(max_digits=6, decimal_places=3)
-    latitude    = models.DecimalField(max_digits=6, decimal_places=3)
+    longitude   = models.DecimalField(max_digits=9, decimal_places=6)
+    latitude    = models.DecimalField(max_digits=9, decimal_places=6)
     parent      = models.ForeignKey('Location', null=True, on_delete=models.SET_NULL, related_name='children')
     
     class Meta:

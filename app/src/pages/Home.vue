@@ -2,6 +2,13 @@
     <div id="canvas" class="absolute text-center cursor-pointer blurry">
     </div>
     
+    <div v-if="$store.getters.selectedLocation" class="text-3xl font-bold fixed left-0 right-0 text-center z-20 flex justify-center items-center text-white">
+        {{ formatLocation($store.getters.selectedLocation) }}
+        <div v-touch="onCloseClick">
+            <i class="ml-2 fas fa-window-close cursor-pointer"></i>
+        </div>
+    </div>
+    
     <Bubble 
         v-for="activity in $store.getters.displayedActivities" 
         :key="activity.title" 
@@ -32,10 +39,10 @@
 <script>
 import Bubble from '../components/Bubble';
 import { createActivity, getActivities } from '../services/activity';
-import { ref, watch } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import { centerMapToUserLocation, getMap, addMarker, clearLayers } from '../services/map';
 import store from '../services/store';
-import { getLocations, locationTree } from '../services/location';
+import { getLocations, locationTree, formatLocation } from '../services/location';
 import { addToList } from '../helpers/utils.js';
 import PositionFactory from '../helpers/positionFactory';
 
@@ -44,22 +51,10 @@ export default {
     components: {
         Bubble
     },
-    async mounted() {
-        const map = getMap();
-        
-        const locations = await getLocations();
-        locationTree.addLocations(locations);
-        
-        const zoomMap = {
-            4: locationTree.countries,
-            6: locationTree.states,
-            8: locationTree.counties,
-            10: locationTree.cities
-        };
-        
+    setup() {
         function onMarkerClick(location) {
             clearLayers();
-            store.commit('selectedLocation', { location });
+            store.commit('setSelectedLocation', { location });
             let cities = locationTree.collectCitiesIn(location);
             const activities = {};
             
@@ -78,8 +73,7 @@ export default {
                 }
             }
             
-            
-            const center = map.latLngToLayerPoint([location.latitude, location.longitude]);
+            const center = getMap().latLngToLayerPoint([location.latitude, location.longitude]);
             PositionFactory.set(center.x, center.y, 150);
             
             let displayedActivities = [];
@@ -106,12 +100,20 @@ export default {
         
         function clearBubbles() {
             store.commit('setDisplayedActivities', { displayedActivities: [] });
+            store.commit('setSelectedLocation', { location: null });
             clearLayers();
         }
         
         function addMarkersForCurrentZoomLevel() {
             const locations = [];
-            const locationMap = zoomMap[map.getZoom()];
+            const zoomMap = {
+                4: locationTree.countries,
+                6: locationTree.states,
+                8: locationTree.counties,
+                10: locationTree.cities
+            };
+            const locationMap = zoomMap[getMap().getZoom()];
+            
             for(const locationId of Object.keys(locationMap)) {
                 for(const child of locationMap[locationId]) {
                     locations.push(child);
@@ -124,20 +126,31 @@ export default {
             }
         }
         
-        map.addEventListener('zoomend', addMarkersForCurrentZoomLevel);
-        map.addEventListener('zoomstart', clearBubbles);
-        addMarkersForCurrentZoomLevel();
-        
-        const activities = await getActivities();
-        const activityMap = {};
-        for(const activity of activities) {
-            addToList(activityMap, activity.location, activity);
+        function onCloseClick() {
+            clearBubbles();
+            addMarkersForCurrentZoomLevel();
         }
-        store.commit('setActivityMap', { activityMap });
         
-        centerMapToUserLocation();
-    },
-    setup() {
+        onMounted(async () => {
+            const map = getMap();
+            
+            const locations = await getLocations();
+            locationTree.addLocations(locations);
+            
+            const activities = await getActivities();
+            const activityMap = {};
+            for(const activity of activities) {
+                addToList(activityMap, activity.location, activity);
+            }
+            store.commit('setActivityMap', { activityMap });
+            
+            map.addEventListener('zoomend', addMarkersForCurrentZoomLevel);
+            map.addEventListener('zoomstart', clearBubbles);
+            addMarkersForCurrentZoomLevel();
+            
+            centerMapToUserLocation();
+        });
+        
         let showAddActivity = ref(false);
         const count = ref(10);
         
@@ -155,6 +168,8 @@ export default {
             toggleAddActivity,
             createActivity,
             centerMapToUserLocation,
+            formatLocation,
+            onCloseClick,
             count,
             yesSVG: require('../svg/yes.svg'),
             okaySVG: require('../svg/okay.svg'),

@@ -52,7 +52,16 @@ export async function getUserLocationByAddress(address) {
 }
 
 export function formatLocation(location) {
-    return `${location.city}, ${location.state}`;
+    if(!location) {
+        return '';
+    }
+    
+    for(const component of ['city', 'county', 'state', 'country']) {
+        if(location[component]) {
+            return location[component];
+        }
+    }
+    
 }
 
 export async function getLocations() {
