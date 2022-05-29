@@ -38,3 +38,10 @@ export function shuffleArray(array) {
         array[j] = temp;
     }
 }
+
+export function linearFunction(x1, y1, x2, y2, x) {
+    const a = (y1-y2)/(x1-x2);
+    const b = y2-a*x2;
+    
+    return a*x + b;
+}

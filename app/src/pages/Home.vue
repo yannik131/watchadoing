@@ -1,39 +1,9 @@
 <template>
-    <Introduction v-if="!$store.getters.locationConfirmed"></Introduction>
     <div id="canvas" class="absolute text-center cursor-pointer blurry">
     </div>
     
-    <div v-if="!$store.getters.userLatitude" class="text-2xl font-bold fixed left-0 right-0 text-center z-20 bg-white flex flex-col justify-center items-center">
-        <div class="font-bold text-2xl mr-2">Getting location.. <i class="fa fa-spinner fa-spin"></i></div>
-        
-    </div>
-    
-    <div v-else-if="$store.getters.isFetching" class="text-2xl font-bold fixed left-0 right-0 text-center z-20 bg-white flex flex-col justify-center items-center">
-        <div class="font-bold text-2xl mr-2">Fetching data.. <i class="fa fa-spinner fa-spin"></i></div>
-        
-    </div>
-    
-    <div 
-        v-else
-        class="text-2xl font-bold fixed left-0 right-0 text-center z-20 bg-white flex justify-center items-center mt-0 px-2">
-        <span v-if="$store.getters.activities.length === 0" class="mr-2">
-            Nothing here yet :(
-        </span>
-        <!--<span v-else class="mr-2">
-            Double click the bubbles!
-        </span>
-        <div class="plus my-2" @click="toggleAddActivity()">
-            <i class="fas fa-plus mr-1"></i>
-            Add
-        </div>
-        <div class="plus my-2 flex items-center" @click="centerMapToUserLocation()">
-            <i class="fas fa-location-arrow mr-1"></i>
-            Center
-        </div>-->
-    </div>
-    
     <Bubble 
-        v-for="activity in store.getters.displayedActivities" 
+        v-for="activity in $store.getters.displayedActivities" 
         :key="activity.title" 
         :activity="activity"
         :bubbleSvgEdgeLength="601"
@@ -60,11 +30,10 @@
 </style>
 
 <script>
-import Introduction from '../components/Introduction';
 import Bubble from '../components/Bubble';
 import { createActivity, getActivities } from '../services/activity';
 import { ref, watch } from 'vue';
-import { centerMapToUserLocation, getMap, addMarker, clearMarkers } from '../services/map';
+import { centerMapToUserLocation, getMap, addMarker, clearLayers } from '../services/map';
 import store from '../services/store';
 import { getLocations, locationTree } from '../services/location';
 import { addToList } from '../helpers/utils.js';
@@ -73,7 +42,6 @@ import PositionFactory from '../helpers/positionFactory';
 export default {
     name: 'Home',
     components: {
-        Introduction,
         Bubble
     },
     async mounted() {
@@ -90,11 +58,17 @@ export default {
         };
         
         function onMarkerClick(location) {
+            clearLayers();
+            store.commit('selectedLocation', { location });
             let cities = locationTree.collectCitiesIn(location);
             const activities = {};
             
             for(const city of cities) {
-                for(const activity of store.getters.activityMap[city.id]) {
+                const activitiesInCity = store.getters.activityMap[city.id];
+                if(!activitiesInCity) {
+                    continue;
+                }
+                for(const activity of activitiesInCity) {
                     if(!activities[activity.title]) {
                         activities[activity.title] = activity.likeCount;
                     }
@@ -104,20 +78,34 @@ export default {
                 }
             }
             
+            
             const center = map.latLngToLayerPoint([location.latitude, location.longitude]);
             PositionFactory.set(center.x, center.y, 150);
             
-            const displayedActivities = [];
-            for(const [title, likeCount] of activities) {
+            let displayedActivities = [];
+            for(const [title, likeCount] of Object.entries(activities)) {
                 displayedActivities.push({
                     title, likeCount
                 });
             }
-            store.setDisplayedActivities(displayedActivities);
+            
+            displayedActivities.sort((a, b) => {
+                return b.likeCount - a.likeCount;
+            });
+            displayedActivities = displayedActivities.slice(0, 10);
+            const maxLikeCount = displayedActivities[0].likeCount;
+            const minLikeCount = displayedActivities[displayedActivities.length-1].likeCount;
+            
+            store.commit('setLikeCountMinMax', { minLikeCount, maxLikeCount });
+            store.commit('setDisplayedActivities', { displayedActivities });
+        }
+        
+        function clearBubbles() {
+            store.commit('setDisplayedActivities', { displayedActivities: [] });
+            clearLayers();
         }
         
         function addMarkersForCurrentZoomLevel() {
-            clearMarkers();
             const locations = [];
             const locationMap = zoomMap[map.getZoom()];
             for(const locationId of Object.keys(locationMap)) {
@@ -133,6 +121,7 @@ export default {
         }
         
         map.addEventListener('zoomend', addMarkersForCurrentZoomLevel);
+        map.addEventListener('zoomstart', clearBubbles);
         addMarkersForCurrentZoomLevel();
         
         const activities = await getActivities();

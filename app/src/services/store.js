@@ -8,13 +8,18 @@ export default createStore({
     state: () => ({
         activityMap: [], //city-id -> [activity]
         maxLikeCount: null,
+        minLikeCount: null,
+        //actual current coordinates (if 'Use current location was used')
         userLatitude: null,
         userLongitude: null,
+        //(nearest) city corresponding to above coordinates
+        userLocation: null,
         isFetching: false,
         likedActivities: {},
         dislikedActivities: {},
         locationConfirmed: false,
-        displayedActivities: []
+        displayedActivities: [],
+        selectedLocation: null
     }),
     
     mutations: {
@@ -22,11 +27,15 @@ export default createStore({
             state.maxLikeCount = 0;
             state.activityMap = activityMap;
         },
-        setDisplayedActivities(state, { activities }) {
-            state.displayedActivities = activities;
+        setDisplayedActivities(state, { displayedActivities }) {
+            state.displayedActivities = displayedActivities;
         },
-        setMaxLikeCount(state, { maxLikeCount }) {
+        setLikeCountMinMax(state, { minLikeCount, maxLikeCount }) {
+            state.minLikeCount = minLikeCount;
             state.maxLikeCount = maxLikeCount;
+        },
+        setSelectedLocation(state, { location }) {
+            state.selectedLocation = location;
         },
         likeActivity(state, { activity }) {
             if(state.likedActivities[activity.id]) {
@@ -52,9 +61,12 @@ export default createStore({
                 delete state.dislikedActivities[activity.id];
             }
         },
-        setLocation(state, { latitude, longitude }) {
+        setUserLatLng(state, { latitude, longitude }) {
             state.userLatitude = latitude;
             state.userLongitude = longitude;
+        },
+        setUserLocation(state, { location }) {
+            state.userLocation = location;
         },
         setFetching(state, { value }) {
             state.isFetching = value;
@@ -67,11 +79,15 @@ export default createStore({
     getters: {
         activityMap: state => state.activityMap,
         maxLikeCount: state => state.maxLikeCount,
+        minLikeCount: state => state.minLikeCount,
         locationConfirmed: state => state.locationConfirmed,
         userLatitude: state => state.userLatitude,
         userLongitude: state => state.userLongitude,
+        userLocation: state => state.userLocation,
         isFetching: state => state.isFetching,
         likedActivities: state => state.likedActivities,
-        dislikedActivities: state => state.dislikedActivities
+        dislikedActivities: state => state.dislikedActivities,
+        displayedActivities: state => state.displayedActivities,
+        selectedLocation: state => state.selectedLocation
     }
 });

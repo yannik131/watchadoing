@@ -14,8 +14,8 @@ class Location(models.Model):
     state       = models.CharField(max_length=40, null=True, blank=True)
     county      = models.CharField(max_length=40, null=True, blank=True)
     city        = models.CharField(max_length=40, null=True, blank=True)
-    longitude   = models.DecimalField(max_digits=9, decimal_places=6)
-    latitude    = models.DecimalField(max_digits=9, decimal_places=6)
+    longitude   = models.DecimalField(max_digits=6, decimal_places=3)
+    latitude    = models.DecimalField(max_digits=6, decimal_places=3)
     parent      = models.ForeignKey('Location', null=True, on_delete=models.SET_NULL, related_name='children')
     
     COMPONENTS = ['country', 'state', 'county', 'city']
@@ -35,6 +35,8 @@ class Location(models.Model):
     
     @staticmethod
     def determine_from_address(address):
+        #TODO: user determines location by coords -> get components with geocode -> get coords from components (query db, if that fails geocode them) -> send location back to user
+        #TODO: DO NOT use user location for city coordinates, geocode twice!
         try:
             return Location.objects.get(city=address)
         except:

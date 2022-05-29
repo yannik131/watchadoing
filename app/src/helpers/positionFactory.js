@@ -51,7 +51,7 @@ export default class PositionFactory {
             );
         }
         
-        const removeCount = getRandomInteger(Math.ceil(0.2*newPositions.length), Math.ceil(0.5*newPositions.length));
+        const removeCount = 0;//getRandomInteger(Math.ceil(0.2*newPositions.length), Math.ceil(0.5*newPositions.length));
         for(let i = 0; i < removeCount; ++i) {
             newPositions.splice(getRandomInteger(0, newPositions.length-1), 1);
         }

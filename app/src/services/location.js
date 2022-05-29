@@ -5,10 +5,11 @@ import { addToList } from '../helpers/utils';
 export function getUserLocation(successCallback, failureCallback) {
     navigator.geolocation.getCurrentPosition(
         async function(position) {
-            store.commit('setLocation', {
+            store.commit('setUserLatLng', {
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude
             });
+            
             if(successCallback) {
                 await successCallback();
             }
@@ -29,7 +30,7 @@ export async function getUserLocationByAddress(address) {
     try {
         const response = await axios.post('api/locations/', { address });
         if(response.data.location) {
-            store.commit('setLocation', {
+            store.commit('setUserLatLng', {
                 latitude: response.data.location.latitude,
                 longitude: response.data.location.longitude
             });

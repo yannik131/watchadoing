@@ -5,7 +5,7 @@ import { getRandomFloat } from '../helpers/utils';
 import PositionFactory from '../helpers/positionFactory';
 import { createPopper } from '@popperjs/core';*/
 let map;
-let layerGroup;
+export let layerGroup;
 
 export function centerMapToUserLocation() {
     if(store.getters.userLongitude && store.getters.userLatitude) {
@@ -53,7 +53,7 @@ export function addMarker(latitude, longitude) {
     return marker;
 }
 
-export function clearMarkers() {
+export function clearLayers() {
     layerGroup.clearLayers();
 }
 

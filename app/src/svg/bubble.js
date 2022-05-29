@@ -1,4 +1,4 @@
-<svg width="601" height="601" viewBox="0 0 601 601" fill="none" xmlns="http://www.w3.org/2000/svg">
+export default `<svg width="601" height="601" viewBox="0 0 601 601" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path style="mix-blend-mode:screen" d="M557.342 377.032C517.153 418.996 507.819 277.616 414.707 188.435C321.596 99.2539 179.984 96.0469 220.133 54.0833C260.281 12.1198 411.582 5.35103 504.707 94.5458C597.832 183.741 597.532 335.123 557.342 377.032Z" fill="url(#paint0_radial_119_329)"/>
 <path id="BUBBLE_ID_PLACEHOLDER" style="mix-blend-mode:screen" d="M0.434832 300.065C0.434825 466.026 134.973 600.565 300.935 600.565C466.896 600.565 601.435 466.026 601.435 300.065C601.435 134.103 466.896 -0.435064 300.935 -0.435072C134.973 -0.435079 0.434839 134.103 0.434832 300.065Z" fill="url(#paint1_radial_119_329)"/>
 <path style="mix-blend-mode:screen" d="M551.802 288.52C551.802 288.52 524.235 185.747 443.611 119.478C362.986 53.2101 259.804 48.5157 259.804 48.5157C259.804 48.5157 387.932 25.8895 468.598 92.1851C549.263 158.481 551.802 288.52 551.802 288.52Z" fill="url(#paint2_radial_119_329)"/>
@@ -52,4 +52,4 @@
 <stop offset="1" stop-color="white" stop-opacity="0"/>
 </radialGradient>
 </defs>
-</svg>
+</svg>'`;
