@@ -20,7 +20,7 @@ def geocode(*args, **kwargs):
             else:
                 result = geolocator.geocode(*args, **kwargs)
         except:
-            raise ValidationError('Could not geocode this location. Please type in another address manually.')
+            raise ValidationError({'error': 'Could not geocode this location. Please type in another address manually.'})
         remaining_time = 1 - (time.perf_counter() - stamp)
         if remaining_time > 0:
             time.sleep(remaining_time)

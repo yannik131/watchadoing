@@ -1,22 +1,22 @@
 <template>
-    <div class="fixed inset-0 bg-black opacity-50 z-30 flex justify-center items-center">
-    </div>
-    <div class="z-40 px-5 py-2 rounded bg-white flex flex-col fixed text-center mt-2 popup" style="height: 250px">
+    <div class="fixed inset-0 z-30 flex justify-center items-center">
+    <div class="z-40 px-5 py-2 rounded-3xl backdrop-blur-sm bg-white/80 flex flex-col fixed text-center mt-2 popup" style="height: 250px;">
             <h1 class="text-2xl font-bold mb-2">Add activity</h1>
-            <p class="mb-2">Watcha doing?</p>
-            <input type="text" placeholder="Description.." class="p-2 w-100 border rounded" v-model="activityTitle" v-on:keyup.enter="createActivity()"/>
+            <p class="mb-2">Watcha doing in {{ formatLocation($store.getters.userLocation) }}?</p>
+            <input type="text" placeholder="Reading, movies, ..." class="p-2 w-100 border rounded-3xl" v-model="activityTitle" v-on:keyup.enter="createActivity()"/>
             <div class="text-red-500 font-bold mt-2" v-text="errorMessage" />
             <div class="flex-1"></div>
             <div class="grid grid-cols-2 gap-5">
-                <button @click="createActivity()" class="bg-green-500 rounded p-2 hover:bg-green-300">Send</button>
-                <button class="bg-red-500 rounded p-2 hover:bg-red-300" @click="$emit('close')">Cancel</button>
+                <button @click="createActivity()" class="bg-green-500 rounded-3xl p-2 hover:bg-green-300">Add</button>
+                <button class="rounded-3xl border border-gray-600 p-2 hover:bg-gray-500" @click="$emit('close')">Cancel</button>
             </div>
-            
         </div>
+    </div>
 </template>
 <script>
 import { ref } from 'vue';
 import store from '../services/store';
+import { formatLocation } from '../services/location';
 
 export default {
     name: "AddActivity",
@@ -32,11 +32,14 @@ export default {
                 return;
             }
             title = title[0].toUpperCase() + title.substring(1);
-            if(title.length > 30) {
-                errorMessage.value = "Maximum length of 30 characters exceeded.";
+            const maxLength = 12;
+            if(title.length > maxLength) {
+                errorMessage.value = `Maximum length of ${maxLength} characters exceeded.`;
                 return;
             }
-            else if(store.getters.activities.filter(activity => activity.title === title).length > 0) {
+            
+            const activities = store.getters.activityMap[store.getters.userLocation.id];
+            if(activities && activities.filter(activity => activity.title === title).length > 0) {
                 errorMessage.value = "There's a bubble with the same description in your area.";
                 return;
             }
@@ -47,7 +50,8 @@ export default {
         return {
             activityTitle,
             errorMessage,
-            createActivity
+            createActivity,
+            formatLocation
         }
     }
 }

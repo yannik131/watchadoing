@@ -1,17 +1,24 @@
 <template>
     <div class="fixed inset-0 bg-black opacity-50 z-30 flex justify-center items-center">
     </div>
-    <div class="z-40 px-5 py-2 rounded bg-white flex flex-col fixed text-center mt-2 popup">
+    <div class="z-40 px-5 py-2 rounded flex flex-col fixed text-center mt-2 popup text-white">
             <h1 class="text-2xl font-bold mb-2">👋 Welcome! 👋</h1>
-            <p class="mb-2 italic">Wanna know what people around you like to do? 🤔</p>
-            <ul class="list-disc">
-                <li>After granting access to your 📍 location, stuff that's popular around you will be shown as bubbles.</li>
-                <li>The bigger the bubble, the more ⭐ popular the stuff!</li>
-                <li>If you don't want to or can't use your current location, you can type in a city here:</li>
-            </ul>
-            <input type="text" placeholder="City or address" class="p-2 w-100 border rounded mt-2" v-model="addressInput" v-on:keyup.enter="onButtonClick()" v-on:input="updateButtonText"/>
+            <p class="mb-2 italic">Wanna know what people around you like to do?</p>
+            <div class="flex items-center">
+                <div class="flex flex-none justify-center items-center" style="width: 32px; height: 32px; border: 1px solid white; border-radius: 50%">📍</div>
+                <div class="ml-2">After granting access to your  location, stuff that's popular around you will be shown as bubbles.</div>
+            </div>
+            <div class="flex items-center mt-2">
+                <div class="flex flex-none justify-center items-center" style="width: 32px; height: 32px; border: 1px solid white; border-radius: 50%"><i class="fas fa-star" style="color: rgb(247	165	61	)"></i></div>
+                <div class="ml-2">The bigger the bubble, the more  popular the stuff!</div>
+            </div>
+            <div class="flex items-center mt-2">
+                <div class="flex flex-none justify-center items-center" style="width: 32px; height: 32px; border: 1px solid white; border-radius: 50%"><img :src="earthSVG" style="height: 21px; width: 21px"/></div>
+                <div class="ml-2">If you don't want to or can't use your current location, you can type in a city here:</div>
+            </div>
+            <input type="text" placeholder="City or address" class="p-2 w-100 border rounded-3xl mt-5 text-black" v-model="addressInput" v-on:keyup.enter="onButtonClick()" v-on:input="updateButtonText"/>
             <div class="flex-1"></div>
-            <button @click="onButtonClick()" class="bg-green-500 rounded p-2 hover:bg-green-300" v-text="buttonText" :disabled="buttonDisabled"></button>
+            <button @click="onButtonClick()" class="bg-green-500 rounded-3xl p-2 hover:bg-green-300" v-text="buttonText" :disabled="buttonDisabled"></button>
         </div>
 </template>
 
@@ -84,7 +91,8 @@ export default {
             buttonDisabled,
             buttonText,
             addressInput,
-            updateButtonText
+            updateButtonText,
+            earthSVG: require('../svg/earth.svg')
         }
     }
 }

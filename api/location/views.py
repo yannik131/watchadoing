@@ -8,7 +8,10 @@ from .serializers import LocationSerializer
 
 class LocationView(views.APIView):
     def post(self, request: Request):
-        location = Location.determine_from_address(request.data.get('address'))
+        if request.data.get('address'):
+            location = Location.determine_from_address(request.data.get('address'))
+        else:
+            location = Location.determine_from_coordinates(**request.data['coordinates'])
             
         return response.Response({'location': LocationSerializer(location).data})
     

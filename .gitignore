@@ -2,5 +2,6 @@
 node_modules
 __pycache__/
 api/env
+dump.rdb
 app/dist
 api/logs/*

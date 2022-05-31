@@ -1,44 +1,18 @@
 import axios from '../services/axios';
 import store from './store';
-import { distance } from '../helpers/utils';
 
 export async function getActivities() {
     store.commit('setFetching', {
         value: true
     });
     
-    const response = await axios.get('api/activities');
-    let activities = response.data;
-    for(const activity of activities) {
-        activity.distance = distance(
-            store.getters.userLatitude,
-            store.getters.userLongitude,
-            activity.latitude,
-            activity.longitude
-        );
-    }
-    activities.sort((a, b) => { return a.distance - b.distance; });
-    
-    const limit = 100;
-    const duplicateCheck = {};
-    const filteredActivities = [];
-    
-    for(const activity of activities) {
-        if(duplicateCheck[activity.title]) {
-            continue;
-        }
-        duplicateCheck[activity.title] = true;
-        filteredActivities.push(activity);
-        if(filteredActivities.length === limit) {
-            break;
-        }
-    }
+    const response = await axios.get('api/activities'); 
     
     store.commit('setFetching', {
         value: false
     });
     
-    return filteredActivities;
+    return response.data;
 }
 
 export async function createActivity(title) {
@@ -47,10 +21,12 @@ export async function createActivity(title) {
             title,
             latitude: store.getters.userLatitude.toFixed(6),
             longitude: store.getters.userLongitude.toFixed(6),
-            likeCount: 0
+            likeCount: 0,
+            location: store.getters.userLocation.id
         };
         const response = await axios.post('api/activities/', data);
         store.commit('addActivity', {
+            locationId: store.getters.userLocation.id,
             activity: response.data
         });
     }

@@ -1,4 +1,5 @@
 import { createStore } from 'vuex';
+import { addToList } from '../helpers/utils';
 import createPersistedState from 'vuex-persistedstate';
 
 export default createStore({
@@ -37,6 +38,9 @@ export default createStore({
         setSelectedLocation(state, { location }) {
             state.selectedLocation = location;
         },
+        addActivity(state, { locationId, activity }) {
+            addToList(state.activityMap, locationId, activity);
+        },
         likeActivity(state, { activity }) {
             if(state.likedActivities[activity.id]) {
                 return;
@@ -67,6 +71,7 @@ export default createStore({
         },
         setUserLocation(state, { location }) {
             state.userLocation = location;
+            console.log(location.id);
         },
         setFetching(state, { value }) {
             state.isFetching = value;
