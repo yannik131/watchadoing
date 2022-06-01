@@ -9,12 +9,15 @@
                 <i class="ml-2 fas fa-window-close cursor-pointer"></i>
             </div>
         </div>
+        <div v-else-if="$store.getters.isFetching">
+            Loading data.. <i class="fa fa-spinner fa-spin mt-10 text-6xl"></i>
+        </div>
         <div v-else-if="$store.getters.locationConfirmed">
             Watcha doing?
         </div>
     </div>
     
-    <div id="add" class="fixed right-0 bottom-0 top-0 z-20 flex items-center blurry">
+    <div id="add" class="fixed z-20 flex items-center blurry" style="top: 50%; right: 0; transform: translate(0, -50%)">
         <div class="flex flex-col">
             <div class="flex justify-center items-center flex-col cursor-pointer hover-green" style="background-color: white; height: 40px; width: 40px; border-radius: 50%;" v-touch="toggleAddActivity">
             <i class="fas fa-plus text-xl"></i>
@@ -108,10 +111,6 @@ export default {
                     title, likeCount
                 });
             }
-            if(displayedActivities.length === 0) {
-                addMarkersForCurrentZoomLevel();
-                return; //TODO: Issue info
-            }
             
             displayedActivities.sort((a, b) => {
                 return b.likeCount - a.likeCount;
@@ -119,6 +118,10 @@ export default {
             const isUserLocation = store.getters.userLocation.id === location.id;
             
             displayedActivities = displayedActivities.slice(0, isUserLocation? 100 : 10);
+            if(displayedActivities.length === 0) {
+                store.commit('setDisplayedActivities', { displayedActivities });
+                return; //TODO: Issue info
+            }
             const maxLikeCount = displayedActivities[0].likeCount;
             const minLikeCount = displayedActivities[displayedActivities.length-1].likeCount;
             
@@ -160,23 +163,7 @@ export default {
         }
         
         onMounted(async () => {
-            const map = getMap();
-            
-            const locations = await getLocations();
-            locationTree.addLocations(locations);
-            
-            const activities = await getActivities();
-            const activityMap = {};
-            for(const activity of activities) {
-                addToList(activityMap, activity.location, activity);
-            }
-            store.commit('setActivityMap', { activityMap });
-            
-            map.addEventListener('zoomend', addMarkersForCurrentZoomLevel);
-            map.addEventListener('zoomstart', clearBubbles);
-            addMarkersForCurrentZoomLevel();
-            
-            centerMapToUserLocation();
+            getMap();
         });
         
         function toggleAddActivity({ closed }) {
@@ -203,10 +190,28 @@ export default {
             setTimeout(() => onMarkerClick(store.getters.userLocation), 100);
         }
         
-        watch(() => store.getters.locationConfirmed, () => {
+        watch(() => store.getters.locationConfirmed, async () => {
             //leaflet doesn't play nicely with Vues dynamic class attributes
             document.getElementById('canvas').classList.toggle('blurry');
             document.getElementById('add').classList.toggle('blurry');
+            store.commit('setFetching', { value: true });
+            const locations = await getLocations();
+            locationTree.addLocations(locations);
+            
+            const activities = await getActivities();
+            const activityMap = {};
+            for(const activity of activities) {
+                addToList(activityMap, activity.location, activity);
+            }
+            store.commit('setActivityMap', { activityMap });
+            
+            getMap().addEventListener('zoomend', addMarkersForCurrentZoomLevel);
+            getMap().addEventListener('zoomstart', clearBubbles);
+            addMarkersForCurrentZoomLevel();
+            
+            store.commit('setFetching', { value: false });
+            
+            centerMapToUserLocation();
         });
         
         return {

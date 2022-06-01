@@ -44,6 +44,9 @@ export async function getUserLocationByAddress(address) {
     try {
         const response = await axios.post('api/locations/', { address });
         if(response.data.location) {
+            response.data.location.latitude = parseFloat(response.data.location.latitude);
+            response.data.location.longitude = parseFloat(response.data.location.longitude);
+            
             store.commit('setUserLatLng', {
                 latitude: response.data.location.latitude,
                 longitude: response.data.location.longitude

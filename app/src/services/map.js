@@ -36,7 +36,7 @@ export function getMap(id = 'canvas') {
     }).addTo(map);
     
     L.control.zoom({
-        position: 'bottomleft'
+        position: 'bottomright'
     }).addTo(map);
     
     return map;
