@@ -11,18 +11,8 @@ c Canceled
 
 --------------------------------
 
-* display like/dislike/dontcare icons in one row
-- connect text/likes to bubbles
-- change bubble text color when liked/disliked
 - make bubbles exchange positions between matrix-layers depending on likes
 - add bubbles in real time with websockets
-- get rid of counties 
 - show bubbles of location closest to center by default
-    -most likes in center
-- display info box with currently viewed location
-- display collapse button to hide the bubbles again and switch to location view
-- show bubbles connected to clicked location
-    - figure out algorithm to accumulate bubbles with equal name. maybe no spaces / hints?
-- display add button on every level, zooms to city level and current location once clicked
-- only like bubbles where you live
+- figure out algorithm to accumulate bubbles with equal name. maybe no spaces / hints?
 - enforce location address format: city[, state] and query the db first before geocoding
