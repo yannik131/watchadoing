@@ -72,7 +72,6 @@ export default createStore({
         },
         setUserLocation(state, { location }) {
             state.userLocation = location;
-            console.log(location.id);
         },
         setFetching(state, { value }) {
             state.isFetching = value;
