@@ -20,7 +20,8 @@ export function getMap(id = 'canvas') {
         center: L.latLng(55, 23),
         minZoom: 4,
         maxZoom: 10,
-        zoomDelta: 2
+        zoomDelta: 2,
+        zoomSnap: 2
     });
     
     layerGroup = L.layerGroup();

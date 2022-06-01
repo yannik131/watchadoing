@@ -21,7 +21,17 @@ export default createStore({
         locationConfirmed: false,
         displayedActivities: [],
         selectedLocation: null,
-        showAddActivity: false
+        showAddActivity: false,
+        //if the state is null, received websocket data can be discarded because it will be downloaded shortly anyways
+        //if the state is 'markers' and a location was created, there are 2 cases:
+        //1. if the location is on the current zoom level, the location and a marker have to be added
+        //2. if not, adding the location is enough
+        //if the state is 'bubbles' and an activity was created:
+        //1. if the currently selected location contains the activity and the number of bubbles does not yet exceed the limit, the activity and bubble have to be added
+        //2. if not, adding the activity is enough
+        //if the state is 'bubbles' and an activity was updated:
+        //if the selected location contains the activity, update the like count of the bubble corresponding to its name
+        appState: null
     }),
     
     mutations: {
@@ -81,6 +91,9 @@ export default createStore({
         },
         toggleShowAddActivity(state) {
             state.showAddActivity = !state.showAddActivity;
+        },
+        setAppState(state, { value }) {
+            state.appState = value;
         }
     },
     
@@ -98,6 +111,7 @@ export default createStore({
         displayedActivities: state => state.displayedActivities,
         selectedLocation: state => state.selectedLocation,
         showAddActivity: state => state.showAddActivity,
-        isUserLocation: state => (state.selectedLocation && state.userLocation) && (state.selectedLocation.id === state.userLocation.id)
+        isUserLocation: state => (state.selectedLocation && state.userLocation) && (state.selectedLocation.id === state.userLocation.id),
+        appState: state => state.appState
     }
 });

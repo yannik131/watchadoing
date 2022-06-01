@@ -5,3 +5,5 @@ django-extensions==3.0.9
 psycopg2==2.8.6
 python-redis-lock==3.7.0
 geopy==2.2.0
+channels==3.0.4
+channels-redis==3.4.0

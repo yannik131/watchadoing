@@ -72,11 +72,12 @@
 import Bubble from '../components/Bubble';
 import AddActivity from '../components/AddActivity.vue';
 import Introduction from '../components/Introduction.vue';
+import consumer from '../services/websocketConsumer';
 import { createActivity, getActivities } from '../services/activity';
 import { watch, onMounted } from 'vue';
 import { centerMapToUserLocation, getMap, addMarker, clearLayers } from '../services/map';
 import store from '../services/store';
-import { getLocations, locationTree, formatLocation } from '../services/location';
+import { getLocations, locationTree, formatLocation, getComponentLevel } from '../services/location';
 import { addToList } from '../helpers/utils.js';
 import PositionFactory from '../helpers/positionFactory';
 
@@ -88,6 +89,27 @@ export default {
         Introduction
     },
     setup() {
+        consumer.register('location:created', (location) => {
+            locationTree.addLocations([location]);
+            const zoomMap = {
+                4: 'country',
+                6: 'state',
+                8: 'county',
+                10: 'city'
+            };
+            
+            if(store.getters.appState === 'markers' && getComponentLevel(location) === zoomMap[getMap().getZoom()]) {
+                addMarker(location.latitude, location.longitude)
+                    .addEventListener('click', () => {
+                        onMarkerClick(location);
+                    });
+            }
+        });
+        
+        consumer.register('activity:created', (activity) => {
+            store.commit('addActivity', { locationId: activity.location, activity });
+        });
+        
         function onMarkerClick(location) {
             clearLayers();
             store.commit('setSelectedLocation', { location });
@@ -134,6 +156,7 @@ export default {
             
             store.commit('setLikeCountMinMax', { minLikeCount, maxLikeCount });
             store.commit('setDisplayedActivities', { displayedActivities });
+            store.commit('setAppState', { value: 'bubbles' });
         }
         
         function clearBubbles() {
@@ -156,12 +179,12 @@ export default {
                 for(const child of locationMap[locationId]) {
                     locations.push(child);
                     addMarker(child.latitude, child.longitude)
-                        .bindPopup(`${child.country}, ${child.state}, ${child.county}, ${child.city}`)
                         .addEventListener('click', () => {
                             onMarkerClick(child);
                         });
                 }
             }
+            store.commit('setAppState', { value: 'markers' });
         }
         
         function onCloseClick() {

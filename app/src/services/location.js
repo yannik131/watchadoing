@@ -11,14 +11,16 @@ export function getUserLocation(successCallback, failureCallback) {
             };
             store.commit('setUserLatLng', coordinates);
             
-            const response = await axios.post('api/locations/', { coordinates });
-            if(response.data.location) {
-                store.commit('setUserLocation', {
-                    location: response.data.location
-                });
+            try {
+                const response = await axios.post('api/locations/', { coordinates });
+                if(response.data.location) {
+                    store.commit('setUserLocation', {
+                        location: response.data.location
+                    });
+                }
             }
-            else {
-                alert(response.data.error);
+            catch(error) {
+                alert(error.response.data.error);
                 if(failureCallback) {
                     failureCallback();
                 }
@@ -93,7 +95,15 @@ export function formatLocation(location, moreInfo = false) {
             }
         }
     }
-    
+}
+
+export function getComponentLevel(location) {
+    for(const component of ['city', 'county', 'state', 'country']) {
+        if(location[component]) {
+            return component;
+        }
+    }
+    throw `${location} has no components`;
 }
 
 export async function getLocations() {

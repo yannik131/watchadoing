@@ -2,12 +2,21 @@ from django.dispatch import receiver
 from django.db.models.signals import m2m_changed, post_save, pre_save, pre_delete
 from .models import Location
 from .utils import geocode
+from websocket.utils import ws_send
+from .serializers import LocationSerializer
 import logging
 
 logger = logging.getLogger('watchadoing')
 
 @receiver(post_save, sender=Location)
 def location_created(instance: Location, created, **kwargs):
+    if created:
+        ws_send({
+            'category': 'location',
+            'action': 'created',
+            'type': 'data_message',
+            'data': LocationSerializer(instance).data
+        })
     if instance.parent:
         return
     parent_components = instance.parent_components()

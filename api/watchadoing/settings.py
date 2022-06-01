@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,7 +42,8 @@ INSTALLED_APPS = [
     'location.apps.LocationConfig',
     'corsheaders',
     'rest_framework',
-    'django_extensions'
+    'django_extensions',
+    'websocket'
 ]
 
 MIDDLEWARE = [
@@ -74,6 +76,20 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'watchadoing.wsgi.application'
+
+ASGI_APPLICATION = 'watchadoing.routing.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('127.0.0.1', 6655)],
+            'group_expiry': 7200,
+            'expiry': 30,
+            'capacity': 1500
+        }
+    }
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
@@ -128,7 +144,8 @@ USE_L10N = True
 USE_TZ = True
 
 SHELL_PLUS_IMPORTS = [
-    'from location.utils import geocode'
+    'from location.utils import geocode, delete_create',
+    'from websocket.utils import ws_send'
 ]
 
 

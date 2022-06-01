@@ -2,9 +2,9 @@ from rest_framework.exceptions import ValidationError
 from geopy import Nominatim
 from redis import StrictRedis
 import redis_lock
-from geopy.extra.rate_limiter import RateLimiter
 import logging
 import time
+from django.apps import apps
 
 logger = logging.getLogger('watchadoing')
 
@@ -31,4 +31,11 @@ def try_keys(obj, *keys):
         if obj.get(key):
             return obj.get(key)
     return None
-            
+
+def delete_create():
+    Location = apps.get_model('location.Location')
+    try:
+        Location.objects.get(city='Kühlungsborn').delete()
+    except:
+        pass
+    Location.determine_from_address('Kühlungsborn')
