@@ -2,7 +2,7 @@
     <div id="canvas" class="absolute text-center cursor-pointer blurry">
     </div>
     
-    <div class="text-3xl font-bold fixed left-0 right-0 text-center z-20 flex justify-center items-center text-white">
+    <div class="text-3xl font-bold fixed text-center z-20 flex justify-center items-center text-white" style="left: 50%; transform: translate(-50%, 0)">
         <div v-if="$store.getters.selectedLocation">
             {{ formatLocation($store.getters.selectedLocation) }}
             <div v-touch="onCloseClick">
@@ -25,7 +25,7 @@
     
     <Introduction v-if="!$store.getters.locationConfirmed"></Introduction>
     
-    <AddActivity v-if="showAddActivity" @activity-created="createActivity" @close="toggleAddActivity({ closed: true })"></AddActivity>
+    <AddActivity v-if="$store.getters.showAddActivity" @activity-created="onActivityCreated" @close="toggleAddActivity({ closed: true })"></AddActivity>
     
     <Bubble 
         v-for="activity in $store.getters.displayedActivities" 
@@ -63,7 +63,7 @@ import Bubble from '../components/Bubble';
 import AddActivity from '../components/AddActivity.vue';
 import Introduction from '../components/Introduction.vue';
 import { createActivity, getActivities } from '../services/activity';
-import { ref, watch, onMounted } from 'vue';
+import { watch, onMounted } from 'vue';
 import { centerMapToUserLocation, getMap, addMarker, clearLayers } from '../services/map';
 import store from '../services/store';
 import { getLocations, locationTree, formatLocation } from '../services/location';
@@ -116,7 +116,9 @@ export default {
             displayedActivities.sort((a, b) => {
                 return b.likeCount - a.likeCount;
             });
-            displayedActivities = displayedActivities.slice(0, 10);
+            const isUserLocation = store.getters.userLocation.id === location.id;
+            
+            displayedActivities = displayedActivities.slice(0, isUserLocation? 100 : 10);
             const maxLikeCount = displayedActivities[0].likeCount;
             const minLikeCount = displayedActivities[displayedActivities.length-1].likeCount;
             
@@ -177,18 +179,28 @@ export default {
             centerMapToUserLocation();
         });
         
-        let showAddActivity = ref(false);
-        const count = ref(10);
-        
         function toggleAddActivity({ closed }) {
             if(!closed) {
-                getMap().setZoom(10);
+                getMap().setZoom(10, { animate: false });
                 centerMapToUserLocation();
-                clearBubbles();
-                //I don't know why I have to use a timeout here. 
-                setTimeout(() => onMarkerClick(store.getters.userLocation), 100);
+                if(!(store.getters.selectedLocation && store.getters.userLocation) || store.getters.selectedLocation.id !== store.getters.userLocation.id) {
+                    //I don't know when exactly the zoomend and zoomstart event listeners are triggered. This small time out
+                    //ought to take care of the issue.
+                    setTimeout(() => {
+                        clearBubbles();
+                        onMarkerClick(store.getters.userLocation);
+                    }, 100);
+                }
+                
             }
-            showAddActivity.value = !showAddActivity.value;
+            //This small timeout prevents a tooltip from appearing if a bubble is behind the cancel button
+            setTimeout(() => store.commit('toggleShowAddActivity'), 10);
+        }
+        
+        async function onActivityCreated(title) {
+            await createActivity(title);
+            clearBubbles();
+            setTimeout(() => onMarkerClick(store.getters.userLocation), 100);
         }
         
         watch(() => store.getters.locationConfirmed, () => {
@@ -198,13 +210,12 @@ export default {
         });
         
         return {
-            showAddActivity,
             toggleAddActivity,
             createActivity,
             centerMapToUserLocation,
             formatLocation,
             onCloseClick,
-            count,
+            onActivityCreated,
             yesSVG: require('../svg/yes.svg'),
             okaySVG: require('../svg/okay.svg'),
             noSVG: require('../svg/no.svg')

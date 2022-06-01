@@ -56,13 +56,13 @@
             </radialGradient>
         </defs>
         </svg>
-    <div :id="`${bubbleId}-tooltip`" class="flex flex-col hidden bg-white rounded border border-gray-400 p-1 gap-1 z-30 tooltip text-left" role="tooltip">
-        <div class="flex flex-row">
-            <div class="p-2 hover:bg-gray-100 text-green-500 font-bold text-xl flex items-center"><img :src="yesSVG"/> <span class="ml-2">Yes!</span></div>
-            <div class="p-2 hover:bg-gray-100 text-red-500 font-bold text-xl flex items-center" style="border-left: 1px solid lightgray"><img :src="noSVG"/> <span class="ml-2">No!</span></div>
+    <div v-if="$store.getters.isUserLocation" :id="`${bubbleId}-tooltip`" class="flex flex-col hidden bg-white rounded border border-gray-400 p-1 gap-1 z-30 tooltip text-left" role="tooltip">
+        <div v-if="!hasAlreadyReacted()" class="flex flex-row">
+            <div v-touch="onTapReaction('likeActivity')" class="p-2 cursor-pointer hover:bg-gray-100 text-green-500 font-bold text-xl flex items-center"><img :src="yesSVG"/> <span class="ml-2">Yes!</span></div>
+            <div v-touch="onTapReaction('dislikeActivity')" class="p-2 cursor-pointer  hover:bg-gray-100 text-red-500 font-bold text-xl flex items-center" style="border-left: 1px solid lightgray"><img :src="noSVG"/> <span class="ml-2">No!</span></div>
         </div>
-        <hr>
-        <div class="p-2 hover:bg-gray-100 text-gray-500 font-bold text-xl flex items-center justify-center"><img :src="okaySVG"/> <span class="ml-2">Okay.</span></div>
+        <hr v-if="!hasAlreadyReacted()">
+        <div v-touch="onTapReaction('resetActivity')" class="p-2 cursor-pointer  hover:bg-gray-100 text-gray-500 font-bold text-xl flex items-center justify-center"><img :src="okaySVG"/> <span class="ml-2">Okay.</span></div>
         <div class="arrow" data-popper-arrow></div>
     </div>
 </template>
@@ -107,9 +107,11 @@
 /* global L */
 import store from '../services/store';
 import PositionFactory from '../helpers/positionFactory';
+import { updateActivity } from '../services/activity';
 import { getRandomFloat, linearFunction } from '../helpers/utils';
 import { getMap, layerGroup } from '../services/map';
-import { onMounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
+import { createPopper } from '@popperjs/core';
 
 export default {
     name: "Bubble",
@@ -131,8 +133,8 @@ export default {
         const bubbleId = `bubble-${props.activity.title}`;
         const title = {
             text: ref(props.activity.title),
-            x: ref(300),
-            y: ref(400)
+            x: ref(0),
+            y: ref(0)
         };
         
         const likeCount = {
@@ -142,27 +144,20 @@ export default {
         };
         
         const fillColor = ref('white');
+        let size;
         
-        onMounted(() => {
-            const position = PositionFactory.get().getRandomPosition();
-            const map = getMap();
-                
-            const lowerLeftCornerLatLng = map.layerPointToLatLng([position[0]-props.mapRectSvgEdgeLength/2, position[1]-props.mapRectSvgEdgeLength/2]);
-            const upperRightCornerLatLng = map.layerPointToLatLng([position[0]+props.mapRectSvgEdgeLength/2, position[1]+props.mapRectSvgEdgeLength/2]);
-            
-            let size;
+        function updateViewbox() {
             if(store.getters.minLikeCount === store.getters.maxLikeCount) {
                 size = 1;
             }
             else {
                 size = linearFunction(
-                    store.getters.minLikeCount, 0.4,
+                    store.getters.minLikeCount, 0.45,
                     store.getters.maxLikeCount, 1.0,
-                    props.activity.likeCount
+                    likeCount.text.value
                 );
             }
             
-            //viewBox parameters
             const width = 1/size * props.bubbleSvgEdgeLength;
             const xmin = props.bubbleSvgEdgeLength/2*(-1/size + 1);
             
@@ -174,37 +169,157 @@ export default {
             const pathElement = document.getElementById(`bubble-${props.activity.title}` + '-svg');
             pathElement.setAttribute(
                 'viewBox', `${getRandomFloat(minXmin, maxXmin)} ${getRandomFloat(minYmin, maxYmin)} ${width} ${props.bubbleSvgEdgeLength}`);
+        }
+        
+        function updateTextPosition(textObject, position) {
+            const bubbleEdgeLength = size * props.mapRectSvgEdgeLength;
+            const textElement = document.getElementById(bubbleId + '-' + position);
+            const textRect = textElement.getBoundingClientRect();
+            textObject.x.value = props.bubbleSvgEdgeLength/2*(1-textRect.width/bubbleEdgeLength);
+            if(position === 'top') {
+                textObject.y.value = props.bubbleSvgEdgeLength/2*(1-textRect.height/bubbleEdgeLength);
+            }
+            else {
+                textObject.y.value = props.bubbleSvgEdgeLength/2*(1+textRect.height/bubbleEdgeLength);
+            }
+        }
+        
+        onMounted(() => {
+            const map = getMap();
+            
+            const position = PositionFactory.get().getRandomPosition();
+            const lowerLeftCornerLatLng = map.layerPointToLatLng([position[0]-props.mapRectSvgEdgeLength/2, position[1]-props.mapRectSvgEdgeLength/2]);
+            const upperRightCornerLatLng = map.layerPointToLatLng([position[0]+props.mapRectSvgEdgeLength/2, position[1]+props.mapRectSvgEdgeLength/2]);
+            
+            updateViewbox();
+            const pathElement = document.getElementById(`bubble-${props.activity.title}` + '-svg');
                 
             L.svgOverlay(pathElement, [lowerLeftCornerLatLng, upperRightCornerLatLng], {
                 interactive: true
             }).addTo(layerGroup);
             
-            function updateTextPosition(textObject, position) {
-                const bubbleEdgeLength = size * props.mapRectSvgEdgeLength;
-                const textElement = document.getElementById(bubbleId + '-' + position);
-                const textRect = textElement.getBoundingClientRect();
-                textObject.x.value = props.bubbleSvgEdgeLength/2*(1-textRect.width/bubbleEdgeLength);
-                if(position === 'top') {
-                    textObject.y.value = props.bubbleSvgEdgeLength/2*(1-textRect.height/bubbleEdgeLength);
-                }
-                else {
-                    textObject.y.value = props.bubbleSvgEdgeLength/2*(1+textRect.height/bubbleEdgeLength);
-                }
-            }
-            
             updateTextPosition(title, 'top');
             updateTextPosition(likeCount, 'bottom');
-            
-            if(store.getters.selectedLocation === store.getters.userLocation) {
-                console.log('adding poppers');
-            }
         });
+        
+        var handler = function onBubbleClick(event) {
+            if(store.getters.showAddActivity) {
+                return;
+            }
+            const rect = document.getElementById(bubbleId).getBoundingClientRect();
+            const x = event.clientX;
+            const y = event.clientY;
+            
+            if (x < rect.left || 
+                x >= rect.right || 
+                y < rect.top || 
+                y >= rect.bottom) {
+                return;
+            }
+            
+            const tooltip = document.getElementById(bubbleId + '-tooltip');
+                
+            const popper = createPopper(
+                document.getElementById(bubbleId), 
+                tooltip, 
+                {
+                    placement: 'bottom',
+                    modifiers: [
+                        {
+                            name: 'offset',
+                            options: {
+                                offset: [0, 8]
+                            }
+                        }
+                    ]
+                }
+            );
+            
+            for(const div of document.getElementsByClassName('tooltip')) {
+                if(div === tooltip) {
+                    continue;
+                }
+                div.classList.add('hidden');
+            }
+            
+            //If the tooltip overlays another bubble, stop the click event from reaching that bubble
+            tooltip.addEventListener('click', (event) => event.stopPropagation());
+            
+            tooltip.classList.toggle('hidden');
+            popper.update();
+            
+            getMap().addEventListener('move', () => {
+                popper.update();
+            });
+        }
+        
+        onUnmounted(() => {
+            document.removeEventListener('click', handler);
+        });
+        
+        const isUserLocation = store.getters.selectedLocation.id === store.getters.userLocation.id;
+        let activity;
+        
+        if(isUserLocation) {
+            //Prevent the click on a marker to open a popper by setting a small timeout until attaching the event listener
+            setTimeout(() => document.addEventListener('click', handler), 10);
+            for(const activityInCity of store.getters.activityMap[store.getters.userLocation.id]) {
+                if(activityInCity.title === props.activity.title) {
+                    activity = activityInCity;
+                    break;
+                }
+            }
+        }
+        
+        async function react(reaction) {
+            store.commit('resetActivity', { activity });
+            store.commit(reaction, { activity });
+            likeCount.text.value = activity.likeCount;
+            
+            const minLikeCount = Math.min(activity.likeCount, store.getters.minLikeCount);
+            const maxLikeCount = Math.max(activity.likeCount, store.getters.maxLikeCount);
+            store.commit('setLikeCountMinMax', { minLikeCount, maxLikeCount });
+            
+            updateViewbox();
+            updateFillColor();
+            const tooltip = document.getElementById(bubbleId + '-tooltip');
+            tooltip.classList.add('hidden');
+            await updateActivity(activity);
+        }
+        
+        function onTapReaction(reaction) {
+            return async function() {
+                await react(reaction);
+            }
+        }
+        
+        function hasAlreadyReacted() {
+            return store.getters.likedActivities[activity.id] || store.getters.dislikedActivities[activity.id];
+        }
+        
+        function updateFillColor() {
+            if(store.getters.likedActivities[activity.id]) {
+                fillColor.value = "green";
+            }
+            else if(store.getters.dislikedActivities[activity.id]) {
+                fillColor.value = "red";
+            }
+            else {
+                fillColor.value = 'white';
+            }
+        }
+        
+        if(isUserLocation) {
+            updateFillColor();
+        }
         
         return {
             bubbleId,
             title,
             likeCount,
             fillColor,
+            onTapReaction,
+            hasAlreadyReacted,
             yesSVG: require('../svg/yes.svg'),
             noSVG: require('../svg/no.svg'),
             okaySVG: require('../svg/okay.svg')

@@ -20,7 +20,8 @@ export default createStore({
         dislikedActivities: {},
         locationConfirmed: false,
         displayedActivities: [],
-        selectedLocation: null
+        selectedLocation: null,
+        showAddActivity: false
     }),
     
     mutations: {
@@ -78,6 +79,9 @@ export default createStore({
         },
         setLocationConfirmed(state, { value }) {
             state.locationConfirmed = value;
+        },
+        toggleShowAddActivity(state) {
+            state.showAddActivity = !state.showAddActivity;
         }
     },
     
@@ -93,6 +97,8 @@ export default createStore({
         likedActivities: state => state.likedActivities,
         dislikedActivities: state => state.dislikedActivities,
         displayedActivities: state => state.displayedActivities,
-        selectedLocation: state => state.selectedLocation
+        selectedLocation: state => state.selectedLocation,
+        showAddActivity: state => state.showAddActivity,
+        isUserLocation: state => (state.selectedLocation && state.userLocation) && (state.selectedLocation.id === state.userLocation.id)
     }
 });
