@@ -16,8 +16,7 @@
                 <div class="flex flex-none justify-center items-center" style="width: 32px; height: 32px; border: 1px solid white; border-radius: 50%"><img :src="earthSVG" style="height: 21px; width: 21px"/></div>
                 <div class="ml-2">If you don't want to or can't use your current location, you can type in a city here:</div>
             </div>
-            <input type="text" placeholder="City or address" class="p-2 w-100 border rounded-3xl mt-5 text-black" v-model="addressInput" v-on:keyup.enter="onButtonClick()" v-on:input="updateButtonText"/>
-            <div class="flex-1"></div>
+            <input type="text" placeholder="City or address" class="p-2 w-100 border rounded-3xl mt-5 text-black mb-3" v-model="addressInput" v-on:keyup.enter="onButtonClick()" v-on:input="updateButtonText"/>
             <button @click="onButtonClick()" class="bg-green-500 rounded-3xl p-2 hover:bg-green-300" v-text="buttonText" :disabled="buttonDisabled"></button>
         </div>
 </template>

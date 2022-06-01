@@ -17,12 +17,19 @@
         </div>
     </div>
     
-    <div id="add" class="fixed z-20 flex items-center blurry" style="top: 50%; right: 0; transform: translate(0, -50%)">
-        <div class="flex flex-col">
+    <div id="add" class="fixed z-20 flex flex-col items-center blurry" style="top: 50%; right: 0; transform: translate(0, -50%)">
+        <div class="flex flex-col items-center">
             <div class="flex justify-center items-center flex-col cursor-pointer hover-green" style="background-color: white; height: 40px; width: 40px; border-radius: 50%;" v-touch="toggleAddActivity">
             <i class="fas fa-plus text-xl"></i>
         </div>
         <div class="text-white text-center">Add</div>
+        </div>
+        
+        <div class="flex flex-col mt-2 items-center">
+            <div class="flex justify-center items-center flex-col cursor-pointer hover-green" style="background-color: white; height: 40px; width: 40px; border-radius: 50%;" v-touch="centerMapToUserLocation">
+            <i class="fas fa-location-arrow"></i>
+        </div>
+        <div class="text-white text-center">Center</div>
         </div>
     </div>
     
