@@ -68,7 +68,7 @@ export default {
                     updateButtonText();
                 }
                 else {
-                    alert(`Determined location: ${formatLocation(location)}. Proceed if this is correct :)`);
+                    alert(`Determined location: ${formatLocation(location, true)}. Proceed if this is correct :)`);
                     addressInput.value = formatLocation(location);
                     buttonText.value = buttonTexts['ready'];
                     locationByAddressSuccess = true;
@@ -78,6 +78,7 @@ export default {
         }
         
         function updateButtonText() {
+            locationByAddressSuccess = false;
             if(addressInput.value.trim().length > 0) {
                 buttonText.value = buttonTexts['addressNotSent'];
             }

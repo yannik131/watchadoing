@@ -72,14 +72,25 @@ export async function getUserLocationByAddress(address) {
     }
 }
 
-export function formatLocation(location) {
+export function formatLocation(location, moreInfo = false) {
     if(!location) {
         return '';
     }
     
+    let result = '';
+    
+    
     for(const component of ['city', 'county', 'state', 'country']) {
         if(location[component]) {
-            return location[component];
+            if(result.length > 0) {
+                return result + ', ' + location[component];
+            }
+            
+            result += location[component];
+            
+            if(!moreInfo) {
+                return result;
+            }
         }
     }
     
