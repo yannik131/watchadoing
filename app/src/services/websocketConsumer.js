@@ -27,6 +27,9 @@ class WebsocketConsumer {
 
   get_url() {
     const prefix = location.protocol === "https" ? "wss" : "ws";
+    if(process.env.VUE_APP_MODE === 'production') {
+      return 'wss://watchadoing.net/ws/pipe/';
+    }
     let host = window.location.host;
     host = host.substring(0, host.indexOf(":"));
     return prefix + "://" + host + ":8000/ws/pipe/";
