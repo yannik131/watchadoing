@@ -164,7 +164,7 @@ CORS_ALLOWED_ORIGINS = [
 
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': True,
+    'disable_existing_loggers': False,
     'formatters': {
         'normal': {
             'format': '{asctime} - {levelname}: {message}',
@@ -175,12 +175,11 @@ LOGGING = {
        'file': {
            'class': 'logging.FileHandler',
            'filename': 'logs/django.log',
-           'formatter': 'normal',
-           'level': 'DEBUG'
+           'formatter': 'normal'
        },
        'console': {
            'class': 'logging.StreamHandler',
-           'level': 'DEBUG',
+           'level': 'ERROR',
            'formatter': 'normal'
        }
     },
@@ -188,6 +187,16 @@ LOGGING = {
         'watchadoing': {
             'handlers': ['file', 'console'],
             'level': 'DEBUG'
+        },
+        '': {
+            'handlers': ['file', 'console'],
+            'level': 'WARNING'
+        },
+        'django.server': {
+            'propagate': True
+        },
+        'django.security': {
+            'propagate': True
         }
     }
 }
