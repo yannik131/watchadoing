@@ -19,6 +19,8 @@ def geocode(*args, **kwargs):
                 result = geolocator.reverse(*args, **kwargs)
             else:
                 result = geolocator.geocode(*args, **kwargs)
+            if result is None:
+                raise Exception()
         except:
             raise ValidationError({'error': 'Could not geocode this location. Please type in another address manually.'})
         remaining_time = 1 - (time.perf_counter() - stamp)

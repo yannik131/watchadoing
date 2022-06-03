@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from location.serializers import LocationSerializer
+from location.serializers import UuidField, IdUuidField
 from .models import Activity
 
 class ActivitySerializer(serializers.ModelSerializer):
@@ -11,3 +11,7 @@ class ActivitySerializer(serializers.ModelSerializer):
                 'read_only': True
             }
         }
+        
+class ActivityWebsocketSerializer(ActivitySerializer):
+    id = UuidField()
+    location = IdUuidField()

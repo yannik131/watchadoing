@@ -89,8 +89,8 @@ export default {
         Introduction
     },
     setup() {
-        consumer.register('location:created', (location) => {
-            locationTree.addLocations([location]);
+        consumer.register('location:created', (locations) => {
+            locationTree.addLocations(locations);
             const zoomMap = {
                 4: 'country',
                 6: 'state',
@@ -98,16 +98,19 @@ export default {
                 10: 'city'
             };
             
-            if(store.getters.appState === 'markers' && getComponentLevel(location) === zoomMap[getMap().getZoom()]) {
-                addMarker(location.latitude, location.longitude)
-                    .addEventListener('click', () => {
+            for(const location of locations) {
+                if(store.getters.appState === 'markers' && getComponentLevel(location) === zoomMap[getMap().getZoom()]) {
+                    addMarker(location.latitude, location.longitude)
+                        .addEventListener('click', () => {
                         onMarkerClick(location);
                     });
+                    break;
+                }
             }
+            
         });
         
-        consumer.register('activity:created', (data) => {
-            const activity = JSON.parse(data);
+        consumer.register('activity:created', (activity) => {
             store.commit('addActivity', { locationId: activity.location, activity });
             
             const minLikeCount = Math.min(activity.likeCount, store.getters.minLikeCount);

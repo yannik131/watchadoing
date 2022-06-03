@@ -40,11 +40,16 @@ class WebsocketConsumer {
         return;
     }
     const data = JSON.parse(payload.data);
-    console.log("Received websocket payload:");
-    console.log(data);
+    if(process.env.VUE_APP_MODE !== 'production') {
+      console.log("Received websocket payload:");
+      console.log(data);
+    }
+    
     const target = `${data.category}:${data.action}`;
     if(!this.func_map[target]) {
-      console.log('No function registered');
+      if(process.env.VUE_APP_MODE !== 'production') {
+        console.log('No function registered');
+      }
       return;
     }
     this.func_map[target](data.data);
