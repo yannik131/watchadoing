@@ -109,6 +109,11 @@ export default {
         consumer.register('activity:created', (data) => {
             const activity = JSON.parse(data);
             store.commit('addActivity', { locationId: activity.location, activity });
+            
+            const minLikeCount = Math.min(activity.likeCount, store.getters.minLikeCount);
+            const maxLikeCount = Math.max(activity.likeCount, store.getters.maxLikeCount);
+            store.commit('setLikeCountMinMax', { minLikeCount, maxLikeCount });
+            
             if(store.getters.appState === 'bubbles' && store.getters.selectedLocation.id === activity.location) {
                 displayActivity(activity);
             }
