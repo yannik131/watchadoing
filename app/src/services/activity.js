@@ -16,10 +16,8 @@ export async function createActivity(title) {
         location: store.getters.userLocation.id
     };
     const response = await axios.post('api/activities/', data);
-    store.commit('addActivity', {
-        locationId: store.getters.userLocation.id,
-        activity: response.data
-    });
+    
+    return response.data;
 }
 
 export async function updateActivity(activity) {

@@ -21,5 +21,5 @@ class Consumer(WebsocketConsumer):
         return super().disconnect(code)
         
     def data_message(self, text_data):
-        text_data.pop('type')
+        #text_data.pop('type')
         self.send(text_data=json.dumps(text_data))

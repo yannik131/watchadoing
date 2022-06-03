@@ -42,6 +42,9 @@ export default createStore({
         setDisplayedActivities(state, { displayedActivities }) {
             state.displayedActivities = displayedActivities;
         },
+        addToDisplayedActivities(state, { activity }) {
+            state.displayedActivities.push(activity);
+        },
         setLikeCountMinMax(state, { minLikeCount, maxLikeCount }) {
             state.minLikeCount = minLikeCount;
             state.maxLikeCount = maxLikeCount;

@@ -1,7 +1,5 @@
 from rest_framework import views, response
-from rest_framework.exceptions import ValidationError
 from rest_framework.request import Request
-from rest_framework.status import HTTP_200_OK
 from .models import Location
 from .serializers import LocationSerializer
 

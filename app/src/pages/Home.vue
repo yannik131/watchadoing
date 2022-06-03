@@ -9,8 +9,8 @@
                 <i class="ml-2 fas fa-window-close cursor-pointer"></i>
             </div>
         </div>
-        <div v-else-if="$store.getters.isFetching">
-            Loading data.. <i class="fa fa-spinner fa-spin mt-10 text-6xl"></i>
+        <div v-else-if="$store.getters.isFetching" class="flex items-center">
+            Loading data.. <i class="fa fa-spinner fa-spin text-3xl ml-1"></i>
         </div>
         <div v-else-if="$store.getters.locationConfirmed">
             Watcha doing?
@@ -106,8 +106,12 @@ export default {
             }
         });
         
-        consumer.register('activity:created', (activity) => {
+        consumer.register('activity:created', (data) => {
+            const activity = JSON.parse(data);
             store.commit('addActivity', { locationId: activity.location, activity });
+            if(store.getters.appState === 'bubbles' && store.getters.selectedLocation.id === activity.location) {
+                displayActivity(activity);
+            }
         });
         
         function onMarkerClick(location) {
@@ -147,6 +151,7 @@ export default {
             const isUserLocation = store.getters.userLocation.id === location.id;
             
             displayedActivities = displayedActivities.slice(0, isUserLocation? 100 : 10);
+            store.commit('setAppState', { value: 'bubbles' });
             if(displayedActivities.length === 0) {
                 store.commit('setDisplayedActivities', { displayedActivities });
                 return; //TODO: Issue info
@@ -156,7 +161,6 @@ export default {
             
             store.commit('setLikeCountMinMax', { minLikeCount, maxLikeCount });
             store.commit('setDisplayedActivities', { displayedActivities });
-            store.commit('setAppState', { value: 'bubbles' });
         }
         
         function clearBubbles() {
@@ -214,10 +218,18 @@ export default {
             setTimeout(() => store.commit('toggleShowAddActivity'), 10);
         }
         
+        function displayActivity(activity) {
+            console.log('displayActivity');
+            if(store.getters.displayedActivities.length === 0) {
+                clearBubbles();
+                setTimeout(() => onMarkerClick(store.getters.userLocation), 100);
+                return;
+            }
+            store.commit('addToDisplayedActivities', { activity });
+        }
+        
         async function onActivityCreated(title) {
             await createActivity(title);
-            clearBubbles();
-            setTimeout(() => onMarkerClick(store.getters.userLocation), 100);
         }
         
         watch(() => store.getters.locationConfirmed, async () => {
