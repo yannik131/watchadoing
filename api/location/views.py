@@ -16,6 +16,7 @@ class LocationView(views.APIView):
         return response.Response({'location': LocationSerializer(location).data})
     
     def get(self, request: Request):
+        raise Exception('Testing logging')
         return response.Response({
             'locations': LocationSerializer(Location.objects.all(), many=True).data
         })
