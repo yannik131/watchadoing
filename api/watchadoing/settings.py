@@ -189,7 +189,7 @@ LOGGING = {
             'level': 'DEBUG'
         },
         '': {
-            'handlers': ['file', 'console'],
+            'handlers': ['file'],
             'level': 'WARNING'
         },
         'django.server': {
