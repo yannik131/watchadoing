@@ -30,7 +30,7 @@ class Location(models.Model):
         #zoom 10 restricts result to city coordinates: https://nominatim.org/release-docs/develop/api/Reverse/#result-limitation
         location = geocode(f"{latitude}, {longitude}", reverse=True, addressdetails=True, zoom=10)
         if location is None:
-            raise ValidationError({'error': f"The coordinates seem to be ill-formatted: {latitude}, {longitude}"})
+            raise ValidationError({'error': "location.error.badCoordinates"})
         return Location.get_from_geopy_location(location)
     
     @staticmethod
@@ -45,7 +45,7 @@ class Location(models.Model):
             #this location, however, contains coordinates of the city
             location = geocode(address, addressdetails=True)
         if location is None:
-            raise ValidationError({'error': "The address could not be found."})
+            raise ValidationError({'error': "location.error.notFound"})
         return Location.get_from_geopy_location(location) 
     
     @staticmethod
@@ -65,7 +65,7 @@ class Location(models.Model):
         components = Location.get_components_from_geopy_location(geopy_location)
         for component in ['state', 'city']:
             if components.get(component) is None:
-                raise ValidationError({'error': f'Could not determine {component} from the given location. Please type in another address manually.'})
+                raise ValidationError({'error': 'location.error.missingComponent'})
             
         if components['county'] is None:
             components['county'] = components['city']

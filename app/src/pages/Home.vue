@@ -10,7 +10,7 @@
             </div>
         </div>
         <div v-else-if="$store.getters.isFetching" class="flex items-center">
-            Loading data.. <i class="fa fa-spinner fa-spin text-3xl ml-1"></i>
+            {{ $t('home.loading') }} <i class="fa fa-spinner fa-spin text-3xl ml-1"></i>
         </div>
         <div v-else-if="$store.getters.locationConfirmed">
             Watcha doing?
@@ -22,14 +22,14 @@
             <div class="flex justify-center items-center flex-col cursor-pointer hover-green" style="background-color: white; height: 40px; width: 40px; border-radius: 50%;" v-touch="toggleAddActivity">
             <i class="fas fa-plus text-xl"></i>
         </div>
-        <div class="text-white text-center">Add</div>
+        <div class="text-white text-center">{{ $t('home.add') }}</div>
         </div>
         
         <div class="flex flex-col mt-2 items-center">
             <div class="flex justify-center items-center flex-col cursor-pointer hover-green" style="background-color: white; height: 40px; width: 40px; border-radius: 50%;" v-touch="centerMapToUserLocation">
             <i class="fas fa-location-arrow"></i>
         </div>
-        <div class="text-white text-center">Center</div>
+        <div class="text-white text-center">{{ $t('home.center') }}</div>
         </div>
     </div>
     

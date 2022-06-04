@@ -18,6 +18,9 @@ const getClient = function() {
                 return response;
             },
             function(error) {
+                if(!error.response) {
+                    throw error;
+                }
                 console.log(`${error.response.request.responseURL}: ${new Date().getTime() - instance.stamp} ms`);
                 console.log(`Request error: ${JSON.stringify(error.response.data)}`);
                 throw error;

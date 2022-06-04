@@ -20,10 +20,15 @@ export function getUserLocation(successCallback, failureCallback) {
                 }
             }
             catch(error) {
-                alert(error.response.data.error);
                 if(failureCallback) {
-                    failureCallback();
+                    if(error.response) {
+                        failureCallback(error.response.data.error);
+                    }
+                    else {
+                        failureCallback();
+                    }
                 }
+                return;
             }
             
             if(successCallback) {
@@ -31,7 +36,6 @@ export function getUserLocation(successCallback, failureCallback) {
             }
         },
         function() {
-            alert("You denied access to your location. This app won't work without your location! You can type it in manually, though.");
             if(failureCallback) {
                 failureCallback();
             }
@@ -64,8 +68,8 @@ export async function getUserLocationByAddress(address) {
         };
     }
     catch(error) {
-        let errorMessage = 'Service unavailable :(';
-        if(error.response.data && error.response.data.error) {
+        let errorMessage = 'location.error.unavailable';
+        if(error.response && error.response.data && error.response.data.error) {
             errorMessage = error.response.data.error
         }
         return {

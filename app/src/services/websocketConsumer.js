@@ -11,10 +11,12 @@ class WebsocketConsumer {
     this.websocket = new WebSocket(url);
     this.websocket.onmessage = this.handle_message.bind(this);
     this.websocket.onclose = function (e) {
-      console.log(
-        "User socket closed unexpectedly. Attempting reconnect in 1 second. Event: ",
-        e
-      );
+      if(process.env.VUE_APP_MODE !== 'production') {
+        console.log(
+          "User socket closed unexpectedly. Attempting reconnect in 1 second. Event: ",
+          e
+        );
+      }
       setTimeout(this.connect.bind(this), 1000);
     }.bind(this);
   }

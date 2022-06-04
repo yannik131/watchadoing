@@ -4,7 +4,7 @@ import createPersistedState from 'vuex-persistedstate';
 
 export default createStore({
     plugins: [createPersistedState({
-        paths: ['likedActivities', 'dislikedActivities', /*'locationConfirmed'*/]
+        paths: ['likedActivities', 'dislikedActivities', 'selectedLanguage', /*'locationConfirmed'*/]
     })],
     state: () => ({
         activityMap: [], //city-id -> [activity]
@@ -22,6 +22,8 @@ export default createStore({
         displayedActivities: [],
         selectedLocation: null,
         showAddActivity: false,
+        selectedLanguage: 'English',
+        availableLanguages: ['English', 'Deutsch'],
         //if the state is null, received websocket data can be discarded because it will be downloaded shortly anyways
         //if the state is 'markers' and a location was created, there are 2 cases:
         //1. if the location is on the current zoom level, the location and a marker have to be added
@@ -133,6 +135,9 @@ export default createStore({
         },
         setAppState(state, { value }) {
             state.appState = value;
+        },
+        setSelectedLanguage(state, { language }) {
+            state.selectedLanguage = language;
         }
     },
     
@@ -151,6 +156,9 @@ export default createStore({
         selectedLocation: state => state.selectedLocation,
         showAddActivity: state => state.showAddActivity,
         isUserLocation: state => (state.selectedLocation && state.userLocation) && (state.selectedLocation.id === state.userLocation.id),
-        appState: state => state.appState
+        appState: state => state.appState,
+        selectedLanguage: state => state.selectedLanguage,
+        availableLanguages: state => state.availableLanguages.filter(item => item !== state.selectedLanguage),
+        selectedLocale: state => { return {'English': 'en', 'Deutsch': 'de'}[state.selectedLanguage]; }
     }
 });
