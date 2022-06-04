@@ -158,7 +158,18 @@ export default {
                 );
             }
             
-            const width = 1/size * props.bubbleSvgEdgeLength;
+            const width = Math.round(1/size * props.bubbleSvgEdgeLength * 100) / 100;
+            const pathElement = document.getElementById(`bubble-${props.activity.title}` + '-svg');
+            if(pathElement) {
+                //In some instances, pathElement was null, even though it shouldn't be, because this function is always called after mounting. Maybe it takes some time sometimes?
+                const oldWidth = parseFloat(pathElement.getAttribute('viewBox').match(/\S+\s+\S+\s+(\S+)/)[1]);
+            
+                if(oldWidth === width) {
+                    return;
+                }
+            }
+            
+            
             const xmin = props.bubbleSvgEdgeLength/2*(-1/size + 1);
             
             const maxXmin = 0;
@@ -166,7 +177,6 @@ export default {
             const minYmin = xmin;
             const maxYmin = -xmin;
             
-            const pathElement = document.getElementById(`bubble-${props.activity.title}` + '-svg');
             pathElement.setAttribute(
                 'viewBox', `${getRandomFloat(minXmin, maxXmin)} ${getRandomFloat(minYmin, maxYmin)} ${width} ${props.bubbleSvgEdgeLength}`);
         }
@@ -272,17 +282,37 @@ export default {
         }
         
         async function react(reaction) {
+            let change;
+            if(reaction === 'likeActivity') {
+                change = 1;
+            }
+            else if(reaction === 'dislikeActivity') {
+                change = -1;
+            }
+            else {
+                if(store.getters.likedActivities[activity.id]) {
+                    change = -1;
+                }
+                else if(store.getters.dislikedActivities[activity.id]) {
+                    change = 1;
+                }
+                else {
+                    document.getElementById(bubbleId + '-tooltip').classList.add('hidden');
+                    return;
+                }
+            }
+            const updatedActivity = {
+                id: activity.id,
+                likeCount: activity.likeCount + change,
+                location: activity.location
+            }
+            store.commit('updateActivity', { updatedActivity });
             store.commit('resetActivity', { activity });
             store.commit(reaction, { activity });
-            likeCount.text.value = activity.likeCount;
             
-            store.commit('updateLikeCountMinMax', { activity });
-            
-            updateViewbox();
             updateFillColor();
-            const tooltip = document.getElementById(bubbleId + '-tooltip');
-            tooltip.classList.add('hidden');
-            await updateActivity(activity);
+            document.getElementById(bubbleId + '-tooltip').classList.add('hidden');
+            await updateActivity(activity.id, change);
         }
         
         function onTapReaction(reaction) {
@@ -314,10 +344,6 @@ export default {
         watch(() => store.getters.displayedActivities, () => {
             for(const activity of store.getters.displayedActivities) {
                 if(activity.title === props.activity.title) {
-                    if(activity.likeCount == likeCount.text.value) {
-                        return;
-                    }
-                    store.commit('updateLikeCountMinMax', { activity });
                     likeCount.text.value = activity.likeCount;
                     updateViewbox();
                     break;

@@ -113,9 +113,9 @@ export default {
         consumer.register('activity:created', (activity) => {
             store.commit('addActivity', { locationId: activity.location, activity });
             
-            store.commit('updateLikeCountMinMax', { activity });
             
             if(store.getters.appState === 'bubbles' && store.getters.selectedLocation.id === activity.location) {
+                store.commit('updateLikeCountMinMax', { activity });
                 if(store.getters.displayedActivities.length === 0) {
                     clearBubbles();
                     setTimeout(() => onMarkerClick(store.getters.userLocation), 100);
@@ -224,6 +224,9 @@ export default {
         });
         
         function toggleAddActivity({ closed }) {
+            if(store.getters.isFetching) {
+                return;
+            }
             if(!closed) {
                 getMap().setZoom(10, { animate: false });
                 centerMapToUserLocation();

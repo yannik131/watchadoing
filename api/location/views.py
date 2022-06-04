@@ -4,7 +4,7 @@ from .models import Location
 from .serializers import LocationSerializer
 
 
-class LocationView(views.APIView):
+class LocationCreateView(views.APIView):
     def post(self, request: Request):
         if request.data.get('address'):
             location = Location.determine_from_address(request.data.get('address'))
@@ -13,6 +13,7 @@ class LocationView(views.APIView):
             
         return response.Response({'location': LocationSerializer(location).data})
     
+class LocationGetView(views.APIView):
     def get(self, request: Request):
         return response.Response({
             'locations': LocationSerializer(Location.objects.all(), many=True).data

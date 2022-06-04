@@ -12,7 +12,7 @@ export function getUserLocation(successCallback, failureCallback) {
             store.commit('setUserLatLng', coordinates);
             
             try {
-                const response = await axios.post('api/locations/', { coordinates });
+                const response = await axios.post('api/locations/create/', { coordinates });
                 if(response.data.location) {
                     store.commit('setUserLocation', {
                         location: response.data.location
@@ -44,7 +44,7 @@ export function getUserLocation(successCallback, failureCallback) {
 
 export async function getUserLocationByAddress(address) {
     try {
-        const response = await axios.post('api/locations/', { address });
+        const response = await axios.post('api/locations/create/', { address });
         if(response.data.location) {
             response.data.location.latitude = parseFloat(response.data.location.latitude);
             response.data.location.longitude = parseFloat(response.data.location.longitude);

@@ -15,14 +15,13 @@ Including another URLconf
 """
 from activity import views as activity_views
 from location import views as location_views
-from rest_framework.routers import DefaultRouter
 from django.urls import path
 
-router = DefaultRouter()
-router.register(r'api/activities', activity_views.ActivityViewSet, basename='activities')
-
-urlpatterns = router.urls
-
-urlpatterns += [
-    path('api/locations/', location_views.LocationView.as_view())
+urlpatterns = [
+    path('api/locations/create/', location_views.LocationCreateView.as_view()),
+    path('api/locations/', location_views.LocationGetView.as_view()),
+    path('api/activities/', activity_views.ActivityGetView.as_view()),
+    path('api/activities/like/', activity_views.ActivityLikeView.as_view()),
+    path('api/activities/dislike/', activity_views.ActivityDislikeView.as_view()),
+    path('api/activities/create/', activity_views.ActivityCreateView.as_view())
 ]

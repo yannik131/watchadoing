@@ -86,7 +86,7 @@ CHANNEL_LAYERS = {
             'hosts': [('127.0.0.1', 6655)],
             'group_expiry': 7200,
             'expiry': 30,
-            'capacity': 1500
+            'capacity': 10000
         }
     }
 }

@@ -61,49 +61,57 @@ export default createStore({
         },
         updateActivity(state, { updatedActivity }) {
             let change;
-            let object;
+            let object1;
+            let object2;
+            
             for(const activity of state.activityMap[updatedActivity.location]) {
                 if(activity.id === updatedActivity.id) {
                     change = updatedActivity.likeCount - activity.likeCount;
-                    activity.likeCount += change;
-                    object = activity;
-                    console.log('change:', change);
+                    object1 = activity;
                     break;
                 }
             }
             
+            let maxLikeCount = -1e6;
             for(const activity of state.displayedActivities) {
                 if(activity.ids.indexOf(updatedActivity.id) > -1) {
-                    if(object === activity) {
-                        //wtf?
-                        return;
-                    }
-                    activity.likeCount += change;
-                    break;
+                    object2 = activity;
+                    state.minLikeCount = Math.min(state.minLikeCount, updatedActivity.likeCount);
+                    maxLikeCount = Math.max(maxLikeCount, activity.likeCount + change);
                 }
+                else {
+                    maxLikeCount = Math.max(maxLikeCount, activity.likeCount);
+                }
+            }
+            if(maxLikeCount !== -1e6) {
+                state.maxLikeCount = maxLikeCount;
+            }
+            
+            if(object1 === object2) {
+                object1.likeCount += change;
+            }
+            else {
+                object1.likeCount += change;
+                object2.likeCount += change;
             }
         },
         likeActivity(state, { activity }) {
             if(state.likedActivities[activity.id]) {
                 return;
             }
-            ++activity.likeCount;
             state.likedActivities[activity.id] = true;
         },
         dislikeActivity(state, { activity }) {
             if(state.dislikedActivities[activity.id]) {
                 return;
             }
-            --activity.likeCount;
             state.dislikedActivities[activity.id] = true;
         },
         resetActivity(state, { activity }) {
             if(state.likedActivities[activity.id]) {
-                --activity.likeCount;
                 delete state.likedActivities[activity.id];
             }
             else if(state.dislikedActivities[activity.id]) {
-                ++activity.likeCount;
                 delete state.dislikedActivities[activity.id];
             }
         },
