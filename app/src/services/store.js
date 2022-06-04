@@ -100,7 +100,9 @@ export default createStore({
             }
             else {
                 object1.likeCount += change;
-                object2.likeCount += change;
+                if(object2) {
+                    object2.likeCount += change;
+                }
             }
         },
         likeActivity(state, { activity }) {
