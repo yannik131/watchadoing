@@ -81,18 +81,23 @@ export default createStore({
             }
             
             let maxLikeCount = -1e6;
+            let minLikeCount = 1e6;
             for(const activity of state.displayedActivities) {
                 if(activity.ids.indexOf(updatedActivity.id) > -1) {
                     object2 = activity;
-                    state.minLikeCount = Math.min(state.minLikeCount, updatedActivity.likeCount);
+                    minLikeCount = Math.min(minLikeCount, activity.likeCount + change);
                     maxLikeCount = Math.max(maxLikeCount, activity.likeCount + change);
                 }
                 else {
+                    minLikeCount = Math.min(minLikeCount, activity.likeCount);
                     maxLikeCount = Math.max(maxLikeCount, activity.likeCount);
                 }
             }
             if(maxLikeCount !== -1e6) {
                 state.maxLikeCount = maxLikeCount;
+            }
+            if(minLikeCount !== 1e6) {
+                state.minLikeCount = minLikeCount;
             }
             
             if(object1 === object2) {
