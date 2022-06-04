@@ -113,18 +113,28 @@ export default {
         consumer.register('activity:created', (activity) => {
             store.commit('addActivity', { locationId: activity.location, activity });
             
+            if(store.getters.appState !== 'bubbles') {
+                return;
+            }
             
-            if(store.getters.appState === 'bubbles' && store.getters.selectedLocation.id === activity.location) {
-                store.commit('updateLikeCountMinMax', { activity });
-                if(store.getters.displayedActivities.length === 0) {
-                    clearBubbles();
-                    setTimeout(() => onMarkerClick(store.getters.userLocation), 100);
+            const activityLocationSelected = store.getters.selectedLocation.id === activity.location;
+            if(!activityLocationSelected) {
+                const cities = locationTree.collectCitiesIn(store.getters.selectedLocation);
+                const cityIndex = cities.map(city => city.id).indexOf(activity.location);
+                if(cityIndex === -1) {
                     return;
                 }
-                else {
-                    activity.ids = [activity.id];
-                    store.commit('addToDisplayedActivities', { activity });
-                }
+            }
+            
+            store.commit('updateLikeCountMinMax', { activity });
+            if(store.getters.displayedActivities.length === 0) {
+                clearBubbles();
+                setTimeout(() => onMarkerClick(store.getters.userLocation), 100);
+                return;
+            }
+            else {
+                activity.ids = [activity.id];
+                store.commit('addToDisplayedActivities', { activity });
             }
         });
         
