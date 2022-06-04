@@ -1,7 +1,7 @@
 <template>
     <div class="fixed inset-0 bg-black opacity-50 z-30 flex justify-center items-center">
     </div>
-    <div class="absolute top-0 left-0 bg-white z-40 p-2 rounded  cursor-pointer" style="min-width: 94px">
+    <div class="absolute top-0 left-0 bg-white p-2 rounded  cursor-pointer" style="min-width: 94px; margin-top: 3px; margin-left: 3px; z-index: 999">
         <div v-touch="toggleLanguageChanging">
             {{ $store.getters.selectedLanguage }}
             <div class="inline" v-if="languageChanging"><i class="fas fa-angle-up"></i></div>
