@@ -128,8 +128,9 @@ export default {
             
             store.commit('updateLikeCountMinMax', { activity });
             if(store.getters.displayedActivities.length === 0) {
+                const location = store.getters.selectedLocation;
                 clearBubbles();
-                setTimeout(() => onMarkerClick(store.getters.userLocation), 100);
+                setTimeout(() => onMarkerClick(location), 100);
                 return;
             }
             else {

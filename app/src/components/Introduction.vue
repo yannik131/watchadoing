@@ -10,7 +10,7 @@
             </div>
             <div class="flex items-center mt-2">
                 <div class="flex flex-none justify-center items-center" style="width: 32px; height: 32px; border: 1px solid white; border-radius: 50%"><i class="fas fa-star" style="color: rgb(247	165	61	)"></i></div>
-                <div class="ml-2">The bigger the bubble, the more  popular the stuff!</div>
+                <div class="ml-2">The bigger the bubble, the more  popular the stuff! Like and add bubbles where you live.</div>
             </div>
             <div class="flex items-center mt-2">
                 <div class="flex flex-none justify-center items-center" style="width: 32px; height: 32px; border: 1px solid white; border-radius: 50%"><img :src="earthSVG" style="height: 21px; width: 21px"/></div>
