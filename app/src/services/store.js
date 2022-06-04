@@ -45,6 +45,10 @@ export default createStore({
         addToDisplayedActivities(state, { activity }) {
             state.displayedActivities.push(activity);
         },
+        updateLikeCountMinMax(state, { activity }) {
+            state.minLikeCount = Math.min(activity.likeCount, state.minLikeCount);
+            state.maxLikeCount = Math.max(activity.likeCount, state.maxLikeCount);
+        },
         setLikeCountMinMax(state, { minLikeCount, maxLikeCount }) {
             state.minLikeCount = minLikeCount;
             state.maxLikeCount = maxLikeCount;
@@ -54,6 +58,30 @@ export default createStore({
         },
         addActivity(state, { locationId, activity }) {
             addToList(state.activityMap, locationId, activity);
+        },
+        updateActivity(state, { updatedActivity }) {
+            let change;
+            let object;
+            for(const activity of state.activityMap[updatedActivity.location]) {
+                if(activity.id === updatedActivity.id) {
+                    change = updatedActivity.likeCount - activity.likeCount;
+                    activity.likeCount += change;
+                    object = activity;
+                    console.log('change:', change);
+                    break;
+                }
+            }
+            
+            for(const activity of state.displayedActivities) {
+                if(activity.ids.indexOf(updatedActivity.id) > -1) {
+                    if(object === activity) {
+                        //wtf?
+                        return;
+                    }
+                    activity.likeCount += change;
+                    break;
+                }
+            }
         },
         likeActivity(state, { activity }) {
             if(state.likedActivities[activity.id]) {

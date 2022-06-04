@@ -110,7 +110,7 @@ import PositionFactory from '../helpers/positionFactory';
 import { updateActivity } from '../services/activity';
 import { getRandomFloat, linearFunction } from '../helpers/utils';
 import { getMap, layerGroup } from '../services/map';
-import { onMounted, onUnmounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { createPopper } from '@popperjs/core';
 
 export default {
@@ -276,9 +276,7 @@ export default {
             store.commit(reaction, { activity });
             likeCount.text.value = activity.likeCount;
             
-            const minLikeCount = Math.min(activity.likeCount, store.getters.minLikeCount);
-            const maxLikeCount = Math.max(activity.likeCount, store.getters.maxLikeCount);
-            store.commit('setLikeCountMinMax', { minLikeCount, maxLikeCount });
+            store.commit('updateLikeCountMinMax', { activity });
             
             updateViewbox();
             updateFillColor();
@@ -312,6 +310,20 @@ export default {
         if(isUserLocation) {
             updateFillColor();
         }
+        
+        watch(() => store.getters.displayedActivities, () => {
+            for(const activity of store.getters.displayedActivities) {
+                if(activity.title === props.activity.title) {
+                    if(activity.likeCount == likeCount.text.value) {
+                        return;
+                    }
+                    store.commit('updateLikeCountMinMax', { activity });
+                    likeCount.text.value = activity.likeCount;
+                    updateViewbox();
+                    break;
+                }
+            }
+        }, { deep: true });
         
         return {
             bubbleId,

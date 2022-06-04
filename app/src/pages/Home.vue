@@ -113,13 +113,23 @@ export default {
         consumer.register('activity:created', (activity) => {
             store.commit('addActivity', { locationId: activity.location, activity });
             
-            const minLikeCount = Math.min(activity.likeCount, store.getters.minLikeCount);
-            const maxLikeCount = Math.max(activity.likeCount, store.getters.maxLikeCount);
-            store.commit('setLikeCountMinMax', { minLikeCount, maxLikeCount });
+            store.commit('updateLikeCountMinMax', { activity });
             
             if(store.getters.appState === 'bubbles' && store.getters.selectedLocation.id === activity.location) {
-                displayActivity(activity);
+                if(store.getters.displayedActivities.length === 0) {
+                    clearBubbles();
+                    setTimeout(() => onMarkerClick(store.getters.userLocation), 100);
+                    return;
+                }
+                else {
+                    activity.ids = [activity.id];
+                    store.commit('addToDisplayedActivities', { activity });
+                }
             }
+        });
+        
+        consumer.register('activity:updated', (updatedActivity) => {
+            store.commit('updateActivity', { updatedActivity });
         });
         
         function onMarkerClick(location) {
@@ -135,10 +145,14 @@ export default {
                 }
                 for(const activity of activitiesInCity) {
                     if(!activities[activity.title]) {
-                        activities[activity.title] = activity.likeCount;
+                        activities[activity.title] = {
+                            likeCount: activity.likeCount,
+                            ids: [activity.id]
+                        }
                     }
                     else {
-                        activities[activity.title] += activity.likeCount;
+                        activities[activity.title].likeCount += activity.likeCount;
+                        activities[activity.title].ids.push(activity.id);
                     }
                 }
             }
@@ -147,9 +161,10 @@ export default {
             PositionFactory.set(center.x, center.y, 150);
             
             let displayedActivities = [];
-            for(const [title, likeCount] of Object.entries(activities)) {
+            for(const [title, activity] of Object.entries(activities)) {
                 displayedActivities.push({
-                    title, likeCount
+                    title,
+                    ...activity
                 });
             }
             
@@ -224,16 +239,6 @@ export default {
             }
             //This small timeout prevents a tooltip from appearing if a bubble is behind the cancel button
             setTimeout(() => store.commit('toggleShowAddActivity'), 10);
-        }
-        
-        function displayActivity(activity) {
-            console.log('displayActivity');
-            if(store.getters.displayedActivities.length === 0) {
-                clearBubbles();
-                setTimeout(() => onMarkerClick(store.getters.userLocation), 100);
-                return;
-            }
-            store.commit('addToDisplayedActivities', { activity });
         }
         
         async function onActivityCreated(title) {

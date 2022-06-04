@@ -142,7 +142,6 @@ class LocationTree {
             else {
                 dict = this.cities;
             }
-            console.log('Adding', location, 'to', dict);
             addToList(dict, location.parent, location);
         }
     }
