@@ -1,7 +1,7 @@
 export default {
   en: {
     introduction: {
-      title: "Welcome",
+      title: "Welcome!",
       subtitle: "Watch in real time how bubbles are added and grow!",
       explanation: "After granting access to your location, click on the location markers to see the bubbles.",
       popular: "The bigger the bubble, the more popular whatever is inside it! You can (dis)like and add bubbles only at your location.",
@@ -46,7 +46,7 @@ export default {
   },
   de: {
     introduction: {
-      title: "Willkommen",
+      title: "Willkommen!",
       subtitle: "Schaue in Echtzeit zu, wie Blasen dazukommen und wachsen!",
       explanation: "Gib Deinen Standort frei und klicke auf einen Standortmarker, um die Blasen zu sehen.",
       popular: "Je größer die Blase, desto mehr Leute mögen, was drin steht! Du kannst Blasen nur an deinem Standort (dis)liken und hinzufügen.",

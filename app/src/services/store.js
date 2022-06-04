@@ -45,6 +45,12 @@ export default createStore({
             state.displayedActivities = displayedActivities;
         },
         addToDisplayedActivities(state, { activity }) {
+            for(const displayedActivity of state.displayedActivities) {
+                if(displayedActivity.title === activity.title) {
+                    displayedActivity.ids.push(activity.id);
+                    return;
+                }
+            }
             state.displayedActivities.push(activity);
         },
         updateLikeCountMinMax(state, { activity }) {

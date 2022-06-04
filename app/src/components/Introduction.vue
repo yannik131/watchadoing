@@ -15,7 +15,7 @@
         </div>
     </div>
     <div class="z-40 px-5 py-2 rounded flex flex-col fixed text-center mt-2 popup text-white">
-            <h1 class="text-2xl font-bold mb-2">👋 {{ $t('introduction.title') }} 👋</h1>
+            <h1 class="text-2xl font-bold mb-2">{{ $t('introduction.title') }}</h1>
             <p class="mb-2 italic">{{ $t('introduction.subtitle') }}</p>
             <div class="flex items-center">
                 <div class="flex flex-none justify-center items-center" style="width: 32px; height: 32px; border: 1px solid white; border-radius: 50%">📍</div>

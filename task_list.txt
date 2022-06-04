@@ -12,7 +12,6 @@ c Canceled
 --------------------------------
 
 - make bubbles exchange positions between matrix-layers depending on likes
-- add bubbles in real time with websockets
 - show bubbles of location closest to center by default
 - figure out algorithm to accumulate bubbles with equal name. maybe no spaces / hints?
 - enforce location address format: city[, state] and query the db first before geocoding
