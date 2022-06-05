@@ -68,39 +68,21 @@
 </template>
 
 <style>
-    .arrow,
-    .arrow::before {
-        position: absolute;
-        width: 8px;
-        height: 8px;
-        background: inherit;
-    }
+.tooltip[data-popper-placement^='top'] > .arrow {
+    bottom: -4px;
+}
 
-    .arrow {
-        visibility: hidden;
-    }
+.tooltip[data-popper-placement^='bottom'] > .arrow {
+    top: -4px;
+}
 
-    .arrow::before {
-        visibility: visible;
-        content: '';
-        transform: rotate(45deg);
-    }
+.tooltip[data-popper-placement^='left'] > .arrow {
+    right: -4px;
+}
 
-    .tooltip[data-popper-placement^='top'] > .arrow {
-        bottom: -4px;
-    }
-
-    .tooltip[data-popper-placement^='bottom'] > .arrow {
-        top: -4px;
-    }
-
-    .tooltip[data-popper-placement^='left'] > .arrow {
-        right: -4px;
-    }
-
-    .tooltip[data-popper-placement^='right'] > .arrow {
-        left: -4px;
-    }
+.tooltip[data-popper-placement^='right'] > .arrow {
+    left: -4px;
+}
 </style>
 
 <script>

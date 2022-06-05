@@ -11,8 +11,11 @@ logger = logging.getLogger('watchadoing')
 geolocator = Nominatim(user_agent="watchadoing")
 redis_connection = StrictRedis(host="localhost", port=6655)
 
+def get_lock(name):
+    return redis_lock.Lock(redis_connection, name=name)
+
 def geocode(*args, **kwargs):
-    with redis_lock.Lock(redis_connection, name='geocode'):
+    with get_lock('geocode'):
         stamp = time.perf_counter()
         try:
             if kwargs.pop('reverse', False):

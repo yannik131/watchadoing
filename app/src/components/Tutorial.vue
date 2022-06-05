@@ -1,0 +1,115 @@
+<template>
+<div id="tutorial" class="bg-white p-2 hidden rounded z-30 tooltip" style="width: 200px;">
+    <div v-touch="close" class="cursor-pointer" style="position: absolute; top: -2px; right: 5px">
+      <i class="fas fa-times text-xl"></i>
+    </div>
+    {{ $t(text) }}
+    <div class="flex justify-around items-center mt-2">
+      <div>{{ currentCount }}/{{ maxCount }}</div>
+      <button @click="next" class="text-white rounded p-1 px-2" style="background-color: rgb(0 125 224)">
+        <span v-if="currentCount < maxCount">{{ $t('tutorial.next') }}</span>
+        <span v-else>{{ $t('tutorial.close') }}</span>
+        
+      </button>
+    </div>
+    <div class="arrow" data-popper-arrow></div>
+</div>
+</template>
+
+<style>
+.tooltip[data-popper-placement^='left'] > .arrow {
+    left: 176px;
+}
+
+.tooltip[data-popper-placement^='bottom'] > .arrow {
+    left: 176px;
+}
+</style>
+
+<script>
+import { onMounted, ref } from 'vue';
+import { createPopper } from '@popperjs/core';
+import store from '../services/store';
+
+export default {
+  name: 'Tutorial',
+  setup() {
+    const targets = [
+      null,
+      () => document.getElementById('add'),
+      () => document.getElementsByClassName('leaflet-control-zoom')[0],
+      () => document.getElementById('info-box'),
+      () => document.getElementById('info-box')
+    ];
+    
+    const positions = [
+      null,
+      'left',
+      'left',
+      'bottom',
+      'bottom'
+    ];
+    
+    const offsets = [
+      null,
+      [-10, 10],
+      [-10, 10],
+      [0, 0],
+      [0, 0]
+    ];
+    
+    const text = ref('');
+    const currentCount = ref(0);
+    const maxCount = ref(4);
+    
+    let popper;
+    
+    onMounted(() => {
+      next();
+    });
+    
+    function next() {
+      const tooltip = document.getElementById('tutorial');
+      currentCount.value++;
+      if(currentCount.value > maxCount.value) {
+        tooltip.classList.add('hidden');
+        store.commit('setTutorialShown');
+        return;
+      }
+      text.value = `tutorial.text${currentCount.value}`;
+      
+      popper = createPopper(
+          targets[currentCount.value](), 
+          tooltip, 
+          {
+              placement: positions[currentCount.value],
+              modifiers: [
+                  {
+                      name: 'offset',
+                      options: {
+                          offset: offsets[currentCount.value]
+                      }
+                  }
+              ]
+          }
+      );
+      
+      tooltip.classList.remove('hidden');
+      popper.update();
+    }
+    
+    function close() {
+      currentCount.value = maxCount.value + 1;
+      next();
+    }
+    
+    return {
+      text,
+      currentCount,
+      maxCount,
+      next,
+      close
+    };
+  }
+}
+</script>

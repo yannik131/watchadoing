@@ -63,6 +63,10 @@ class Location(models.Model):
     @staticmethod
     def get_from_geopy_location(geopy_location: geopy.location.Location):
         components = Location.get_components_from_geopy_location(geopy_location)
+        #Berlin..
+        if components['city'] and not components['state']:
+            components['state'] = components['city']
+            
         for component in ['state', 'city']:
             if components.get(component) is None:
                 raise ValidationError({'error': 'location.error.missingComponent'})

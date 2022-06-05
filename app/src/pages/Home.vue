@@ -2,7 +2,7 @@
     <div id="canvas" class="absolute text-center cursor-pointer blurry">
     </div>
     
-    <div class="text-3xl font-bold fixed text-center z-20 flex justify-center items-center text-white" style="left: 50%; transform: translate(-50%, 0)">
+    <div id="info-box" class="text-3xl font-bold fixed text-center z-20 flex justify-center items-center text-white" style="left: 50%; transform: translate(-50%, 0)">
         <div v-if="$store.getters.selectedLocation">
             {{ formatLocation($store.getters.selectedLocation) }}
             <div v-touch="onCloseClick">
@@ -17,7 +17,7 @@
         </div>
     </div>
     
-    <div id="add" class="fixed z-20 flex flex-col items-center blurry" style="top: 50%; right: 0; transform: translate(0, -50%)">
+    <div id="add" class="fixed z-20 flex flex-col items-center blurry" style="top: 50%; right: 5px; transform: translate(0, -50%)">
         <div class="flex flex-col items-center">
             <div class="flex justify-center items-center flex-col cursor-pointer hover-green" style="background-color: white; height: 40px; width: 40px; border-radius: 50%;" v-touch="toggleAddActivity">
             <i class="fas fa-plus text-xl"></i>
@@ -45,6 +45,8 @@
         :mapRectSvgEdgeLength="150"
         >
     </Bubble>
+    
+    <Tutorial v-if="$store.getters.locationDetermined && !$store.getters.tutorialShown"></Tutorial>
 </template>
 
 <style>
@@ -72,6 +74,7 @@
 import Bubble from '../components/Bubble';
 import AddActivity from '../components/AddActivity.vue';
 import Introduction from '../components/Introduction.vue';
+import Tutorial from '../components/Tutorial';
 import consumer from '../services/websocketConsumer';
 import { createActivity, getActivities } from '../services/activity';
 import { watch, onMounted } from 'vue';
@@ -86,7 +89,8 @@ export default {
     components: {
         Bubble,
         AddActivity,
-        Introduction
+        Introduction,
+        Tutorial
     },
     setup() {
         consumer.register('location:created', (locations) => {

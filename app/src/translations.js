@@ -47,6 +47,14 @@ export default {
       like: 'Yes!',
       dislike: 'No!',
       reset: 'Okay.'
+    },
+    tutorial: {
+      next: "Next",
+      close: "Close",
+      text1: "Click on the plus to zoom in on your location and add a bubble. The other button centers the map on your location.",
+      text2: "There are 4 zoom levels: Countries, states, counties and cities. Bubbles are are summed up over all cities within the selected location!",
+      text3: "After clicking on one of the blue markers, the name of the selected location is shown here. You can add and like bubbles only in the city you specified earlier.",
+      text4: "If you click on the marker of a location, you can see in real time how others add bubbles and change their size by liking them! Have fun!"
     }
   },
   de: {
@@ -97,6 +105,14 @@ export default {
       like: 'Ja!',
       dislike: 'Nein!',
       reset: 'Okay.'
+    },
+    tutorial: {
+      next: "Nächste",
+      close: "Fertig",
+      text1: "Klicke auf das Plus, um in deinen Standort zu zoomen und eine Blase hinzuzufügen. Der andere Button zentriert die Karte auf deinen Standort.",
+      text2: "Es gibt 4 Zoomstufen: Länder, Bundesländer, Landkreise und Städte. Blasen werden über alle Städte innerhalb des ausgewählten Standorts aufsummiert!",
+      text3: "Nach Klicken auf einen der blauen Marker wird der Name des ausgewählten Ortes hier angezeigt. Blasen können nur in deinem angegeben Ort geliked werden.",
+      text4: "Wenn Du z. B. auf den Marker von Deutschland klickst, kannst Du in Echtzeit verfolgen, wie andere neue Blasen hinzufügen und ihre Größe durch liken ändern! Viel Spaß!"
     }
   },
 };
