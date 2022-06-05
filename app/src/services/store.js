@@ -34,7 +34,9 @@ export default createStore({
         //2. if not, adding the activity is enough
         //if the state is 'bubbles' and an activity was updated:
         //if the selected location contains the activity, update the like count of the bubble corresponding to its name
-        appState: null
+        appState: null,
+        cityRanking: [],
+        rankedActivityTitle: null
     }),
     
     mutations: {
@@ -155,6 +157,12 @@ export default createStore({
         },
         setTutorialShown(state) {
             state.tutorialShown = true;
+        },
+        setCityRanking(state, { ranking }) {
+            state.cityRanking = ranking;
+        },
+        setRankedActivityTitle(state, { title }) {
+            state.rankedActivityTitle = title;
         }
     },
     
@@ -177,6 +185,8 @@ export default createStore({
         selectedLanguage: state => state.selectedLanguage,
         availableLanguages: state => state.availableLanguages.filter(item => item !== state.selectedLanguage),
         selectedLocale: state => { return {'English': 'en', 'Deutsch': 'de'}[state.selectedLanguage]; },
-        tutorialShown: state => state.tutorialShown
+        tutorialShown: state => state.tutorialShown,
+        cityRanking: state => state.cityRanking,
+        rankedActivityTitle: state => state.rankedActivityTitle
     }
 });

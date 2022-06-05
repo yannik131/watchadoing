@@ -46,7 +46,7 @@
         >
     </Bubble>
     
-    <Tutorial v-if="$store.getters.locationConfirmed && !$store.getters.tutorialShown"></Tutorial>
+    <Tutorial v-if="true"></Tutorial>
 </template>
 
 <style>

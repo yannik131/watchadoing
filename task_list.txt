@@ -15,11 +15,5 @@ c Canceled
 - show bubbles of location closest to center by default
 - figure out algorithm to accumulate bubbles with equal name. maybe no spaces / hints?
 - enforce location address format: city[, state] and query the db first before geocoding
-- tutorial
-  -Click on the marker to see bubbles in this location
-  -The bubbles are shown in real time
-  -Click here to zoom in 4 levels: Country, state, county, city
-  -Click here to add a bubble
-  -Click the bubble to change its size
-- buttons margin
 - search button for location
+- show top 3 cities where activity was liked when not in city view

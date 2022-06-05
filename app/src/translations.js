@@ -4,7 +4,7 @@ export default {
       title: "Welcome!",
       subtitle: "Watch in real time how bubbles are added and grow!",
       explanation: "After granting access to your location, click on the location markers to see the bubbles.",
-      popular: "The bigger the bubble, the more popular whatever is inside it! You can (dis)like and add bubbles only at your location.",
+      popular: "The bigger the bubble, the more popular whatever is inside it! You can like and add bubbles only at your location.",
       grantLocation: "If you don't want to or can't use your current location, you can type in a city here:",
       addressPlaceholder: "City or address",
       button: {
@@ -52,7 +52,7 @@ export default {
       next: "Next",
       close: "Close",
       text1: "Click on the plus to zoom in on your location and add a bubble. The other button centers the map on your location.",
-      text2: "There are 4 zoom levels: Countries, states, counties and cities. Bubbles are are summed up over all cities within the selected location!",
+      text2: "There are 4 zoom levels: Countries, states, counties and cities. Bubbles are are summed up over all cities within the selected location. Click on a bubble to see where it got the most likes!",
       text3: "After clicking on one of the blue markers, the name of the selected location is shown here. You can add and like bubbles only in the city you specified earlier.",
       text4: "If you click on the marker of a location, you can see in real time how others add bubbles and change their size by liking them! Have fun!"
     }
@@ -62,7 +62,7 @@ export default {
       title: "Willkommen!",
       subtitle: "Schaue in Echtzeit zu, wie Blasen dazukommen und wachsen!",
       explanation: "Gib Deinen Standort frei und klicke auf einen Standortmarker, um die Blasen zu sehen.",
-      popular: "Je größer die Blase, desto mehr Leute mögen, was drin steht! Du kannst Blasen nur an deinem Standort (dis)liken und hinzufügen.",
+      popular: "Je größer die Blase, desto mehr Leute mögen, was drin steht! Du kannst Blasen nur an deinem Standort liken und hinzufügen.",
       grantLocation: "Falls Du deinen Standort nicht freigeben möchtest, kannst du hier eine Stadt eingeben:",
       addressPlaceholder: "Stadt oder Adresse",
       button: {
@@ -110,9 +110,9 @@ export default {
       next: "Nächste",
       close: "Fertig",
       text1: "Klicke auf das Plus, um in deinen Standort zu zoomen und eine Blase hinzuzufügen. Der andere Button zentriert die Karte auf deinen Standort.",
-      text2: "Es gibt 4 Zoomstufen: Länder, Bundesländer, Landkreise und Städte. Blasen werden über alle Städte innerhalb des ausgewählten Standorts aufsummiert!",
+      text2: "Es gibt 4 Zoomstufen: Länder, Bundesländer, Landkreise und Städte. Blasen werden über alle Städte innerhalb des ausgewählten Standorts aufsummiert. Klick auf eine Blase, um zu sehen wo sie die meisten Likes hat!",
       text3: "Nach Klicken auf einen der blauen Marker wird der Name des ausgewählten Ortes hier angezeigt. Blasen können nur in deinem angegeben Ort geliked werden.",
-      text4: "Wenn Du z. B. auf den Marker von Deutschland klickst, kannst Du in Echtzeit verfolgen, wie andere neue Blasen hinzufügen und ihre Größe durch liken ändern! Viel Spaß!"
+      text4: "Wenn Du z. B. auf den Marker von Deutschland klickst, kannst Du in Echtzeit verfolgen, wie andere neue Blasen hinzufügen und ihre Größe durch Likes ändern! Viel Spaß!"
     }
   },
 };

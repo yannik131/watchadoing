@@ -65,6 +65,15 @@
         <div v-touch="onTapReaction('resetActivity')" class="p-2 cursor-pointer  hover:bg-gray-100 text-gray-500 font-bold text-xl flex items-center justify-center"><img :src="okaySVG"/> <span class="ml-2">{{ $t('bubble.reset') }}</span></div>
         <div class="arrow" data-popper-arrow></div>
     </div>
+    <div v-else-if="$store.getters.selectedLocation.city === null" :id="`${bubbleId}-tooltip`" class="flex flex-col hidden bg-white rounded border border-gray-400 p-1 gap-1 z-30 tooltip text-left" role="tooltip">
+        <div class="flex flex-col" id="ranking">
+            <div v-for="(rank, index) in $store.getters.cityRanking" :key="rank[0].id">
+                {{ index+1 }}. {{ rank[0].city }}: {{ rank[1] }}
+                <hr/>
+            </div>
+        </div>
+        <div class="arrow" data-popper-arrow></div>
+    </div>
 </template>
 
 <style>
@@ -90,6 +99,7 @@
 import store from '../services/store';
 import PositionFactory from '../helpers/positionFactory';
 import { updateActivity } from '../services/activity';
+import { locationTree } from '../services/location';
 import { getRandomFloat, linearFunction } from '../helpers/utils';
 import { getMap, layerGroup } from '../services/map';
 import { onMounted, onUnmounted, ref, watch } from 'vue';
@@ -209,6 +219,11 @@ export default {
                 return;
             }
             
+            if(store.getters.selectedLocation.city === null) {
+                store.commit('setRankedActivityTitle', { title: props.activity.title });
+                setCityRanking();
+            }
+            
             const tooltip = document.getElementById(bubbleId + '-tooltip');
                 
             const popper = createPopper(
@@ -249,6 +264,25 @@ export default {
             document.removeEventListener('click', handler);
         });
         
+        function setCityRanking() {
+            const cities = locationTree.collectCitiesIn(store.getters.selectedLocation);
+            const ranking = [];
+            for(const city of cities) {
+                const activities = store.getters.activityMap[city.id];
+                if(!activities) {
+                    continue;
+                }
+                for(const activity of activities) {
+                    if(activity.title === props.activity.title) {
+                        ranking.push([city, activity.likeCount]);
+                        break;
+                    }
+                }
+            }
+            ranking.sort((a, b) => b[1]-a[1]);
+            store.commit('setCityRanking', { ranking: ranking.slice(0, 3) });
+        }
+        
         const isUserLocation = store.getters.selectedLocation.id === store.getters.userLocation.id;
         let activity;
         
@@ -261,6 +295,9 @@ export default {
                     break;
                 }
             }
+        }
+        else if(store.getters.selectedLocation.city === null) {
+            setTimeout(() => document.addEventListener('click', handler), 10);
         }
         
         async function react(reaction) {
@@ -326,6 +363,14 @@ export default {
         watch(() => store.getters.displayedActivities, () => {
             for(const activity of store.getters.displayedActivities) {
                 if(activity.title === props.activity.title) {
+                    if(store.getters.rankedActivityTitle === activity.title && likeCount.text.value !== activity.likeCount) {
+                        const ranking = document.getElementById('ranking');
+                        if(ranking && ranking.offsetParent) {
+                            console.log('ranking update');
+                            setCityRanking();
+                        }
+                        
+                    }
                     likeCount.text.value = activity.likeCount;
                     updateViewbox();
                     break;
