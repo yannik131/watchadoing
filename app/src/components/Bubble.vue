@@ -58,11 +58,11 @@
         </svg>
     <div v-if="$store.getters.isUserLocation" :id="`${bubbleId}-tooltip`" class="flex flex-col hidden bg-white rounded border border-gray-400 p-1 gap-1 z-30 tooltip text-left" role="tooltip">
         <div v-if="!hasAlreadyReacted()" class="flex flex-row">
-            <div v-touch="onTapReaction('likeActivity')" class="p-2 cursor-pointer hover:bg-gray-100 text-green-500 font-bold text-xl flex items-center"><img :src="yesSVG"/> <span class="ml-2">Yes!</span></div>
-            <div v-touch="onTapReaction('dislikeActivity')" class="p-2 cursor-pointer  hover:bg-gray-100 text-red-500 font-bold text-xl flex items-center" style="border-left: 1px solid lightgray"><img :src="noSVG"/> <span class="ml-2">No!</span></div>
+            <div v-touch="onTapReaction('likeActivity')" class="p-2 cursor-pointer hover:bg-gray-100 text-green-500 font-bold text-xl flex items-center"><img :src="yesSVG"/> <span class="ml-2">{{ $t('bubble.like') }}</span></div>
+            <div v-touch="onTapReaction('dislikeActivity')" class="p-2 cursor-pointer  hover:bg-gray-100 text-red-500 font-bold text-xl flex items-center" style="border-left: 1px solid lightgray"><img :src="noSVG"/> <span class="ml-2">{{ $t('bubble.dislike') }}</span></div>
         </div>
         <hr v-if="!hasAlreadyReacted()">
-        <div v-touch="onTapReaction('resetActivity')" class="p-2 cursor-pointer  hover:bg-gray-100 text-gray-500 font-bold text-xl flex items-center justify-center"><img :src="okaySVG"/> <span class="ml-2">Okay.</span></div>
+        <div v-touch="onTapReaction('resetActivity')" class="p-2 cursor-pointer  hover:bg-gray-100 text-gray-500 font-bold text-xl flex items-center justify-center"><img :src="okaySVG"/> <span class="ml-2">{{ $t('bubble.reset') }}</span></div>
         <div class="arrow" data-popper-arrow></div>
     </div>
 </template>

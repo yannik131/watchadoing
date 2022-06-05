@@ -42,6 +42,11 @@ export default {
         geocodingFail: "Could not geocode this location. Please type in another address manually."
       },
       determined: "Determined location: {location}. Proceed if this is correct :)"
+    },
+    bubble: {
+      like: 'Yes!',
+      dislike: 'No!',
+      reset: 'Okay.'
     }
   },
   de: {
@@ -87,6 +92,11 @@ export default {
         geocodingFail: "Openstreetmap kann mit der eingegeben Adresse bzw. deinem Standort nichts anfangen. Bitte gib manuell eine Stadt ein."
       },
       determined: "Ermittelter Standort: {location}. Wenn das passt, kannst du weitermachen :)"
+    },
+    bubble: {
+      like: 'Ja!',
+      dislike: 'Nein!',
+      reset: 'Okay.'
     }
   },
 };
