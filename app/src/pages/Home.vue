@@ -46,7 +46,7 @@
         >
     </Bubble>
     
-    <Tutorial v-if="true"></Tutorial>
+    <Tutorial v-if="$store.getters.locationConfirmed && !$store.getters.tutorialShown"></Tutorial>
 </template>
 
 <style>
@@ -220,10 +220,15 @@ export default {
             for(const locationId of Object.keys(locationMap)) {
                 for(const child of locationMap[locationId]) {
                     locations.push(child);
-                    addMarker(child.latitude, child.longitude)
+                    const marker = addMarker(child.latitude, child.longitude)
                         .addEventListener('click', () => {
                             onMarkerClick(child);
                         });
+                    if(!store.getters.tutorialShown) {
+                        if(child.state === null && child.country === store.getters.userLocation.country) {
+                            marker._icon.id = 'user-marker';
+                        }
+                    }
                 }
             }
             store.commit('setAppState', { value: 'markers' });

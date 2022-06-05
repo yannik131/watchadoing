@@ -1,8 +1,13 @@
 <template>
-<div id="tutorial" class="bg-white p-2 hidden rounded z-30 tooltip" style="width: 200px;">
-    <div v-touch="close" class="cursor-pointer" style="position: absolute; top: -2px; right: 5px">
-      <i class="fas fa-times text-xl"></i>
-    </div>
+<div id="tutorial" class="bg-white p-2 hidden rounded z-30 tooltip" style="width: 200px; padding-top: 2px">
+    <h1 style="padding-top: 0">
+      Tutorial
+      <div v-touch="close" class="cursor-pointer" style="position: absolute; top: -2px; right: 5px">
+        <i class="fas fa-times" style="font-size: 1.5rem; font-weight: normal"></i>
+      </div>
+    </h1>
+    
+    
     {{ $t(text) }}
     <div class="flex justify-around items-center mt-2">
       <div>{{ currentCount }}/{{ maxCount }}</div>
@@ -25,6 +30,7 @@
 <script>
 import { onMounted, ref } from 'vue';
 import { createPopper } from '@popperjs/core';
+import { getMap } from '../services/map';
 import store from '../services/store';
 
 export default {
@@ -35,7 +41,7 @@ export default {
       () => document.getElementById('add'),
       () => document.getElementsByClassName('leaflet-control-zoom')[0],
       () => document.getElementById('info-box'),
-      () => document.getElementById('info-box')
+      () => document.getElementById('user-marker') || document.getElementById('info-box')
     ];
     
     const positions = [
@@ -43,7 +49,7 @@ export default {
       'left',
       'left',
       'bottom',
-      'bottom'
+      'left'
     ];
     
     const offsets = [
@@ -92,6 +98,11 @@ export default {
       
       tooltip.classList.remove('hidden');
       popper.update();
+      if(currentCount.value === 4) {
+        getMap().addEventListener('move', () => {
+            popper.update();
+        });
+      }
     }
     
     function close() {

@@ -66,10 +66,10 @@
         <div class="arrow" data-popper-arrow></div>
     </div>
     <div v-else-if="$store.getters.selectedLocation.city === null" :id="`${bubbleId}-tooltip`" class="flex flex-col hidden bg-white rounded border border-gray-400 p-1 gap-1 z-30 tooltip text-left" role="tooltip">
-        <div class="flex flex-col" id="ranking">
+        <div class="flex flex-col" :id="`${bubbleId}-ranking`">
             <div v-for="(rank, index) in $store.getters.cityRanking" :key="rank[0].id">
                 {{ index+1 }}. {{ rank[0].city }}: {{ rank[1] }}
-                <hr/>
+                <hr v-if="index !== $store.getters.cityRanking.length -1"/>
             </div>
         </div>
         <div class="arrow" data-popper-arrow></div>
@@ -137,6 +137,7 @@ export default {
         
         const fillColor = ref('white');
         let size;
+        let popper;
         
         function updateViewbox() {
             if(store.getters.minLikeCount === store.getters.maxLikeCount) {
@@ -171,6 +172,10 @@ export default {
             
             pathElement.setAttribute(
                 'viewBox', `${getRandomFloat(minXmin, maxXmin)} ${getRandomFloat(minYmin, maxYmin)} ${width} ${props.bubbleSvgEdgeLength}`);
+                
+            if(popper) {
+                popper.update();
+            }
         }
         
         function updateTextPosition(textObject, position) {
@@ -226,7 +231,7 @@ export default {
             
             const tooltip = document.getElementById(bubbleId + '-tooltip');
                 
-            const popper = createPopper(
+            popper = createPopper(
                 document.getElementById(bubbleId), 
                 tooltip, 
                 {
@@ -364,9 +369,8 @@ export default {
             for(const activity of store.getters.displayedActivities) {
                 if(activity.title === props.activity.title) {
                     if(store.getters.rankedActivityTitle === activity.title && likeCount.text.value !== activity.likeCount) {
-                        const ranking = document.getElementById('ranking');
+                        const ranking = document.getElementById(bubbleId + '-ranking');
                         if(ranking && ranking.offsetParent) {
-                            console.log('ranking update');
                             setCityRanking();
                         }
                         

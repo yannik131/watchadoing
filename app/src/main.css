@@ -18,6 +18,10 @@ html {
     @apply flex items-center justify-center text-xl ml-2 p-1.5 rounded bg-gray-300 hover:bg-gray-200 cursor-pointer;
 }
 
+h1 {
+    @apply font-bold text-center text-xl;
+}
+
 .arrow,
 .arrow::before {
     position: absolute;
