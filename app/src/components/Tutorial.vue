@@ -6,7 +6,7 @@
     {{ $t(text) }}
     <div class="flex justify-around items-center mt-2">
       <div>{{ currentCount }}/{{ maxCount }}</div>
-      <button @click="next" class="text-white rounded p-1 px-2" style="background-color: rgb(0 125 224)">
+      <button @click="next" class="text-white rounded p-1 px-3" style="background-color: rgb(0 125 224)">
         <span v-if="currentCount < maxCount">{{ $t('tutorial.next') }}</span>
         <span v-else>{{ $t('tutorial.close') }}</span>
         
@@ -18,11 +18,7 @@
 
 <style>
 .tooltip[data-popper-placement^='left'] > .arrow {
-    left: 176px;
-}
-
-.tooltip[data-popper-placement^='bottom'] > .arrow {
-    left: 176px;
+    left: 196px;
 }
 </style>
 
