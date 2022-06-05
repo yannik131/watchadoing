@@ -38,25 +38,25 @@ export default {
   setup() {
     const targets = [
       null,
+      () => document.getElementById('user-marker') || document.getElementById('info-box'),
       () => document.getElementById('add'),
       () => document.getElementsByClassName('leaflet-control-zoom')[0],
-      () => document.getElementById('info-box'),
-      () => document.getElementById('user-marker') || document.getElementById('info-box')
+      () => document.getElementById('info-box')
     ];
     
     const positions = [
       null,
+      'bottom',
       'left',
       'left',
       'bottom',
-      'left'
     ];
     
     const offsets = [
       null,
-      [-10, 10],
-      [-10, 10],
       [0, 0],
+      [-10, 10],
+      [-10, 10],
       [0, 0]
     ];
     
@@ -98,7 +98,7 @@ export default {
       
       tooltip.classList.remove('hidden');
       popper.update();
-      if(currentCount.value === 4) {
+      if(currentCount.value === 1) {
         getMap().addEventListener('move', () => {
             popper.update();
         });

@@ -16,7 +16,7 @@ export function getMap(id = 'canvas') {
     
     map = L.map(id, {
         zoomControl: false,
-        zoom: 4,
+        zoom: 10,
         center: L.latLng(55, 23),
         minZoom: 4,
         maxZoom: 10,

@@ -210,7 +210,7 @@ export default {
         });
         
         var handler = function onBubbleClick(event) {
-            if(store.getters.showAddActivity) {
+            if(store.getters.showAddActivity || !store.getters.tutorialShown) {
                 return;
             }
             const rect = document.getElementById(bubbleId).getBoundingClientRect();

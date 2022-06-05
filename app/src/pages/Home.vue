@@ -13,7 +13,7 @@
             {{ $t('home.loading') }} <i class="fa fa-spinner fa-spin text-3xl ml-1"></i>
         </div>
         <div v-else-if="$store.getters.locationConfirmed">
-            Watcha doing?
+            {{ $t(zoomLevelText)}}
         </div>
     </div>
     
@@ -46,7 +46,7 @@
         >
     </Bubble>
     
-    <Tutorial v-if="$store.getters.locationConfirmed && !$store.getters.tutorialShown"></Tutorial>
+    <Tutorial v-if="$store.getters.locationConfirmed && !$store.getters.tutorialShown && !$store.getters.isFetching"></Tutorial>
 </template>
 
 <style>
@@ -77,7 +77,7 @@ import Introduction from '../components/Introduction.vue';
 import Tutorial from '../components/Tutorial';
 import consumer from '../services/websocketConsumer';
 import { createActivity, getActivities } from '../services/activity';
-import { watch, onMounted } from 'vue';
+import { watch, onMounted, ref } from 'vue';
 import { centerMapToUserLocation, getMap, addMarker, clearLayers } from '../services/map';
 import store from '../services/store';
 import { getLocations, locationTree, formatLocation, getComponentLevel } from '../services/location';
@@ -207,6 +207,7 @@ export default {
             clearLayers();
         }
         
+        const zoomLevelText = ref('home.zoom.cities');
         function addMarkersForCurrentZoomLevel() {
             const locations = [];
             const zoomMap = {
@@ -215,7 +216,15 @@ export default {
                 8: locationTree.counties,
                 10: locationTree.cities
             };
+            const zoomTextMap = {
+                4: 'home.zoom.countries',
+                6: 'home.zoom.states',
+                8: 'home.zoom.counties',
+                10: 'home.zoom.cities'
+            };
+            
             const locationMap = zoomMap[getMap().getZoom()];
+            zoomLevelText.value = zoomTextMap[getMap().getZoom()];
             
             for(const locationId of Object.keys(locationMap)) {
                 for(const child of locationMap[locationId]) {
@@ -225,7 +234,7 @@ export default {
                             onMarkerClick(child);
                         });
                     if(!store.getters.tutorialShown) {
-                        if(child.state === null && child.country === store.getters.userLocation.country) {
+                        if(child.id === store.getters.userLocation.id) {
                             marker._icon.id = 'user-marker';
                         }
                     }
@@ -248,20 +257,23 @@ export default {
                 return;
             }
             if(!closed) {
-                getMap().setZoom(10, { animate: false });
-                centerMapToUserLocation();
-                if(!(store.getters.selectedLocation && store.getters.userLocation) || store.getters.selectedLocation.id !== store.getters.userLocation.id) {
-                    //I don't know when exactly the zoomend and zoomstart event listeners are triggered. This small time out
-                    //ought to take care of the issue.
-                    setTimeout(() => {
-                        clearBubbles();
-                        onMarkerClick(store.getters.userLocation);
-                    }, 100);
-                }
-                
+                zoomToUserLocation();
             }
             //This small timeout prevents a tooltip from appearing if a bubble is behind the cancel button
             setTimeout(() => store.commit('toggleShowAddActivity'), 10);
+        }
+        
+        function zoomToUserLocation() {
+            getMap().setZoom(10, { animate: false });
+            centerMapToUserLocation();
+            if(!(store.getters.selectedLocation && store.getters.userLocation) || store.getters.selectedLocation.id !== store.getters.userLocation.id) {
+                //I don't know when exactly the zoomend and zoomstart event listeners are triggered. This small time out
+                //ought to take care of the issue.
+                setTimeout(() => {
+                    clearBubbles();
+                    onMarkerClick(store.getters.userLocation);
+                }, 100);
+            }
         }
         
         async function onActivityCreated(title) {
@@ -299,6 +311,7 @@ export default {
             formatLocation,
             onCloseClick,
             onActivityCreated,
+            zoomLevelText,
             yesSVG: require('../svg/yes.svg'),
             okaySVG: require('../svg/okay.svg'),
             noSVG: require('../svg/no.svg')
