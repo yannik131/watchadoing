@@ -69,6 +69,7 @@
     </div>
     <div v-else-if="$store.getters.selectedLocation.city === null" :id="`${bubbleId}-tooltip`" class="flex flex-col hidden bg-white rounded border border-gray-400 p-1 gap-1 z-30 tooltip text-left" role="tooltip">
         <h1>{{ title.text.value }}</h1>
+        <hr/>
         <div class="flex flex-col" :id="`${bubbleId}-ranking`">
             <div v-for="(rank, index) in $store.getters.cityRanking" :key="rank[0].id">
                 {{ index+1 }}. {{ rank[0].city }}: {{ rank[1] }}
