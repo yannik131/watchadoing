@@ -57,6 +57,8 @@
         </defs>
         </svg>
     <div v-if="$store.getters.isUserLocation" :id="`${bubbleId}-tooltip`" class="flex flex-col hidden bg-white rounded border border-gray-400 p-1 gap-1 z-30 tooltip text-left" role="tooltip">
+        <h1>{{ title.text.value }}</h1>
+        <hr/>
         <div v-if="!hasAlreadyReacted()" class="flex flex-row">
             <div v-touch="onTapReaction('likeActivity')" class="p-2 cursor-pointer hover:bg-gray-100 text-green-500 font-bold text-xl flex items-center"><img :src="yesSVG"/> <span class="ml-2">{{ $t('bubble.like') }}</span></div>
             <div v-touch="onTapReaction('dislikeActivity')" class="p-2 cursor-pointer  hover:bg-gray-100 text-red-500 font-bold text-xl flex items-center" style="border-left: 1px solid lightgray"><img :src="noSVG"/> <span class="ml-2">{{ $t('bubble.dislike') }}</span></div>
@@ -66,6 +68,7 @@
         <div class="arrow" data-popper-arrow></div>
     </div>
     <div v-else-if="$store.getters.selectedLocation.city === null" :id="`${bubbleId}-tooltip`" class="flex flex-col hidden bg-white rounded border border-gray-400 p-1 gap-1 z-30 tooltip text-left" role="tooltip">
+        <h1>{{ title.text.value }}</h1>
         <div class="flex flex-col" :id="`${bubbleId}-ranking`">
             <div v-for="(rank, index) in $store.getters.cityRanking" :key="rank[0].id">
                 {{ index+1 }}. {{ rank[0].city }}: {{ rank[1] }}
@@ -91,6 +94,10 @@
 
 .tooltip[data-popper-placement^='right'] > .arrow {
     left: -4px;
+}
+
+.c {
+    color: rgb(255, 147, 147);
 }
 </style>
 
@@ -351,10 +358,10 @@ export default {
         
         function updateFillColor() {
             if(store.getters.likedActivities[activity.id]) {
-                fillColor.value = "green";
+                fillColor.value = "rgb(147 255 147)";
             }
             else if(store.getters.dislikedActivities[activity.id]) {
-                fillColor.value = "red";
+                fillColor.value = "rgb(255, 147, 147)";
             }
             else {
                 fillColor.value = 'white';
