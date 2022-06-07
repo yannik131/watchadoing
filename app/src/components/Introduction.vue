@@ -7,7 +7,7 @@
             <div class="m-3 mt-5">
                 <h1 class="flex items-center justify-center">
                     {{ $t('introduction.about.title') }}
-                    <div v-touch="showAbout" class="absolute" style="right: 17px">
+                    <div v-touch.prevent="showAbout" class="absolute" style="right: 17px">
                         <i class="fas fa-times  text-3xl cursor-pointer" ></i>
                     </div>
                 </h1>
@@ -30,7 +30,7 @@
     </div>
     
     <div :class="{ blurry: aboutShown }">
-        <div v-touch="showAbout" class="absolute top-0 right-0 z-50 p-1.5" >
+        <div v-touch.prevent="showAbout" class="absolute top-0 right-0 z-50 p-1.5" >
         <i class="far fa-question-circle text-white text-3xl cursor-pointer"></i>
     </div>
     <div class="absolute top-0 left-0 bg-white p-2 rounded  cursor-pointer" style="min-width: 94px; margin-top: 3px; margin-left: 3px; z-index: 999">
@@ -151,10 +151,9 @@ export default {
         
         const aboutShown = ref(false);
         
-        function showAbout() {
+        function showAbout(event) {
+            event.stopPropagation();
             aboutShown.value = !aboutShown.value;
-            
-            console.log(aboutShown);
         }
         
         return {
