@@ -57,14 +57,6 @@
     z-index: -1;
 }
 
-.blurry {
-    filter: blur(2px);
-    -webkit-filter: blur(2px);
-    -moz-filter: blur(2px);
-    -o-filter: blur(2px);
-    -ms-filter: blur(2px);
-}
-
 .hover-green:hover {
     color: green;
 }

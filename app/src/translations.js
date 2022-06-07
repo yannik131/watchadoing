@@ -14,14 +14,21 @@ export default {
       },
       error: {
         locationDenied: "You denied access to your location. This app won't work without your location! You can type it in manually, though."
+      },
+      about: {
+        title: "Site notice",
+        privacy: "Your location data is completely anonymous and not used by third parties.",
+        phone: "Phone",
+        operator: "Website operator",
+        end: "You can't really expose any sensitive data on this website since location data is keyed by cities. If you have any questions or suggestions, though, feel free to contact me."
       }
     },
     addActivity: {
       title: "Add bubble",
       subtitle: "Watcha doing in {location}?",
       inputPlaceholder: "Reading, movies, ...",
-      add: 'Add',
-      cancel: 'Cancel',
+      add: "Add",
+      cancel: "Cancel",
       error: {
         emptyDescription: "Empty descriptions are not supported.",
         lengthExceeded: "Maximum length of {maxLength} characters exceeded.",
@@ -70,7 +77,7 @@ export default {
       subtitle: "Schaue in Echtzeit zu, wie Blasen dazukommen und wachsen!",
       explanation: "Gib Deinen Standort frei und klicke auf einen Standortmarker, um die Blasen zu sehen.",
       popular: "Je größer die Blase, desto mehr Leute mögen, was drin steht! Du kannst Blasen nur an deinem Standort liken und hinzufügen.",
-      grantLocation: "Falls Du deinen Standort nicht freigeben möchtest, kannst du hier eine Stadt eingeben:",
+      grantLocation: "Falls Du deinen Standort nicht freigeben möchtest, kannst Du hier eine Stadt eingeben:",
       addressPlaceholder: "Stadt oder Adresse",
       button: {
         go: "Los geht's!",
@@ -79,6 +86,13 @@ export default {
       },
       error: {
         locationDenied: "Du hast Deinen Standort nicht freigegeben. Ohne Deinen Standort geht's nicht! Du kannst aber eine Stadt manuell eintippen."
+      },
+      about: {
+        title: "Impressum",
+        phone: "Mobil",
+        privacy: "Deine ortsbezogenen Daten sind vollkommen anonym und werden nicht an Dritte weitergegeben.",
+        operator: "Inhaber",
+        end: "Du kannst auf dieser Website eigentlich keine sensiblen Daten preisgeben, weil Ortsdaten nach Städten aufgeschlüsselt werden. Solltest Du trotzdem Fragen oder Anregungen haben, kannst Du Dich gerne bei mir melden."
       }
     },
     addActivity: {
@@ -113,7 +127,7 @@ export default {
         missingComponent: "Konnte Stadt oder Bundesland nicht ermitteln. Bitte gib eine andere Stadt ein.",
         geocodingFail: "Openstreetmap kann mit der eingegeben Adresse bzw. deinem Standort nichts anfangen. Bitte gib manuell eine Stadt ein."
       },
-      determined: "Ermittelter Standort: {location}. Wenn das passt, kannst du weitermachen :)"
+      determined: "Ermittelter Standort: {location}. Wenn das passt, kannst Du weitermachen :)"
     },
     bubble: {
       like: 'Ja!',
@@ -124,8 +138,8 @@ export default {
       next: "Nächste",
       close: "Fertig",
       text1: "Wenn Du auf einen Marker klickst, werden die Blasen angezeigt und Du kannst in Echtzeit verfolgen, wie andere neue Blasen hinzufügen und ihre Größe durch Likes ändern.",
-      text2: "Klicke auf das Plus, um in deinen Standort zu zoomen und eine Blase hinzuzufügen. Der andere Button zentriert die Karte auf deinen Standort.",
-      text3: "Es gibt 4 Zoomstufen: Länder, Bundesländer, Landkreise und Städte. Blasen werden über alle Städte innerhalb des ausgewählten Standorts aufsummiert. Klick auf eine Blase, um zu sehen wo sie die meisten Likes hat!",
+      text2: "Klicke auf das Plus, um in Deinen Standort zu zoomen und eine Blase hinzuzufügen. Der andere Button zentriert die Karte auf Deinen Standort.",
+      text3: "Es gibt 4 Zoomstufen: Länder, Bundesländer, Landkreise und Städte. Blasen werden über alle Städte innerhalb des ausgewählten Standorts aufsummiert. Klicke auf eine Blase, um zu sehen wo sie die meisten Likes hat!",
       text4: "Nach Klicken auf einen der blauen Marker wird der Name des ausgewählten Ortes hier angezeigt. Blasen können nur in deinem angegeben Ort geliked werden. Viel Spaß!"
     }
   },
