@@ -175,7 +175,8 @@ LOGGING = {
        'file': {
            'class': 'logging.FileHandler',
            'filename': 'logs/django.log',
-           'formatter': 'normal'
+           'formatter': 'normal',
+           'level': 'WARNING'
        },
        'console': {
            'class': 'logging.StreamHandler',
@@ -185,18 +186,10 @@ LOGGING = {
     },
     'loggers': {
         'watchadoing': {
-            'handlers': ['file', 'console'],
-            'level': 'DEBUG'
+            'propagate': True
         },
         '': {
-            'handlers': ['file'],
-            'level': 'WARNING'
-        },
-        'django.server': {
-            'propagate': True
-        },
-        'django.security': {
-            'propagate': True
+            'handlers': ['file']
         }
     }
 }
