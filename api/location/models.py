@@ -10,10 +10,10 @@ COMPONENTS = ['country', 'state', 'county', 'city']
 
 class Location(models.Model):
     id          = models.UUIDField(primary_key=True, default=uuid.uuid4)
-    country     = models.CharField(max_length=40)
-    state       = models.CharField(max_length=40, null=True, blank=True)
-    county      = models.CharField(max_length=40, null=True, blank=True)
-    city        = models.CharField(max_length=40, null=True, blank=True)
+    country     = models.CharField(max_length=50)
+    state       = models.CharField(max_length=50, null=True, blank=True)
+    county      = models.CharField(max_length=50, null=True, blank=True)
+    city        = models.CharField(max_length=50, null=True, blank=True)
     longitude   = models.DecimalField(max_digits=9, decimal_places=6)
     latitude    = models.DecimalField(max_digits=9, decimal_places=6)
     parent      = models.ForeignKey('Location', null=True, on_delete=models.SET_NULL, related_name='children')
