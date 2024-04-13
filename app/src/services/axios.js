@@ -3,7 +3,7 @@ import axios from 'axios';
 const getClient = function() {
     const instance = axios.create();
     if(process.env.VUE_APP_MODE === 'production') {
-        instance.defaults.baseURL = 'https://watchadoing.net:8000/';
+        instance.defaults.baseURL = 'https://watchadoing.myactivities.net:8000/';
     }
     else {
         instance.defaults.baseURL = 'http://localhost:8000/';
